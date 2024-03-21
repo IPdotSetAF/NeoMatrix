@@ -9,6 +9,8 @@ window.onload = function () {
                 font_size = properties.fontsize.value;
                 updateFontSize();
             }
+            if (properties.traillength) 
+                trail_length = map(properties.traillength.value , 0.0, 1.0, 0.35, 0.02);
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
 
@@ -16,7 +18,7 @@ window.onload = function () {
         }
     };
 
-    var fps, fpsInterval, startTime, now, then, elapsed, font_size, char_set, letters, columns, drops;
+    var fpsInterval, startTime, now, then, elapsed, font_size, char_set, letters, columns, drops, trail_length = 0.05;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -32,7 +34,7 @@ window.onload = function () {
         else if (char_set == 1)
             letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         else if (char_set == 2)
-            letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"";
+            letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}";
         else if (char_set == 3)
             letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日ZTHEMATRIX:・.\"=*+-<>¦｜_╌";
         else if (char_set == 4)
@@ -49,8 +51,12 @@ window.onload = function () {
             drops[x] = 1;
     }
 
+    function map(value, from_a, from_b, to_a, to_b){
+        return (((value - from_a) * (to_b - to_a))/(from_b - from_a)) + to_a;
+    }
+
     function drawmatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.fillStyle = "#0F0";
 

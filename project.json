@@ -19,11 +19,11 @@
 						"value" : "3"
 					},
 					{
-						"label" : "English Letters + Numbers",
+						"label" : "Letters+Numbers",
 						"value" : "1"
 					},
 					{
-						"label" : "English Letters + Numbers + Chars",
+						"label" : "Letters+Numbers+Chars",
 						"value" : "2"
 					},
 					{
@@ -64,6 +64,19 @@
 				"text" : "Scheme color",
 				"type" : "color",
 				"value" : "0 0 0"
+			},
+			"traillength" : 
+			{
+				"fraction" : true,
+				"index" : 3,
+				"max" : 1,
+				"min" : 0,
+				"order" : 103,
+				"precision" : 3,
+				"step" : 0.01,
+				"text" : "Trail Length",
+				"type" : "slider",
+				"value" : 0.8
 			}
 		}
 	},
