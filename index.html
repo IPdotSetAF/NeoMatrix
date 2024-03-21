@@ -1,0 +1,125 @@
+﻿<!doctype html>
+
+<html lang="en">
+<head>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            window.wallpaperPropertyListener = {
+                applyUserProperties: function (properties) {
+                    startAnimating(
+                        properties.matrixspeed ? properties.matrixspeed.value : null,
+                        properties.charset ? properties.charset.value : null,
+                        properties.fontsize ? properties.fontsize.value : null
+                    );
+                }
+            };
+        };
+    </script>
+
+    <meta charset="utf-8">
+    <title>Wallpaper - NeoMatrix</title>
+    <meta name="author" content="cybeerboy">
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <canvas id="greenmatrix"></canvas>
+
+    <script type="text/javascript">
+
+        var fps, fpsInterval, startTime, now, then, elapsed, font_size, char_set, letters, columns, drops;
+        var c = document.getElementById("greenmatrix");
+        var ctx = c.getContext("2d");
+
+        function applySettings() {
+            ctx.font = font_size + "px arial";
+
+            c.height = window.innerHeight;
+            c.width = window.innerWidth;
+
+            if (char_set == 0)
+                letters = "1234567890#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            else
+                letters = "1234567890ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍｦｲｸｺｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝ日ZTHEMATRIX:・.\"=*+-<>¦｜_╌";
+            letters = letters.split("");
+
+
+            columns = c.width / font_size;
+            drops = [];
+            for (var x = 0; x < columns; x++)
+                drops[x] = 1;
+        }
+
+        applySettings();
+
+        function drawmatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.fillStyle = "#0F0";
+
+            for (var i = 0; i < drops.length; i++) {
+                var text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+                if (drops[i] * font_size > c.height && Math.random() > 0.975)
+                    drops[i] = 0;
+
+                drops[i]++;
+            }
+        }
+
+        window.addEventListener('resize', function () {
+            c.height = window.innerHeight;
+            c.width = window.innerWidth;
+            columns = c.width / font_size;
+            drops = [];
+            for (var x = 0; x < columns; x++)
+                drops[x] = 1;
+        }, false);
+
+        function loop() {
+            window.requestAnimationFrame(loop);
+            now = Date.now();
+            elapsed = now - then;
+            if (elapsed > fpsInterval) {
+                then = now - (elapsed % fpsInterval);
+                drawmatrix();
+            }
+
+        }
+
+        function startAnimating(fps, charset, fontsize) {
+            if (charset)
+                char_set = charset;
+            if (fontsize)
+                font_size = fontsize;
+            if (fps)
+                fpsInterval = 1000 / fps;
+            then = Date.now();
+            startTime = then;
+            applySettings();
+            loop();
+        }
+    </script>
+</body>
+</html>
