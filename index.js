@@ -10,8 +10,8 @@ window.onload = function () {
 
             if (properties.font)
                 font = properties.font.value;
-            if (properties.customfontname)
-                custom_font_name = properties.customfontname.value;
+            if (properties.customfont)
+                custom_font = properties.customfont.value;
             if (properties.fontsize)
                 font_size = properties.fontsize.value;
             if (properties.font || properties.customfontname || properties.fontsize)
@@ -27,7 +27,7 @@ window.onload = function () {
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, char_set = "1", custom_char_set, font_size, font = "0", custom_font_name;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, char_set = "4", custom_char_set, font_size, font = "0", custom_font;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -84,7 +84,7 @@ window.onload = function () {
                 break;
             }
             case "2": {
-                font_name = custom_font_name;
+                font_name = custom_font;
                 break;
             }
         }
