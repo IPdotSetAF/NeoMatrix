@@ -7,7 +7,7 @@
 		{
 			"charset" : 
 			{
-				"index" : 7,
+				"index" : 6,
 				"options" : 
 				[
 					{
@@ -39,15 +39,15 @@
 						"value" : "6"
 					}
 				],
-				"order" : 107,
+				"order" : 106,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "4"
 			},
 			"codescommaseparated" : 
 			{
-				"index" : 11,
-				"order" : 111,
+				"index" : 10,
+				"order" : 110,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THEMATRIX, IP.AF"
@@ -56,10 +56,10 @@
 			{
 				"condition" : "colormode.value != 0",
 				"fraction" : true,
-				"index" : 3,
+				"index" : 2,
 				"max" : 1,
 				"min" : -1,
-				"order" : 103,
+				"order" : 102,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Color Animation Speed",
@@ -92,8 +92,8 @@
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 8,
-				"order" : 108,
+				"index" : 7,
+				"order" : 107,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -101,15 +101,15 @@
 			"customfont" : 
 			{
 				"condition" : "font.value == 3",
-				"index" : 10,
-				"order" : 110,
+				"index" : 9,
+				"order" : 109,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
 			"font" : 
 			{
-				"index" : 9,
+				"index" : 8,
 				"options" : 
 				[
 					{
@@ -129,7 +129,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 109,
+				"order" : 108,
 				"text" : "Font",
 				"type" : "combo",
 				"value" : "2"
@@ -137,10 +137,10 @@
 			"fontsize" : 
 			{
 				"fraction" : false,
-				"index" : 6,
+				"index" : 5,
 				"max" : 30,
 				"min" : 5,
-				"order" : 106,
+				"order" : 105,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 10
@@ -157,27 +157,13 @@
 			"matrixspeed" : 
 			{
 				"fraction" : false,
-				"index" : 4,
+				"index" : 3,
 				"max" : 60,
 				"min" : 10,
-				"order" : 104,
+				"order" : 103,
 				"text" : "Matrix Speed",
 				"type" : "slider",
 				"value" : 25
-			},
-			"rainbowscale" : 
-			{
-				"condition" : "colormode.value != 0",
-				"fraction" : true,
-				"index" : 2,
-				"max" : 1,
-				"min" : -1,
-				"order" : 102,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "Rainbow Scale",
-				"type" : "slider",
-				"value" : 0.5
 			},
 			"schemecolor" : 
 			{
@@ -189,10 +175,10 @@
 			"traillength" : 
 			{
 				"fraction" : true,
-				"index" : 5,
+				"index" : 4,
 				"max" : 1,
 				"min" : 0,
-				"order" : 105,
+				"order" : 104,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Trail Length",

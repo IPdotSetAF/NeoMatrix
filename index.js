@@ -38,15 +38,13 @@ window.onload = function () {
                 });
             if (properties.coloranimationspeed)
                 color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
-            if (properties.rainbowscale)
-                rainbow_scale = properties.rainbowscale.value;
 
             startAnimating();
         }
     };
 
     var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, trail_length = 0.05, codes;
-    var color = "0,255,0", color_mode = "0", color_animation_speed = 0, rainbow_scale = 0.5, column_hue, row_hue;
+    var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size, font = "2", custom_font;
     var c = document.getElementById("neomatrix");
