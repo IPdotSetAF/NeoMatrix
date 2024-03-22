@@ -5,51 +5,9 @@
 	{
 		"properties" : 
 		{
-			"schemecolor" : 
-			{
-				"order" : 0,
-				"text" : "Scheme color",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"matrixspeed" : 
-			{
-				"fraction" : false,
-				"index" : 0,
-				"max" : 60,
-				"min" : 10,
-				"order" : 100,
-				"text" : "Matrix Speed",
-				"type" : "slider",
-				"value" : 25
-			},
-			"traillength" : 
-			{
-				"fraction" : true,
-				"index" : 1,
-				"max" : 1,
-				"min" : 0,
-				"order" : 101,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "Trail Length",
-				"type" : "slider",
-				"value" : 0.8
-			},
-			"fontsize" : 
-			{
-				"fraction" : false,
-				"index" : 2,
-				"max" : 30,
-				"min" : 5,
-				"order" : 102,
-				"text" : "Font size",
-				"type" : "slider",
-				"value" : 10
-			},
 			"charset" : 
 			{
-				"index" : 3,
+				"index" : 4,
 				"options" : 
 				[
 					{
@@ -81,23 +39,40 @@
 						"value" : "6"
 					}
 				],
-				"order" : 103,
+				"order" : 104,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "4"
 			},
+			"codescommaseparated" : 
+			{
+				"index" : 8,
+				"order" : 108,
+				"text" : "Codes (comma separated)",
+				"type" : "textinput",
+				"value" : "THEMATRIX, IP.AF"
+			},
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 4,
-				"order" : 104,
+				"index" : 5,
+				"order" : 105,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
 			},
+			"customfont" : 
+			{
+				"condition" : "font.value == 3",
+				"index" : 7,
+				"order" : 107,
+				"text" : "Custom Font",
+				"type" : "textinput",
+				"value" : "monospace"
+			},
 			"font" : 
 			{
-				"index" : 5,
+				"index" : 6,
 				"options" : 
 				[
 					{
@@ -109,23 +84,68 @@
 						"value" : "1"
 					},
 					{
-						"label" : "Custom",
+						"label" : "Courier Bold",
 						"value" : "2"
+					},
+					{
+						"label" : "Custom",
+						"value" : "3"
 					}
 				],
-				"order" : 105,
+				"order" : 106,
 				"text" : "Font",
 				"type" : "combo",
-				"value" : "0"
+				"value" : "2"
 			},
-			"customfont" : 
+			"fontsize" : 
 			{
-				"condition" : "font.value == 2",
-				"index" : 6,
-				"order" : 106,
-				"text" : "Custom Font",
-				"type" : "textinput",
-				"value" : "monospace"
+				"fraction" : false,
+				"index" : 3,
+				"max" : 30,
+				"min" : 5,
+				"order" : 103,
+				"text" : "Font size",
+				"type" : "slider",
+				"value" : 10
+			},
+			"matrixcolor" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "Matrix Color",
+				"type" : "color",
+				"value" : "0 1 0"
+			},
+			"matrixspeed" : 
+			{
+				"fraction" : false,
+				"index" : 1,
+				"max" : 60,
+				"min" : 10,
+				"order" : 101,
+				"text" : "Matrix Speed",
+				"type" : "slider",
+				"value" : 25
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "Scheme color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"traillength" : 
+			{
+				"fraction" : true,
+				"index" : 2,
+				"max" : 1,
+				"min" : 0,
+				"order" : 102,
+				"precision" : 3,
+				"step" : 0.01,
+				"text" : "Trail Length",
+				"type" : "slider",
+				"value" : 0.8
 			}
 		}
 	},

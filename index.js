@@ -23,11 +23,25 @@ window.onload = function () {
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
 
+            if (properties.codescommaseparated) {
+                codes = properties.codescommaseparated.value.split(",");
+                codes.forEach(element => {
+                    element = element.trim();
+                });
+            }
+
+            if (properties.matrixcolor)
+                color = properties.matrixcolor.value.split(' ').map(function (c) {
+                    return Math.ceil(c * 255)
+                });
+
             startAnimating();
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, char_set = "4", custom_char_set, font_size, font = "0", custom_font;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, codes, color = "0,255,0";
+    var char_set = "4", custom_char_set;
+    var font_size, font = "2", custom_font;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -84,6 +98,10 @@ window.onload = function () {
                 break;
             }
             case "2": {
+                font_name = "courier-bold";
+                break;
+            }
+            case "3": {
                 font_name = custom_font;
                 break;
             }
@@ -104,11 +122,11 @@ window.onload = function () {
     function drawmatrix() {
         ctx.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
         ctx.fillRect(0, 0, c.width, c.height);
-        ctx.fillStyle = "#0F0";
+        ctx.fillStyle = "rgb( " + color + " )";
 
         for (var i = 0; i < drops.length; i++) {
-            var text = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillText(text, i * font_size, drops[i] * font_size);
+            var charcter = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(charcter, i * font_size, drops[i] * font_size);
             if (drops[i] * font_size > c.height && Math.random() > 0.975)
                 drops[i] = 0;
 
@@ -133,7 +151,6 @@ window.onload = function () {
             then = now - (elapsed % fpsInterval);
             drawmatrix();
         }
-
     }
 
     function startAnimating() {
