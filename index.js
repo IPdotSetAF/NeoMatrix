@@ -155,18 +155,15 @@ window.onload = function () {
     function calculateColor(i, j) {
         var hue, offset = Math.floor(color_animation_speed * then);
 
-        i += offset;
-        j += offset;
-
         switch (color_mode) {
             //Horizontal
             case "1": {
-                hue = i * column_hue;
+                hue = (i + offset) * column_hue;
                 break;
             }
             //Vertical
             case "2": {
-                hue = j * row_hue;
+                hue = (j + offset) * row_hue;
                 break;
             }
             //Static
