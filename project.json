@@ -7,7 +7,7 @@
 		{
 			"charset" : 
 			{
-				"index" : 6,
+				"index" : 7,
 				"options" : 
 				[
 					{
@@ -39,15 +39,15 @@
 						"value" : "6"
 					}
 				],
-				"order" : 106,
+				"order" : 107,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "4"
 			},
 			"codescommaseparated" : 
 			{
-				"index" : 10,
-				"order" : 110,
+				"index" : 11,
+				"order" : 111,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THEMATRIX, IP.AF"
@@ -92,8 +92,8 @@
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 7,
-				"order" : 107,
+				"index" : 8,
+				"order" : 108,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -101,15 +101,15 @@
 			"customfont" : 
 			{
 				"condition" : "font.value == 3",
-				"index" : 9,
-				"order" : 109,
+				"index" : 10,
+				"order" : 110,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
 			"font" : 
 			{
-				"index" : 8,
+				"index" : 9,
 				"options" : 
 				[
 					{
@@ -129,7 +129,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 108,
+				"order" : 109,
 				"text" : "Font",
 				"type" : "combo",
 				"value" : "2"
@@ -137,13 +137,21 @@
 			"fontsize" : 
 			{
 				"fraction" : false,
-				"index" : 5,
+				"index" : 6,
 				"max" : 30,
 				"min" : 5,
-				"order" : 105,
+				"order" : 106,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 10
+			},
+			"highlightfirstcharacter" : 
+			{
+				"index" : 5,
+				"order" : 105,
+				"text" : "Highlight First Character",
+				"type" : "bool",
+				"value" : true
 			},
 			"matrixcolor" : 
 			{

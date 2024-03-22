@@ -39,11 +39,14 @@ window.onload = function () {
             if (properties.coloranimationspeed)
                 color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
 
+            if (properties.highlightfirstcharacter)
+                highlight_first_character = properties.highlightfirstcharacter.value;
+
             startAnimating();
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, trail_length = 0.05, codes;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, codes, highlight_first_character = true;
     var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size, font = "2", custom_font;
@@ -127,9 +130,21 @@ window.onload = function () {
         ctx.fillRect(0, 0, c.width, c.height);
 
         for (var i = 0; i < drops.length; i++) {
-            var charcter = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillStyle = calculateColor(i, drops[i]);
-            ctx.fillText(charcter, i * font_size, drops[i] * font_size);
+            if (highlight_first_character) {
+                ctx.fillStyle = "rgb(0, 0, 0)";
+                ctx.fillRect(i * font_size, ((drops[i] - 2) * font_size) + 5, font_size, font_size);
+
+                ctx.fillStyle = calculateColor(i, drops[i]);
+                ctx.fillText(drop_chars[i], i * font_size, (drops[i] - 1) * font_size);
+
+                ctx.fillStyle = "#FFF";
+            }
+            else
+                ctx.fillStyle = calculateColor(i, drops[i]);
+
+            drop_chars[i] = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(drop_chars[i], i * font_size, drops[i] * font_size);
+
             if (drops[i] > rows && Math.random() > 0.975)
                 drops[i] = 0;
 
@@ -171,15 +186,16 @@ window.onload = function () {
         fallAnimation();
     }, false);
 
-    function updateGrid(){
+    function updateGrid() {
         columns = c.width / font_size;
         rows = c.height / font_size;
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
     }
 
-    function fallAnimation(){
+    function fallAnimation() {
         drops = [];
+        drop_chars = [];
         for (var x = 0; x < columns; x++)
             drops[x] = 1;
     }
