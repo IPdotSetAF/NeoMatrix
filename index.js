@@ -37,14 +37,16 @@ window.onload = function () {
                     return Math.ceil(c * 255)
                 });
             if (properties.coloranimationspeed)
-                color_animation_speed = properties.coloranimationspeed.value;
+                color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
+            if (properties.rainbowscale)
+                rainbow_scale = properties.rainbowscale.value;
 
             startAnimating();
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, codes;
-    var color = "0,255,0", color_mode = "0", color_animation_speed = 0.5;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, trail_length = 0.05, codes;
+    var color = "0,255,0", color_mode = "0", color_animation_speed = 0, rainbow_scale = 0.5, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size, font = "2", custom_font;
     var c = document.getElementById("neomatrix");
@@ -114,10 +116,8 @@ window.onload = function () {
 
         ctx.font = font_size + "px " + font_name;
 
-        columns = c.width / font_size;
-        drops = [];
-        for (var x = 0; x < columns; x++)
-            drops[x] = 1;
+        updateGrid();
+        fallAnimation();
     }
 
     function map(value, from_a, from_b, to_a, to_b) {
@@ -130,38 +130,61 @@ window.onload = function () {
 
         for (var i = 0; i < drops.length; i++) {
             var charcter = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillStyle = "rgb( " + calculateColor(i, drops[i]) + " )";
+            ctx.fillStyle = calculateColor(i, drops[i]);
             ctx.fillText(charcter, i * font_size, drops[i] * font_size);
-            if (drops[i] * font_size > c.height && Math.random() > 0.975)
+            if (drops[i] > rows && Math.random() > 0.975)
                 drops[i] = 0;
 
             drops[i]++;
         }
     }
 
-    function calculateColor(i, j){
-        var currentColor = color;
+    function calculateColor(i, j) {
+        var hue, offset = Math.floor(color_animation_speed * then);
 
-        switch(color_mode){
-            case "1":{
+        i += offset;
+        j += offset;
+
+        switch (color_mode) {
+            //Horizontal
+            case "1": {
+                hue = i * column_hue;
                 break;
             }
-            case "2":{
+            //Vertical
+            case "2": {
+                hue = j * row_hue;
                 break;
+            }
+            //Static
+            default: {
+                return "rgb( " + color + " )";
             }
         }
-          
-        return currentColor;
+
+        return "hsl(" + hue + ", 100%, 50%)";;
     }
 
     window.addEventListener('resize', function () {
         c.height = window.innerHeight;
         c.width = window.innerWidth;
+
+        updateGrid();
+        fallAnimation();
+    }, false);
+
+    function updateGrid(){
         columns = c.width / font_size;
+        rows = c.height / font_size;
+        column_hue = Math.floor(360 / columns);
+        row_hue = Math.floor(360 / rows);
+    }
+
+    function fallAnimation(){
         drops = [];
         for (var x = 0; x < columns; x++)
             drops[x] = 1;
-    }, false);
+    }
 
     function loop() {
         window.requestAnimationFrame(loop);
