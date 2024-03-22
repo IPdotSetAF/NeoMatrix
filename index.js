@@ -30,16 +30,21 @@ window.onload = function () {
                 });
             }
 
+            if (properties.colormode)
+                color_mode = properties.colormode.value;
             if (properties.matrixcolor)
                 color = properties.matrixcolor.value.split(' ').map(function (c) {
                     return Math.ceil(c * 255)
                 });
+            if (properties.coloranimationspeed)
+                color_animation_speed = properties.coloranimationspeed.value;
 
             startAnimating();
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, codes, color = "0,255,0";
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, codes;
+    var color = "0,255,0", color_mode = "0", color_animation_speed = 0.5;
     var char_set = "4", custom_char_set;
     var font_size, font = "2", custom_font;
     var c = document.getElementById("neomatrix");
@@ -122,16 +127,31 @@ window.onload = function () {
     function drawmatrix() {
         ctx.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
         ctx.fillRect(0, 0, c.width, c.height);
-        ctx.fillStyle = "rgb( " + color + " )";
 
         for (var i = 0; i < drops.length; i++) {
             var charcter = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillStyle = "rgb( " + calculateColor(i, drops[i]) + " )";
             ctx.fillText(charcter, i * font_size, drops[i] * font_size);
             if (drops[i] * font_size > c.height && Math.random() > 0.975)
                 drops[i] = 0;
 
             drops[i]++;
         }
+    }
+
+    function calculateColor(i, j){
+        var currentColor = color;
+
+        switch(color_mode){
+            case "1":{
+                break;
+            }
+            case "2":{
+                break;
+            }
+        }
+          
+        return currentColor;
     }
 
     window.addEventListener('resize', function () {

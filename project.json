@@ -7,7 +7,7 @@
 		{
 			"charset" : 
 			{
-				"index" : 4,
+				"index" : 6,
 				"options" : 
 				[
 					{
@@ -39,24 +39,61 @@
 						"value" : "6"
 					}
 				],
-				"order" : 104,
+				"order" : 106,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "4"
 			},
 			"codescommaseparated" : 
 			{
-				"index" : 8,
-				"order" : 108,
+				"index" : 10,
+				"order" : 110,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THEMATRIX, IP.AF"
 			},
+			"coloranimationspeed" : 
+			{
+				"condition" : "colormode.value != 0",
+				"fraction" : true,
+				"index" : 2,
+				"max" : 1,
+				"min" : 0,
+				"order" : 102,
+				"precision" : 3,
+				"step" : 0.01,
+				"text" : "Color Animation Speed",
+				"type" : "slider",
+				"value" : 0.5
+			},
+			"colormode" : 
+			{
+				"index" : 0,
+				"options" : 
+				[
+					{
+						"label" : "Single",
+						"value" : "0"
+					},
+					{
+						"label" : "Horizontal Rainbow",
+						"value" : "1"
+					},
+					{
+						"label" : "Vertical Rainbow",
+						"value" : "2"
+					}
+				],
+				"order" : 100,
+				"text" : "Color Mode",
+				"type" : "combo",
+				"value" : "0"
+			},
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 5,
-				"order" : 105,
+				"index" : 7,
+				"order" : 107,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -64,15 +101,15 @@
 			"customfont" : 
 			{
 				"condition" : "font.value == 3",
-				"index" : 7,
-				"order" : 107,
+				"index" : 9,
+				"order" : 109,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
 			"font" : 
 			{
-				"index" : 6,
+				"index" : 8,
 				"options" : 
 				[
 					{
@@ -92,7 +129,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 106,
+				"order" : 108,
 				"text" : "Font",
 				"type" : "combo",
 				"value" : "2"
@@ -100,18 +137,19 @@
 			"fontsize" : 
 			{
 				"fraction" : false,
-				"index" : 3,
+				"index" : 5,
 				"max" : 30,
 				"min" : 5,
-				"order" : 103,
+				"order" : 105,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 10
 			},
 			"matrixcolor" : 
 			{
-				"index" : 0,
-				"order" : 100,
+				"condition" : "colormode.value == 0",
+				"index" : 1,
+				"order" : 101,
 				"text" : "Matrix Color",
 				"type" : "color",
 				"value" : "0 1 0"
@@ -119,10 +157,10 @@
 			"matrixspeed" : 
 			{
 				"fraction" : false,
-				"index" : 1,
+				"index" : 3,
 				"max" : 60,
 				"min" : 10,
-				"order" : 101,
+				"order" : 103,
 				"text" : "Matrix Speed",
 				"type" : "slider",
 				"value" : 25
@@ -137,10 +175,10 @@
 			"traillength" : 
 			{
 				"fraction" : true,
-				"index" : 2,
+				"index" : 4,
 				"max" : 1,
 				"min" : 0,
-				"order" : 102,
+				"order" : 104,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Trail Length",
@@ -150,7 +188,9 @@
 		}
 	},
 	"monetization" : false,
-	"preview" : "preview.jpg",
+	"preview" : "preview.gif",
+	"snapshotformat" : 0,
+	"snapshotoverlay" : "",
 	"tags" : [ "Sci-Fi", "Technology", "Multi-monitor optimized" ],
 	"title" : "Neo Matrix",
 	"type" : "web",
