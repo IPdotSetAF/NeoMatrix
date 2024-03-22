@@ -1,16 +1,25 @@
 window.onload = function () {
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
-            if (properties.charset) {
+            if (properties.charset)
                 char_set = properties.charset.value;
+            if (properties.customcharset)
+                custom_char_set = properties.customcharset.value;
+            if (properties.charset || properties.customcharset)
                 updateCharSet();
-            }
-            if (properties.fontsize) {
+
+            if (properties.font)
+                font = properties.font.value;
+            if (properties.customfontname)
+                custom_font_name = properties.customfontname.value;
+            if (properties.fontsize)
                 font_size = properties.fontsize.value;
-                updateFontSize();
-            }
-            if (properties.traillength) 
-                trail_length = map(properties.traillength.value , 0.0, 1.0, 0.35, 0.02);
+            if (properties.font || properties.customfontname || properties.fontsize)
+                updateFont();
+
+            if (properties.traillength)
+                trail_length = map(properties.traillength.value, 0.0, 1.0, 0.35, 0.02);
+
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
 
@@ -18,7 +27,7 @@ window.onload = function () {
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, font_size, char_set, letters, columns, drops, trail_length = 0.05;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, drops, trail_length = 0.05, char_set = "1", custom_char_set, font_size, font = "0", custom_font_name;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -26,24 +35,61 @@ window.onload = function () {
     c.width = window.innerWidth;
 
     updateCharSet();
-    updateFontSize();
+    updateFont();
 
     function updateCharSet() {
-        if (char_set == 0)
-            letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        else if (char_set == 1)
-            letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        else if (char_set == 2)
-            letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}";
-        else if (char_set == 3)
-            letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日ZTHEMATRIX:・.\"=*+-<>¦｜_╌";
-        else if (char_set == 4)
-            letters = "01";
+        switch (char_set) {
+            case "0": {
+                letters = custom_char_set;
+                break;
+            }
+            case "1": {
+                letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                break;
+            }
+            case "2": {
+                letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                break;
+            }
+            case "3": {
+                letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}";
+                break;
+            }
+            case "4": {
+                letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日ZTHEMATRIX:・.\"=*+-<>¦｜_╌";
+                break;
+            }
+            case "5": {
+                letters = "01";
+                break;
+            }
+            case "6": {
+                letters = "0123456789ABCDEF";
+                break;
+            }
+        }
+
         letters = letters.split("");
     }
 
-    function updateFontSize() {
-        ctx.font = font_size + "px monospace";
+    function updateFont() {
+        var font_name;
+        switch (font) {
+            case "0": {
+                font_name = "monospace";
+                break;
+            }
+            case "1": {
+                font_name = "consolas";
+                break;
+            }
+            case "2": {
+                font_name = custom_font_name;
+                break;
+            }
+        }
+
+        ctx.font = font_size + "px " + font_name;
 
         columns = c.width / font_size;
         drops = [];
@@ -51,8 +97,8 @@ window.onload = function () {
             drops[x] = 1;
     }
 
-    function map(value, from_a, from_b, to_a, to_b){
-        return (((value - from_a) * (to_b - to_a))/(from_b - from_a)) + to_a;
+    function map(value, from_a, from_b, to_a, to_b) {
+        return (((value - from_a) * (to_b - to_a)) / (from_b - from_a)) + to_a;
     }
 
     function drawmatrix() {
