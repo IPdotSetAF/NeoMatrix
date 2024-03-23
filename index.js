@@ -23,13 +23,9 @@ window.onload = function () {
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
 
-            if (properties.codescommaseparated) {
+            if (properties.codescommaseparated) 
                 codes = properties.codescommaseparated.value.split(",");
-                codes.forEach(element => {
-                    element = element.trim();
-                });
-            }
-
+            
             if (properties.colormode)
                 color_mode = properties.colormode.value;
             if (properties.matrixcolor)
