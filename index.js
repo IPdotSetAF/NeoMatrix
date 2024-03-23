@@ -135,20 +135,24 @@ window.onload = function () {
         ctx.fillRect(0, 0, c.width, c.height);
 
         for (var i = 0; i < drops.length; i++) {
+            var character = calculateCharacter(drops[i]);
+            var doHighlight = drops[i][1] > 0;
+
             if (highlight_first_character) {
                 ctx.fillStyle = "#000";
                 ctx.fillRect(i * font_size, ((drops[i][0] - 2) * font_size) + font_fraction, font_size, font_size);
 
-                ctx.fillStyle = calculateColor(i, drops[i][0], drops[i][1]);
-                ctx.fillText(drop_chars[i], i * font_size, (drops[i][0] - 1) * font_size);
+                var tmp = drops[i][0] - 1;
+                ctx.fillStyle = calculateColor(i, tmp, drop_chars[i][1]);
+                ctx.fillText(drop_chars[i][0], i * font_size, tmp * font_size);
 
                 ctx.fillStyle = "#FFF";
             }
             else
-                ctx.fillStyle = calculateColor(i, drops[i][0], drops[i][1]);
+                ctx.fillStyle = calculateColor(i, drops[i][0], doHighlight);
 
-            drop_chars[i] = calculateCharacter(drops[i]);
-            ctx.fillText(drop_chars[i], i * font_size, drops[i][0] * font_size);
+            drop_chars[i] = [character, doHighlight];
+            ctx.fillText(character, i * font_size, drops[i][0] * font_size);
 
             if (drops[i][0] > rows && Math.random() > 0.975)
                 drops[i] = [0, 0, 0];
@@ -175,8 +179,8 @@ window.onload = function () {
         return letters[Math.floor(Math.random() * letters.length)];
     }
 
-    function calculateColor(i, j, codeIndex) {
-        if (codeIndex != 0)
+    function calculateColor(i, j, highLight) {
+        if (highLight)
             return "#FFF";
 
         var hue, offset = Math.floor(color_animation_speed * then);
@@ -224,8 +228,10 @@ window.onload = function () {
     function fallAnimation() {
         drops = [];
         drop_chars = [];
-        for (var x = 0; x < columns; x++)
-            drops[x] = [1, 0, 0];
+        for (var i = 0; i < columns; i++) {
+            drops[i] = [1, 0, 0];
+            drop_chars[i] = ["", false];
+        }
     }
 
     function loop() {
