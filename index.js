@@ -182,14 +182,19 @@ window.onload = function () {
         var hue, offset = Math.floor(color_animation_speed * then);
 
         switch (color_mode) {
-            //Horizontal
+            //RGb cycle
             case "1": {
-                hue = (i + offset) * column_hue;
+                hue = offset * row_hue;
                 break;
             }
             //Vertical
             case "2": {
                 hue = (j + offset) * row_hue;
+                break;
+            }
+            //Horizontal
+            case "3": {
+                hue = (i + offset) * column_hue;
                 break;
             }
             //Static

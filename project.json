@@ -7,7 +7,7 @@
 		{
 			"charset" : 
 			{
-				"index" : 7,
+				"index" : 6,
 				"options" : 
 				[
 					{
@@ -43,7 +43,7 @@
 						"value" : "7"
 					}
 				],
-				"order" : 107,
+				"order" : 106,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "3"
@@ -80,12 +80,16 @@
 						"value" : "0"
 					},
 					{
-						"label" : "Horizontal Rainbow",
+						"label" : "RGB Cycle",
 						"value" : "1"
 					},
 					{
 						"label" : "Vertical Rainbow",
 						"value" : "2"
+					},
+					{
+						"label" : "Horizontal Rainbow",
+						"value" : "3"
 					}
 				],
 				"order" : 100,
@@ -96,8 +100,8 @@
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 8,
-				"order" : 108,
+				"index" : 7,
+				"order" : 107,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -141,10 +145,10 @@
 			"fontsize" : 
 			{
 				"fraction" : false,
-				"index" : 6,
+				"index" : 8,
 				"max" : 30,
 				"min" : 5,
-				"order" : 106,
+				"order" : 108,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 15

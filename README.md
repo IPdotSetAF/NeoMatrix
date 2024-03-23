@@ -5,12 +5,15 @@
 This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 
 ## Features
-- Static, Vertical and Horizontal Rainbow Color options
-   - Configurable Rainbow animation
-- Matrix Speed customization
-- Trail Length customization
+- Customizable Color Mode:
+   - Static Color
+   - RGB Cycle
+   - Vertical Rainbow
+   - Horizontal Rainbow
+- Configurable Animation Speed (Rainbow and RGB Cycle)
+- Matrix Speed Customization
+- Trail Length Customization
 - Togglable First Character Highlighting 
-- Font Size customization
 - Character Set Choice
    - English Letters
    - English Letters + Numbers
@@ -20,6 +23,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
    - Hex
    - Morse code
    - CUSTOM
+- Font Size Customization
 - Font Customization:
    - 3 Presets
    - CUSTOM
@@ -35,7 +39,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
    - Download this Repo as Zip and extract it.
 
 ## TODO:
-- Static Color Animations
 - Clock support
 - Big Message support
 - Mobile support
