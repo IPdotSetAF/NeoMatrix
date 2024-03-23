@@ -43,3 +43,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 - Big Message support
 - Mobile support
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
+
+## Contribution
+- You can open Issues for any bug report or feature request.
+- You are free to contribute to this project by Forking this repository, do what you want to do and then createing a pull request.
