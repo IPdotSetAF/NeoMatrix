@@ -37,6 +37,10 @@
 					{
 						"label" : "Hex",
 						"value" : "6"
+					},
+					{
+						"label" : "Morse Code",
+						"value" : "7"
 					}
 				],
 				"order" : 107,

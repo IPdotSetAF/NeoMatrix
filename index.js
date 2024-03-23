@@ -49,7 +49,7 @@ window.onload = function () {
     var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, codes, highlight_first_character = true;
     var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
-    var font_size, font = "2", custom_font;
+    var font_size, font_fraction, font = "2", custom_font;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -89,6 +89,10 @@ window.onload = function () {
                 letters = "0123456789ABCDEF";
                 break;
             }
+            case "7": {
+                letters = "|.";
+                break;
+            }
         }
 
         letters = letters.split("");
@@ -116,6 +120,7 @@ window.onload = function () {
         }
 
         ctx.font = font_size + "px " + font_name;
+        font_fraction = font_size/4;
 
         updateGrid();
         fallAnimation();
@@ -131,8 +136,8 @@ window.onload = function () {
 
         for (var i = 0; i < drops.length; i++) {
             if (highlight_first_character) {
-                ctx.fillStyle = "rgb(0, 0, 0)";
-                ctx.fillRect(i * font_size, ((drops[i] - 2) * font_size) + 5, font_size, font_size);
+                ctx.fillStyle = "#000";
+                ctx.fillRect(i * font_size, ((drops[i] - 2) * font_size) + font_fraction, font_size, font_size);
 
                 ctx.fillStyle = calculateColor(i, drops[i]);
                 ctx.fillText(drop_chars[i], i * font_size, (drops[i] - 1) * font_size);
