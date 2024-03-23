@@ -25,7 +25,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
    - CUSTOM
 - Codes (these will be shown as decrypted Messages)
 
-## Are you read to be free?
+## Are you ready to be free?
 
 1. Install `Wallpaper Engine`
 2. Goto the Install folder: `Wallpaper Engine\projects\myprojects`
