@@ -23,9 +23,12 @@ window.onload = function () {
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
 
-            if (properties.codescommaseparated) 
+            if (properties.codescommaseparated) {
                 codes = properties.codescommaseparated.value.split(",");
-            
+                codes.push("IP.AF");
+                fallAnimation();
+            }
+
             if (properties.colormode)
                 color_mode = properties.colormode.value;
             if (properties.matrixcolor)
@@ -42,10 +45,11 @@ window.onload = function () {
         }
     };
 
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, codes, highlight_first_character = true;
+    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size, font_fraction, font = "2", custom_font;
+    var codes;
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -74,7 +78,7 @@ window.onload = function () {
                 break;
             }
             case "4": {
-                letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日ZTHEMATRIX:・.\"=*+-<>¦｜_╌";
+                letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日Z:・.\"=*+-<>¦｜_╌";
                 break;
             }
             case "5": {
@@ -116,7 +120,7 @@ window.onload = function () {
         }
 
         ctx.font = font_size + "px " + font_name;
-        font_fraction = font_size/4;
+        font_fraction = font_size / 4;
 
         updateGrid();
         fallAnimation();
@@ -133,27 +137,48 @@ window.onload = function () {
         for (var i = 0; i < drops.length; i++) {
             if (highlight_first_character) {
                 ctx.fillStyle = "#000";
-                ctx.fillRect(i * font_size, ((drops[i] - 2) * font_size) + font_fraction, font_size, font_size);
+                ctx.fillRect(i * font_size, ((drops[i][0] - 2) * font_size) + font_fraction, font_size, font_size);
 
-                ctx.fillStyle = calculateColor(i, drops[i]);
-                ctx.fillText(drop_chars[i], i * font_size, (drops[i] - 1) * font_size);
+                ctx.fillStyle = calculateColor(i, drops[i][0], drops[i][1]);
+                ctx.fillText(drop_chars[i], i * font_size, (drops[i][0] - 1) * font_size);
 
                 ctx.fillStyle = "#FFF";
             }
             else
-                ctx.fillStyle = calculateColor(i, drops[i]);
+                ctx.fillStyle = calculateColor(i, drops[i][0], drops[i][1]);
 
-            drop_chars[i] = letters[Math.floor(Math.random() * letters.length)];
-            ctx.fillText(drop_chars[i], i * font_size, drops[i] * font_size);
+            drop_chars[i] = calculateCharacter(drops[i]);
+            ctx.fillText(drop_chars[i], i * font_size, drops[i][0] * font_size);
 
-            if (drops[i] > rows && Math.random() > 0.975)
-                drops[i] = 0;
+            if (drops[i][0] > rows && Math.random() > 0.975)
+                drops[i] = [0, 0, 0];
 
-            drops[i]++;
+            drops[i][0]++;
         }
     }
 
-    function calculateColor(i, j) {
+    function calculateCharacter(dropItem) {
+
+        if (Math.random() > 0.995 && dropItem[1] == 0) {
+            dropItem[1] = Math.floor(Math.random() * codes.length) + 1;
+            dropItem[2] = dropItem[0];
+        }
+
+        if (dropItem[1] != 0) {
+            var codeCharIndex = dropItem[0] - dropItem[2];
+            if (codeCharIndex < codes[dropItem[1] - 1].length)
+                return codes[dropItem[1] - 1][codeCharIndex];
+            dropItem[1] = 0;
+            dropItem[2] = 0;
+        }
+
+        return letters[Math.floor(Math.random() * letters.length)];
+    }
+
+    function calculateColor(i, j, codeIndex) {
+        if (codeIndex != 0)
+            return "#FFF";
+
         var hue, offset = Math.floor(color_animation_speed * then);
 
         switch (color_mode) {
@@ -195,7 +220,7 @@ window.onload = function () {
         drops = [];
         drop_chars = [];
         for (var x = 0; x < columns; x++)
-            drops[x] = 1;
+            drops[x] = [1, 0, 0];
     }
 
     function loop() {
