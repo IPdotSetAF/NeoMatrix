@@ -41,6 +41,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 ## TODO:
 - Clock support
 - Big Message support
+- Audio responsiveness
 - Mobile support
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Normal Web Compatible version
