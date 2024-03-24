@@ -36,7 +36,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 3. Download this Repository:
    - `git clone https://github.com/IPdotSetAF/NeoMatrix`
    or
-   - Download this Repo as Zip and extract it.
+   - Download this Repo as ZIP and extract it.
 
 ## TODO:
 - Clock support
@@ -47,4 +47,4 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 
 ## Contribution
 - You can open Issues for any bug report or feature request.
-- You are free to contribute to this project by Forking this repository, do what you want to do and then createing a pull request.
+- You are free to contribute to this project by Forking this repository, Doing what you want to do, then creating a pull request.
