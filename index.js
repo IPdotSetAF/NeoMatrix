@@ -45,6 +45,7 @@ window.onload = function () {
         }
     };
 
+    var debug = document.getElementById("debug"), logs = [];
     var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
@@ -248,6 +249,15 @@ window.onload = function () {
         then = Date.now();
         startTime = then;
         loop();
+    }
+
+    function Log(text) {
+        logs.push(text);
+        if (logs.length > 10)
+            logs.splice(0, 1);
+        var tmp = "";
+        logs.forEach(l => { tmp += l + "\n" });
+        debug.innerText = tmp;
     }
 };
 
