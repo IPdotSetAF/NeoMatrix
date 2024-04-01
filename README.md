@@ -44,6 +44,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 
 ## TODO:
 - Multiple drops (customizable count)
+- SVG Logo support
 - Clock support
 - Big Message support
 - Normal Web Compatible version
