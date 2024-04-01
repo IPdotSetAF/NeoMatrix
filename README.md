@@ -43,11 +43,13 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
+- Multiple drops (customizable count)
 - Clock support
 - Big Message support
-- Mobile support
-- [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Normal Web Compatible version
+- Github pages publish
+- [Lively](https://github.com/rocksdanister/lively) Compatible version
+- Mobile support
 
 ## Contribution
 - You can open Issues for any bug report or feature request.
