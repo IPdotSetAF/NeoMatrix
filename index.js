@@ -1,4 +1,8 @@
 window.onload = function () {
+    window.wallpaperRegisterAudioListener((audioArray) => {
+        return frequencyArray = audioArray;
+    });
+
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
             if (properties.charset)
@@ -31,15 +35,26 @@ window.onload = function () {
 
             if (properties.colormode)
                 color_mode = properties.colormode.value;
-            if (properties.matrixcolor)
-                color = properties.matrixcolor.value.split(' ').map(function (c) {
+            if (properties.matrixcolor){
+                var tmp = properties.matrixcolor.value.split(' ').map(function (c) {
                     return Math.ceil(c * 255)
                 });
+                color = rgbToHsl(...tmp)[0] * 360;
+            }
             if (properties.coloranimationspeed)
                 color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
 
             if (properties.highlightfirstcharacter)
                 highlight_first_character = properties.highlightfirstcharacter.value;
+
+            if (properties.audioresponsive)
+                isAudioResponsive = properties.audioresponsive.value;
+            if (properties.audiosensetivity)
+                AudioMultiplier = properties.audiosensetivity.value;
+            if (properties.silenceanimation)
+                hasSilenceAnimation = properties.silenceanimation.value;
+            if (properties.silencetimeoutseconds)
+                SilenceTimeoutSeconds = properties.silencetimeoutseconds.value;
 
             startAnimating();
         }
@@ -47,6 +62,7 @@ window.onload = function () {
 
     var debug = document.getElementById("debug"), logs = [];
     var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
+    var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
     var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size, font_fraction, font = "2", custom_font;
@@ -127,17 +143,67 @@ window.onload = function () {
         fallAnimation();
     }
 
+    function rgbToHsl(r, g, b) {
+        r /= 255, g /= 255, b /= 255;
+
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, l = (max + min) / 2;
+
+        if (max == min) {
+            h = s = 0; // achromatic
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+
+            h /= 6;
+        }
+
+        return [h, s, l];
+    }
+
     function map(value, from_a, from_b, to_a, to_b) {
         return (((value - from_a) * (to_b - to_a)) / (from_b - from_a)) + to_a;
+    }
+
+    function clamp(min, max, value) {
+        if (value < min)
+            return min;
+        if (value > max)
+            return max;
+        return value;
     }
 
     function drawmatrix() {
         ctx.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
         ctx.fillRect(0, 0, c.width, c.height);
+        isSilent = true;
 
         for (var i = 0; i < drops.length; i++) {
             var character = calculateCharacter(drops[i]);
-            var doHighlight = drops[i][1] > 0;
+            var probability = 0.975;
+            var lightness = 50;
+
+            if (isAudioResponsive) {
+                var frequency = Math.floor(i * column_frequency);
+                var Volume = frequencyArray[frequency] + frequencyArray[frequency + (frequencyArrayLength / 2)];
+
+                if (Volume > 0.01)
+                    isSilent = false;
+
+                if (!AudioTimeout || !hasSilenceAnimation) {
+                    probability = 1 - clamp(0, 1, (Volume * Volume * Volume * AudioMultiplier));
+                    lightness = Math.floor(clamp(40, 80, Volume * 100 * AudioMultiplier));
+                }
+            }
+
+            if (drops[i][1] > 0)
+                lightness = 100;
 
             if (highlight_first_character) {
                 ctx.fillStyle = "#000";
@@ -150,15 +216,24 @@ window.onload = function () {
                 ctx.fillStyle = "#FFF";
             }
             else
-                ctx.fillStyle = calculateColor(i, drops[i][0], doHighlight);
+                ctx.fillStyle = calculateColor(i, drops[i][0], lightness);
 
-            drop_chars[i] = [character, doHighlight];
+            drop_chars[i] = [character, lightness];
             ctx.fillText(character, i * font_size, drops[i][0] * font_size);
 
-            if (drops[i][0] > rows && Math.random() > 0.975)
+            if (drops[i][0] > rows && Math.random() > probability)
                 drops[i] = [0, 0, 0];
 
             drops[i][0]++;
+        }
+
+        if (hasSilenceAnimation) {
+            if (!isSilent) {
+                AudioTimeout = false;
+                LastSoundTime = new Date();
+            } else if ((new Date() - LastSoundTime) > SilenceTimeoutSeconds * 1000) {
+                AudioTimeout = true;
+            }
         }
     }
 
@@ -180,10 +255,7 @@ window.onload = function () {
         return letters[Math.floor(Math.random() * letters.length)];
     }
 
-    function calculateColor(i, j, highLight) {
-        if (highLight)
-            return "#FFF";
-
+    function calculateColor(i, j, lightness) {
         var hue, offset = Math.floor(color_animation_speed * then);
 
         switch (color_mode) {
@@ -204,11 +276,12 @@ window.onload = function () {
             }
             //Static
             default: {
-                return "rgb( " + color + " )";
+                hue = color;
+                break;
             }
         }
 
-        return "hsl(" + hue + ", 100%, 50%)";;
+        return "hsl(" + hue + ", 100%, " + lightness + "%)";;
     }
 
     window.addEventListener('resize', function () {
@@ -224,6 +297,7 @@ window.onload = function () {
         rows = c.height / font_size;
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
+        column_frequency = frequencyArrayLength / (columns * 2);
     }
 
     function fallAnimation() {

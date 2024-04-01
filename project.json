@@ -5,9 +5,29 @@
 	{
 		"properties" : 
 		{
+			"audioresponsive" : 
+			{
+				"index" : 16,
+				"order" : 116,
+				"text" : "Audio Responsive",
+				"type" : "bool",
+				"value" : false
+			},
+			"audiosensetivity" : 
+			{
+				"condition" : "audioresponsive.value == true",
+				"fraction" : false,
+				"index" : 17,
+				"max" : 100,
+				"min" : 0,
+				"order" : 117,
+				"text" : "Audio Sensetivity",
+				"type" : "slider",
+				"value" : 50
+			},
 			"charset" : 
 			{
-				"index" : 6,
+				"index" : 9,
 				"options" : 
 				[
 					{
@@ -43,15 +63,15 @@
 						"value" : "7"
 					}
 				],
-				"order" : 106,
+				"order" : 109,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "3"
 			},
 			"codescommaseparated" : 
 			{
-				"index" : 11,
-				"order" : 111,
+				"index" : 21,
+				"order" : 121,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
@@ -60,10 +80,10 @@
 			{
 				"condition" : "colormode.value != 0",
 				"fraction" : true,
-				"index" : 2,
+				"index" : 6,
 				"max" : 1,
 				"min" : -1,
-				"order" : 102,
+				"order" : 106,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Color Animation Speed",
@@ -72,7 +92,7 @@
 			},
 			"colormode" : 
 			{
-				"index" : 0,
+				"index" : 4,
 				"options" : 
 				[
 					{
@@ -92,7 +112,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 100,
+				"order" : 104,
 				"text" : "Color Mode",
 				"type" : "combo",
 				"value" : "2"
@@ -100,8 +120,8 @@
 			"customcharset" : 
 			{
 				"condition" : "charset.value == 0",
-				"index" : 7,
-				"order" : 107,
+				"index" : 10,
+				"order" : 110,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -109,15 +129,15 @@
 			"customfont" : 
 			{
 				"condition" : "font.value == 3",
-				"index" : 10,
-				"order" : 110,
+				"index" : 14,
+				"order" : 114,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
 			"font" : 
 			{
-				"index" : 9,
+				"index" : 13,
 				"options" : 
 				[
 					{
@@ -137,7 +157,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 109,
+				"order" : 113,
 				"text" : "Font",
 				"type" : "combo",
 				"value" : "2"
@@ -145,18 +165,18 @@
 			"fontsize" : 
 			{
 				"fraction" : false,
-				"index" : 8,
+				"index" : 12,
 				"max" : 30,
 				"min" : 5,
-				"order" : 108,
+				"order" : 112,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 15
 			},
 			"highlightfirstcharacter" : 
 			{
-				"index" : 5,
-				"order" : 105,
+				"index" : 7,
+				"order" : 107,
 				"text" : "Highlight First Character",
 				"type" : "bool",
 				"value" : true
@@ -164,8 +184,8 @@
 			"matrixcolor" : 
 			{
 				"condition" : "colormode.value == 0",
-				"index" : 1,
-				"order" : 101,
+				"index" : 5,
+				"order" : 105,
 				"text" : "Matrix Color",
 				"type" : "color",
 				"value" : "0 1 0"
@@ -173,10 +193,10 @@
 			"matrixspeed" : 
 			{
 				"fraction" : false,
-				"index" : 3,
+				"index" : 1,
 				"max" : 60,
 				"min" : 10,
-				"order" : 103,
+				"order" : 101,
 				"text" : "Matrix Speed",
 				"type" : "slider",
 				"value" : 25
@@ -188,20 +208,84 @@
 				"type" : "color",
 				"value" : "0 0 0"
 			},
+			"silenceanimation" : 
+			{
+				"condition" : "audioresponsive.value == true",
+				"index" : 18,
+				"order" : 118,
+				"text" : "Silence Animation",
+				"type" : "bool",
+				"value" : true
+			},
+			"silencetimeoutseconds" : 
+			{
+				"condition" : "audioresponsive.value == true && silenceanimation.value == true",
+				"fraction" : false,
+				"index" : 19,
+				"max" : 15,
+				"min" : 1,
+				"order" : 119,
+				"text" : "Silence Timeout (Seconds)",
+				"type" : "slider",
+				"value" : 3
+			},
+			"titleaudio" : 
+			{
+				"index" : 15,
+				"order" : 115,
+				"text" : "<h4>Audio</h4>",
+				"type" : "text"
+			},
+			"titlecharacters" : 
+			{
+				"index" : 8,
+				"order" : 108,
+				"text" : "<h4>Characters</h4>",
+				"type" : "text"
+			},
+			"titlecolor" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "<h4>Color</h4>",
+				"type" : "text"
+			},
+			"titlefont" : 
+			{
+				"index" : 11,
+				"order" : 111,
+				"text" : "<h4>Font</h4>",
+				"type" : "text"
+			},
+			"titleother" : 
+			{
+				"index" : 20,
+				"order" : 120,
+				"text" : "<h4>Other</h4>",
+				"type" : "text"
+			},
+			"titlerain" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "<h4>Rain</h4>",
+				"type" : "text"
+			},
 			"traillength" : 
 			{
 				"fraction" : true,
-				"index" : 4,
+				"index" : 2,
 				"max" : 1,
 				"min" : 0,
-				"order" : 104,
+				"order" : 102,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Trail Length",
 				"type" : "slider",
 				"value" : 0.86
 			}
-		}
+		},
+		"supportsaudioprocessing" : true
 	},
 	"monetization" : false,
 	"preview" : "preview.gif",
