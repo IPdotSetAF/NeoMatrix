@@ -27,6 +27,10 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 - Font Customization:
    - 3 Presets
    - CUSTOM
+- Audio responsive (inspired by [Colorful Matrix](https://steamcommunity.com/sharedfiles/filedetails/?id=1103493745))
+   - Sensetivity
+   - Silence Animation
+   - Silence Timeout
 - Codes (these will be shown as decrypted Messages)
 
 ## Are you ready to be free?
@@ -41,7 +45,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 ## TODO:
 - Clock support
 - Big Message support
-- Audio responsiveness
 - Mobile support
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Normal Web Compatible version
