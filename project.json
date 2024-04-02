@@ -293,7 +293,7 @@
 	"snapshotoverlay" : "",
 	"tags" : [ "Sci-Fi", "Technology", "Multi-monitor optimized" ],
 	"title" : "Neo Matrix",
-	"type" : "web",
+	"type" : "Web",
 	"version" : 0,
 	"visibility" : "public"
 }

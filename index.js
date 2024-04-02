@@ -1,7 +1,8 @@
 window.onload = function () {
-    window.wallpaperRegisterAudioListener((audioArray) => {
-        return frequencyArray = audioArray;
-    });
+    if (window.wallpaperRegisterAudioListener)
+        window.wallpaperRegisterAudioListener((audioArray) => {
+            return frequencyArray = audioArray;
+        });
 
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
@@ -35,7 +36,7 @@ window.onload = function () {
 
             if (properties.colormode)
                 color_mode = properties.colormode.value;
-            if (properties.matrixcolor){
+            if (properties.matrixcolor) {
                 var tmp = properties.matrixcolor.value.split(' ').map(function (c) {
                     return Math.ceil(c * 255)
                 });
@@ -61,18 +62,23 @@ window.onload = function () {
     };
 
     var debug = document.getElementById("debug"), logs = [];
-    var fpsInterval, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
+    var fpsInterval = 1000 / 24, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
-    var color = "0,255,0", color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
+    var color = 0, color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
-    var font_size, font_fraction, font = "2", custom_font;
-    var codes;
+    var font_size = 15, font_fraction, font = "2", custom_font;
+    var codes = ["IP.AF"];
+    var maskDom = document.getElementById("mask");
+    var mask = maskDom.getContext("2d");
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
     c.height = window.innerHeight;
     c.width = window.innerWidth;
+    maskDom.height = window.innerHeight;
+    maskDom.width = window.innerWidth;
 
+    updateMask();
     updateCharSet();
     updateFont();
 
@@ -180,8 +186,7 @@ window.onload = function () {
     }
 
     function drawmatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
-        ctx.fillRect(0, 0, c.width, c.height);
+        drawMask();
         isSilent = true;
 
         for (var i = 0; i < drops.length; i++) {
@@ -237,6 +242,15 @@ window.onload = function () {
         }
     }
 
+    function updateMask() {
+        mask.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
+        mask.fillRect(0, 0, c.width, c.height);
+    }
+
+    function drawMask() {
+        ctx.drawImage(maskDom, 0, 0);
+    }
+
     function calculateCharacter(dropItem) {
 
         if (Math.random() > 0.995 && dropItem[1] == 0) {
@@ -287,7 +301,11 @@ window.onload = function () {
     window.addEventListener('resize', function () {
         c.height = window.innerHeight;
         c.width = window.innerWidth;
+        maskDom.height = window.innerHeight;
+        maskDom.width = window.innerWidth;
 
+        updateFont();
+        updateMask();
         updateGrid();
         fallAnimation();
     }, false);
@@ -333,5 +351,7 @@ window.onload = function () {
         logs.forEach(l => { tmp += l + "\n" });
         debug.innerText = tmp;
     }
+
+    startAnimating();
 };
 

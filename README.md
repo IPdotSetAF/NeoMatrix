@@ -32,6 +32,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
    - Silence Animation
    - Silence Timeout
 - Codes (these will be shown as decrypted Messages)
+- Web Browser Compatible
 
 ## Are you ready to be free?
 
@@ -47,7 +48,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 - SVG Logo support
 - Clock support
 - Big Message support
-- Normal Web Compatible version
 - Github pages publish
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
