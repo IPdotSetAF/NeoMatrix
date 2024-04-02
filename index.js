@@ -41,6 +41,7 @@ window.onload = function () {
                     return Math.ceil(c * 255)
                 });
                 color = rgbToHsl(...tmp)[0] * 360;
+                Log(color);
             }
             if (properties.coloranimationspeed)
                 color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
@@ -64,10 +65,10 @@ window.onload = function () {
     var debug = document.getElementById("debug"), logs = [];
     var fpsInterval = 1000 / 24, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
-    var color = 0, color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
+    var color = 120, color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size = 15, font_fraction, font = "2", custom_font;
-    var codes = ["IP.AF"];
+    var codes = ["IP.AF", "THE MATRIX"];
     var maskDom = document.getElementById("mask");
     var mask = maskDom.getContext("2d");
     var c = document.getElementById("neomatrix");
