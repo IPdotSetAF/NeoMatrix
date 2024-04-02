@@ -22,8 +22,10 @@ window.onload = function () {
             if (properties.font || properties.customfontname || properties.fontsize)
                 updateFont();
 
-            if (properties.traillength)
+            if (properties.traillength) {
                 trail_length = map(properties.traillength.value, 0.0, 1.0, 0.35, 0.02);
+                updateMask();
+            }
 
             if (properties.matrixspeed)
                 fpsInterval = 1000 / properties.matrixspeed.value;
@@ -65,7 +67,7 @@ window.onload = function () {
     var debug = document.getElementById("debug"), logs = [];
     var fpsInterval = 1000 / 24, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
-    var color = 120, color_mode = "0", color_animation_speed = 0, column_hue, row_hue;
+    var color = 120, color_mode = "0", color_animation_speed = 0.5, column_hue, row_hue;
     var char_set = "4", custom_char_set;
     var font_size = 15, font_fraction, font = "2", custom_font;
     var codes = ["IP.AF", "THE MATRIX"];
@@ -244,6 +246,7 @@ window.onload = function () {
     }
 
     function updateMask() {
+        mask.clearRect(0, 0, c.width, c.height);
         mask.fillStyle = "rgba(0, 0, 0, " + trail_length + ")";
         mask.fillRect(0, 0, c.width, c.height);
     }
