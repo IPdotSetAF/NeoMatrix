@@ -101,6 +101,18 @@ window.onload = function () {
         }
     };
 
+    window.addEventListener('resize', function () {
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+        maskDom.height = window.innerHeight;
+        maskDom.width = window.innerWidth;
+
+        updateFont();
+        updateMask();
+        updateGrid();
+        fallAnimation();
+    }, false);
+
     var debug = document.getElementById("debug"), logs = [];
     var fpsInterval = 1000 / 24, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
@@ -121,6 +133,7 @@ window.onload = function () {
     updateMask();
     updateCharSet();
     updateFont();
+    startAnimating();
 
     function updateCharSet() {
         switch (char_set) {
@@ -339,18 +352,6 @@ window.onload = function () {
         return "hsl(" + hue + ", 100%, " + lightness + "%)";;
     }
 
-    window.addEventListener('resize', function () {
-        c.height = window.innerHeight;
-        c.width = window.innerWidth;
-        maskDom.height = window.innerHeight;
-        maskDom.width = window.innerWidth;
-
-        updateFont();
-        updateMask();
-        updateGrid();
-        fallAnimation();
-    }, false);
-
     function updateGrid() {
         columns = c.width / font_size;
         rows = c.height / font_size;
@@ -392,7 +393,5 @@ window.onload = function () {
         logs.forEach(l => { tmp += l + "\n" });
         debug.innerText = tmp;
     }
-
-    startAnimating();
 };
 
