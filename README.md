@@ -4,6 +4,7 @@
 
 This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 
+[Web Demo](https://ipdotsetaf.github.io/NeoMatrix/)
 ## Features
 - Customizable Color Mode:
    - Static Color
@@ -48,7 +49,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine
 - SVG Logo support
 - Clock support
 - Big Message support
-- Github pages publish
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
 
