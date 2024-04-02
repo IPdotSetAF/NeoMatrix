@@ -3,6 +3,44 @@ window.onload = function () {
         window.wallpaperRegisterAudioListener((audioArray) => {
             return frequencyArray = audioArray;
         });
+    else {
+        var opt = {
+            matrixspeed: 24,
+            traillength: 0.86,
+            charset: "4",
+            customcharset: "ABC",
+            font: "2",
+            customfont: "",
+            fontsize: 15,
+            codescommaseparated: "THE MATRIX",
+            colormode: "0",
+            matrixcolor: [0, 255, 0],
+            coloranimationspeed: 0.5,
+            highlightfirstcharacter: true
+        }
+
+        gui = new dat.GUI({ autoPlace: false })
+        gui.add(opt, 'matrixspeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
+            fpsInterval = 1000 / opt.matrixspeed;
+        });
+        gui.add(opt, 'traillength').min(0).max(1).step(0.01).name('Trail Length').onChange(() => {
+            trail_length = map(opt.traillength, 0.0, 1.0, 0.35, 0.02);
+            updateMask();
+        });
+        gui.add(opt, 'charset').name('Char set');
+        gui.add(opt, 'customcharset').name('Custom Char Set');
+        gui.add(opt, 'fontsize').name('Font Size');
+        gui.add(opt, 'font').name('Font');
+        gui.add(opt, 'customfont').name('Custom Font');
+        gui.add(opt, 'colormode').name('Color Mode');
+        gui.addColor(opt, 'matrixcolor').name('Matrix Color');
+        gui.add(opt, 'coloranimationspeed').min(-1).max(1).step(0.01).name('Color Animation Speed');
+        gui.add(opt, 'highlightfirstcharacter').name('Highlight First Character');
+        gui.add(opt, 'codescommaseparated').name('Codes (Comma separated)');
+
+        customContainer = document.getElementById('gui');
+        customContainer.appendChild(gui.domElement);
+    }
 
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
@@ -43,7 +81,6 @@ window.onload = function () {
                     return Math.ceil(c * 255)
                 });
                 color = rgbToHsl(...tmp)[0] * 360;
-                Log(color);
             }
             if (properties.coloranimationspeed)
                 color_animation_speed = map(properties.coloranimationspeed.value, -1, 1, 0.05, -0.05);
