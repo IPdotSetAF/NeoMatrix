@@ -43,7 +43,6 @@ window.onload = function () {
         });
         colorFolder.add(opt, 'coloranimationspeed').min(-1).max(1).step(0.01).name('Color Animation Speed').onChange(() => {
             color_animation_speed = map(opt.coloranimationspeed, -1, 1, 0.05, -0.05);
-            Log(color_animation_speed);
         });
         colorFolder.add(opt, 'highlightfirstcharacter').name('Highlight First Character').onChange(() => {
             highlight_first_character = opt.highlightfirstcharacter;
