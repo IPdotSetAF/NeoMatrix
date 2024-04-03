@@ -8,35 +8,79 @@ window.onload = function () {
             matrixspeed: 24,
             traillength: 0.86,
             charset: "4",
-            customcharset: "ABC",
+            customcharset: "0123456789ABCDEF",
             font: "2",
-            customfont: "",
+            customfont: "monospace",
             fontsize: 15,
             codescommaseparated: "THE MATRIX",
-            colormode: "0",
+            colormode: "2",
             matrixcolor: [0, 255, 0],
             coloranimationspeed: 0.5,
             highlightfirstcharacter: true
         }
 
         gui = new dat.GUI({ autoPlace: false })
-        gui.add(opt, 'matrixspeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
+        gui.width = 400;
+        
+        const rainFolder = gui.addFolder('Rain');
+        rainFolder.add(opt, 'matrixspeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
             fpsInterval = 1000 / opt.matrixspeed;
         });
-        gui.add(opt, 'traillength').min(0).max(1).step(0.01).name('Trail Length').onChange(() => {
+        rainFolder.add(opt, 'traillength').min(0).max(1).step(0.01).name('Trail Length').onChange(() => {
             trail_length = map(opt.traillength, 0.0, 1.0, 0.35, 0.02);
             updateMask();
         });
-        gui.add(opt, 'charset').name('Char set');
-        gui.add(opt, 'customcharset').name('Custom Char Set');
-        gui.add(opt, 'fontsize').name('Font Size');
-        gui.add(opt, 'font').name('Font');
-        gui.add(opt, 'customfont').name('Custom Font');
-        gui.add(opt, 'colormode').name('Color Mode');
-        gui.addColor(opt, 'matrixcolor').name('Matrix Color');
-        gui.add(opt, 'coloranimationspeed').min(-1).max(1).step(0.01).name('Color Animation Speed');
-        gui.add(opt, 'highlightfirstcharacter').name('Highlight First Character');
-        gui.add(opt, 'codescommaseparated').name('Codes (Comma separated)');
+
+        const colorFolder = gui.addFolder("Color");
+        colorFolder.add(opt, 'colormode', { "Single": "0", "RGB Cycle": "1", "Vertical Rainbow": "2", "Horizontal Rainbow": "3" }).name('Color Mode').onChange(() => {
+            color_mode = opt.colormode;
+        });
+        colorFolder.addColor(opt, 'matrixcolor').name('Matrix Color').onChange(() => {
+            let tmp = opt.matrixcolor.map(function (c) {
+                return Math.ceil(c * 255)
+            });
+            color = rgbToHsl(...tmp)[0] * 360;
+        });
+        colorFolder.add(opt, 'coloranimationspeed').min(-1).max(1).step(0.01).name('Color Animation Speed').onChange(() => {
+            color_animation_speed = map(opt.coloranimationspeed, -1, 1, 0.05, -0.05);
+            Log(color_animation_speed);
+        });
+        colorFolder.add(opt, 'highlightfirstcharacter').name('Highlight First Character').onChange(() => {
+            highlight_first_character = opt.highlightfirstcharacter;
+        });
+
+        const characterFolder = gui.addFolder("Characters");
+        characterFolder.add(opt, 'charset', { "Custom": "0", "English Lttrs": "1", "Lttrs+Nums": "2", "Lttrs+Nums+Chars": "3", "Original Matrix": "4", "Binary": "5", "Hex": "6", "Morse Code": "7" }).name('Char set').onChange(() => {
+            char_set = opt.charset;
+            updateCharSet();
+        });
+        characterFolder.add(opt, 'customcharset').name('Custom Char Set').onChange(() => {
+            custom_char_set = opt.customcharset;
+            updateCharSet();
+        });
+
+        const fontFolder = gui.addFolder("Font");
+        fontFolder.add(opt, 'fontsize').min(5).max(30).step(1).name('Font Size').onChange(() => {
+            font_size = opt.fontsize;
+            updateFont();
+        });
+        fontFolder.add(opt, 'font', { "MonoSpace": "0", "Consolas": "1", "Courier Bold": "2", "Custom": "3" }).name('Font').onChange(() => {
+            font = opt.font;
+            updateFont();
+        });
+        fontFolder.add(opt, 'customfont').name('Custom Font').onChange(() => {
+            custom_font = opt.customfont;
+            updateFont();
+        });
+
+        gui.addFolder("Audio (not available in web version)");
+
+        const otherFolder = gui.addFolder("Other");
+        otherFolder.add(opt, 'codescommaseparated').name('Codes (Comma separated)').onChange(() => {
+            codes = opt.codescommaseparated.split(",");
+            codes.push("IP.AF");
+            fallAnimation();
+        });
 
         customContainer = document.getElementById('gui');
         customContainer.appendChild(gui.domElement);
@@ -116,9 +160,9 @@ window.onload = function () {
     var debug = document.getElementById("debug"), logs = [];
     var fpsInterval = 1000 / 24, startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars, trail_length = 0.05, highlight_first_character = true;
     var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
-    var color = 120, color_mode = "0", color_animation_speed = 0.5, column_hue, row_hue;
-    var char_set = "4", custom_char_set;
-    var font_size = 15, font_fraction, font = "2", custom_font;
+    var color = 120, color_mode = "2", color_animation_speed = -0.025, column_hue, row_hue;
+    var char_set = "4", custom_char_set = "0123456789ABCDEF";
+    var font_size = 15, font_fraction, font = "2", custom_font = "monospace";
     var codes = ["IP.AF", "THE MATRIX"];
     var maskDom = document.getElementById("mask");
     var mask = maskDom.getContext("2d");
