@@ -2,7 +2,7 @@
 
 This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (Web Browser Compatible)
 
-## [Preview (Click for web demo)](https://ipdotsetaf.github.io/NeoMatrix/)
+## Preview [(Web Demo)](https://ipdotsetaf.github.io/NeoMatrix/)
 
 <img src="preview.gif" width=300px/>
 
