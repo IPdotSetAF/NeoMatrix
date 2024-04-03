@@ -13,7 +13,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 </p>
 
 <p align="center">
-   <img src="https://readme-typing-svg.demolab.com?font=Courier+Prime&weight=900&size=36&pause=1000&color=00FF00&center=true&vCenter=true&random=false&width=600&height=100&lines=Are+you+ready%3F;Wanna+make+the+jump%3F;Will+you+take+the+Red+Pill%3F;Choice+is+an+illusion.;..........." alt="Don't take the red pill." />
+   <img src="https://readme-typing-svg.demolab.com?font=Courier+Prime&weight=400&size=36&pause=1000&color=00FF00&center=true&vCenter=true&random=false&width=600&height=100&lines=Are+you+ready%3F;Wanna+make+the+jump%3F;Will+you+take+the+Red+Pill%3F;Choice+is+an+illusion.;..........." alt="Don't take the red pill." />
 </p>
 
 ##
