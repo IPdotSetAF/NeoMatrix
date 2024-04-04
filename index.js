@@ -19,7 +19,7 @@ window.onload = function () {
         ui_font_customFont: "monospace",
         ui_font_fontSize: 15,
         ui_other_codesCommaSeparated: "THE MATRIX",
-        codes: ["IP.AF", "THE MATRIX"],
+        codes: makeCodes("THE MATRIX"),
         ui_color_colorMode: "2",
         ui_color_matrixColor: [0, 255, 0],
         matrixColor: rgbToHue([0, 255, 0]),
@@ -71,8 +71,7 @@ window.onload = function () {
 
         const otherFolder = gui.addFolder("Other");
         otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
-            options.codes = options.ui_other_codesCommaSeparated.split(",");
-            options.codes.push("IP.AF");
+            options.codes = makeCodes(options.ui_other_codesCommaSeparated);
             fallAnimation();
         });
 
@@ -85,7 +84,7 @@ window.onload = function () {
             if (properties.matrixspeed)
                 options.fpsInterval = calculateFpsInterval(properties.matrixspeed.value);
             if (properties.traillength) {
-                options.trailLength = calculateTrailLength(properties.trailLength.value);
+                options.trailLength = calculateTrailLength(properties.traillength.value);
                 updateMask();
             }
 
@@ -124,8 +123,7 @@ window.onload = function () {
                 SilenceTimeoutSeconds = properties.silencetimeoutseconds.value;
 
             if (properties.codescommaseparated) {
-                options.codes = properties.codescommaseparated.value.split(",");
-                options.codes.push("IP.AF");
+                options.codes = makeCodes(properties.codescommaseparated.value);
                 fallAnimation();
             }
         }
@@ -387,6 +385,12 @@ window.onload = function () {
 
     function calculateColorAnimationSpeed(value) {
         return map(value, -1, 1, 0.05, -0.05);
+    }
+
+    function makeCodes(codesText){
+        var codes = codesText.split(",")
+        codes.push("IP.AF");
+        return codes;
     }
 
     function Log(text) {
