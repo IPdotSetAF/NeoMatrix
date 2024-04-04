@@ -21,8 +21,8 @@ window.onload = function () {
         ui_other_codesCommaSeparated: "THE MATRIX",
         codes: makeCodes("THE MATRIX"),
         ui_color_colorMode: "2",
-        ui_color_matrixColor: [0, 255, 0],
-        matrixColor: rgbToHue([0, 255, 0]),
+        ui_color_matrixColor: [0, 1, 0],
+        matrixColor: rgbToHue([0, 1, 0]),
         ui_color_colorAnimationSpeed: 0.5,
         colorAnimationSpeed: calculateColorAnimationSpeed(0.5),
         ui_color_highlightFirstCharacter: true,
@@ -40,9 +40,8 @@ window.onload = function () {
         drawGui();
 
     function drawGui() {
-        gui = new dat.GUI({ autoPlace: false })
-        gui.width = 400;
-
+        gui = new lil.GUI({ autoPlace: false });
+        
         const rainFolder = gui.addFolder('Rain');
         rainFolder.add(options, 'ui_rain_matrixSpeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
             options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
