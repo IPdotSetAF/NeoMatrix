@@ -5,7 +5,7 @@
 	{
 		"properties" : 
 		{
-			"audioresponsive" : 
+			"ui_audio_audioresponsive" : 
 			{
 				"index" : 16,
 				"order" : 116,
@@ -13,9 +13,9 @@
 				"type" : "bool",
 				"value" : false
 			},
-			"audiosensetivity" : 
+			"ui_audio_audiosensetivity" : 
 			{
-				"condition" : "audioresponsive.value == true",
+				"condition" : "ui_audio_audioresponsive.value == true",
 				"fraction" : false,
 				"index" : 17,
 				"max" : 100,
@@ -25,7 +25,7 @@
 				"type" : "slider",
 				"value" : 50
 			},
-			"charset" : 
+			"ui_characters_charset" : 
 			{
 				"index" : 9,
 				"options" : 
@@ -68,7 +68,7 @@
 				"type" : "combo",
 				"value" : "3"
 			},
-			"codescommaseparated" : 
+			"ui_other_codescommaseparated" : 
 			{
 				"index" : 21,
 				"order" : 121,
@@ -76,9 +76,9 @@
 				"type" : "textinput",
 				"value" : "THE MATRIX"
 			},
-			"coloranimationspeed" : 
+			"ui_color_coloranimationspeed" : 
 			{
-				"condition" : "colormode.value != 0",
+				"condition" : "ui_color_colormode.value != 0",
 				"fraction" : true,
 				"index" : 6,
 				"max" : 1,
@@ -90,7 +90,7 @@
 				"type" : "slider",
 				"value" : 0.5
 			},
-			"colormode" : 
+			"ui_color_colormode" : 
 			{
 				"index" : 4,
 				"options" : 
@@ -117,25 +117,25 @@
 				"type" : "combo",
 				"value" : "2"
 			},
-			"customcharset" : 
+			"ui_characters_customcharset" : 
 			{
-				"condition" : "charset.value == 0",
+				"condition" : "ui_characters_charset.value == 0",
 				"index" : 10,
 				"order" : 110,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
 			},
-			"customfont" : 
+			"ui_font_customfont" : 
 			{
-				"condition" : "font.value == 3",
+				"condition" : "ui_font_font.value == 3",
 				"index" : 14,
 				"order" : 114,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
-			"font" : 
+			"ui_font_font" : 
 			{
 				"index" : 13,
 				"options" : 
@@ -162,7 +162,7 @@
 				"type" : "combo",
 				"value" : "2"
 			},
-			"fontsize" : 
+			"ui_font_fontsize" : 
 			{
 				"fraction" : false,
 				"index" : 12,
@@ -173,7 +173,7 @@
 				"type" : "slider",
 				"value" : 15
 			},
-			"highlightfirstcharacter" : 
+			"ui_color_highlightfirstcharacter" : 
 			{
 				"index" : 7,
 				"order" : 107,
@@ -181,16 +181,16 @@
 				"type" : "bool",
 				"value" : true
 			},
-			"matrixcolor" : 
+			"ui_color_matrixcolor" : 
 			{
-				"condition" : "colormode.value == 0",
+				"condition" : "ui_color_colormode.value == 0",
 				"index" : 5,
 				"order" : 105,
 				"text" : "Matrix Color",
 				"type" : "color",
 				"value" : "0 1 0"
 			},
-			"matrixspeed" : 
+			"ui_rain_matrixspeed" : 
 			{
 				"fraction" : false,
 				"index" : 1,
@@ -208,18 +208,18 @@
 				"type" : "color",
 				"value" : "0 0 0"
 			},
-			"silenceanimation" : 
+			"ui_audio_silenceanimation" : 
 			{
-				"condition" : "audioresponsive.value == true",
+				"condition" : "ui_audio_audioresponsive.value == true",
 				"index" : 18,
 				"order" : 118,
 				"text" : "Silence Animation",
 				"type" : "bool",
 				"value" : true
 			},
-			"silencetimeoutseconds" : 
+			"ui_audio_silencetimeoutseconds" : 
 			{
-				"condition" : "audioresponsive.value == true && silenceanimation.value == true",
+				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
 				"fraction" : false,
 				"index" : 19,
 				"max" : 15,
@@ -229,49 +229,49 @@
 				"type" : "slider",
 				"value" : 3
 			},
-			"titleaudio" : 
+			"folder_audio" : 
 			{
 				"index" : 15,
 				"order" : 115,
 				"text" : "<h4>Audio</h4>",
 				"type" : "text"
 			},
-			"titlecharacters" : 
+			"folder_characters" : 
 			{
 				"index" : 8,
 				"order" : 108,
 				"text" : "<h4>Characters</h4>",
 				"type" : "text"
 			},
-			"titlecolor" : 
+			"folder_color" : 
 			{
 				"index" : 3,
 				"order" : 103,
 				"text" : "<h4>Color</h4>",
 				"type" : "text"
 			},
-			"titlefont" : 
+			"folder_font" : 
 			{
 				"index" : 11,
 				"order" : 111,
 				"text" : "<h4>Font</h4>",
 				"type" : "text"
 			},
-			"titleother" : 
+			"folder_other" : 
 			{
 				"index" : 20,
 				"order" : 120,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
-			"titlerain" : 
+			"folder_rain" : 
 			{
 				"index" : 0,
 				"order" : 100,
 				"text" : "<h4>Rain</h4>",
 				"type" : "text"
 			},
-			"traillength" : 
+			"ui_rain_traillength" : 
 			{
 				"fraction" : true,
 				"index" : 2,

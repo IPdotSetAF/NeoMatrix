@@ -25,7 +25,11 @@ window.onload = function () {
         matrixColor: rgbToHue([0, 255, 0]),
         ui_color_colorAnimationSpeed: 0.5,
         colorAnimationSpeed: calculateColorAnimationSpeed(0.5),
-        ui_color_highlightFirstCharacter: true
+        ui_color_highlightFirstCharacter: true,
+        ui_audio_audioResponsive: false,
+        ui_audio_audioSensetivity: 50,
+        ui_audio_silenceAnimation: true,
+        ui_audio_silenceTimeoutSeconds: 3
     }
 
     if (window.wallpaperRegisterAudioListener)
@@ -81,49 +85,49 @@ window.onload = function () {
 
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
-            if (properties.matrixspeed)
-                options.fpsInterval = calculateFpsInterval(properties.matrixspeed.value);
-            if (properties.traillength) {
-                options.trailLength = calculateTrailLength(properties.traillength.value);
+            if (properties.ui_rain_matrixspeed)
+                options.fpsInterval = calculateFpsInterval(properties.ui_rain_matrixspeed.value);
+            if (properties.ui_rain_traillength) {
+                options.trailLength = calculateTrailLength(properties.ui_rain_traillength.value);
                 updateMask();
             }
 
-            if (properties.colormode)
-                options.ui_color_colorMode = properties.colormode.value;
-            if (properties.matrixcolor)
-                options.matrixColor = rgbToHue(properties.matrixcolor.value.split(' '))
-            if (properties.coloranimationspeed)
-                options.colorAnimationSpeed = calculateColorAnimationSpeed(properties.coloranimationspeed.value);
-            if (properties.highlightfirstcharacter)
-                options.ui_color_highlightFirstCharacter = properties.highlightfirstcharacter.value;
+            if (properties.ui_color_colormode)
+                options.ui_color_colorMode = properties.ui_color_colormode.value;
+            if (properties.ui_color_matrixcolor)
+                options.matrixColor = rgbToHue(properties.ui_color_matrixcolor.value.split(' '))
+            if (properties.ui_color_coloranimationspeed)
+                options.colorAnimationSpeed = calculateColorAnimationSpeed(properties.ui_color_coloranimationspeed.value);
+            if (properties.ui_color_highlightfirstcharacter)
+                options.ui_color_highlightFirstCharacter = properties.ui_color_highlightfirstcharacter.value;
 
-            if (properties.charset)
-                options.ui_characters_charset = properties.charset.value;
-            if (properties.customcharset)
-                options.ui_characters_customCharset = properties.customcharset.value;
-            if (properties.charset || properties.customcharset)
+            if (properties.ui_characters_charset)
+                options.ui_characters_charset = properties.ui_characters_charset.value;
+            if (properties.ui_characters_customcharset)
+                options.ui_characters_customCharset = properties.ui_characters_customcharset.value;
+            if (properties.ui_characters_charset || properties.ui_characters_customcharset)
                 updateCharSet();
 
-            if (properties.font)
-                options.ui_font_font = properties.font.value;
-            if (properties.customfont)
-                options.ui_font_customFont = properties.customfont.value;
-            if (properties.fontsize)
-                options.ui_font_fontSize = properties.fontsize.value;
-            if (properties.font || properties.customfontname || properties.fontsize)
+            if (properties.ui_font_font)
+                options.ui_font_font = properties.ui_font_font.value;
+            if (properties.ui_font_customFont)
+                options.ui_font_customFont = properties.ui_font_customFont.value;
+            if (properties.ui_font_fontsize)
+                options.ui_font_fontSize = properties.ui_font_fontsize.value;
+            if (properties.ui_font_font || properties.ui_font_customFont || properties.ui_font_fontsize)
                 updateFont();
 
-            if (properties.audioresponsive)
-                isAudioResponsive = properties.audioresponsive.value;
-            if (properties.audiosensetivity)
-                AudioMultiplier = properties.audiosensetivity.value;
-            if (properties.silenceanimation)
-                hasSilenceAnimation = properties.silenceanimation.value;
-            if (properties.silencetimeoutseconds)
-                SilenceTimeoutSeconds = properties.silencetimeoutseconds.value;
+            if (properties.ui_audio_audioresponsive)
+                options.ui_audio_audioResponsive = properties.ui_audio_audioresponsive.value;
+            if (properties.ui_audio_audiosensetivity)
+                options.ui_audio_audioSensetivity = properties.ui_audio_audiosensetivity.value;
+            if (properties.ui_audio_silenceanimation)
+                options.ui_audio_silenceAnimation = properties.ui_audio_silenceanimation.value;
+            if (properties.ui_audio_silencetimeoutseconds)
+                options.ui_audio_silenceTimeoutSeconds = properties.ui_audio_silencetimeoutseconds.value;
 
-            if (properties.codescommaseparated) {
-                options.codes = makeCodes(properties.codescommaseparated.value);
+            if (properties.ui_other_codescommaseparated) {
+                options.codes = makeCodes(properties.ui_other_codescommaseparated.value);
                 fallAnimation();
             }
         }
@@ -139,7 +143,7 @@ window.onload = function () {
 
     var debug = document.getElementById("debug"), logs = [];
     var startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars;
-    var isAudioResponsive = false, hasSilenceAnimation = true, AudioTimeout = false, SilenceTimeoutSeconds = 15, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, AudioMultiplier = 50, column_frequency;
+    var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
     var font_fraction;
     var maskDom = document.getElementById("mask");
@@ -280,16 +284,16 @@ window.onload = function () {
             var probability = 0.975;
             var lightness = 50;
 
-            if (isAudioResponsive) {
+            if (options.ui_audio_audioResponsive) {
                 var frequency = Math.floor(i * column_frequency);
                 var Volume = frequencyArray[frequency] + frequencyArray[frequency + (frequencyArrayLength / 2)];
 
                 if (Volume > 0.01)
                     isSilent = false;
 
-                if (!AudioTimeout || !hasSilenceAnimation) {
-                    probability = 1 - clamp(0, 1, (Volume * Volume * Volume * AudioMultiplier));
-                    lightness = Math.floor(clamp(40, 80, Volume * 100 * AudioMultiplier));
+                if (!AudioTimeout || !options.ui_audio_silenceAnimation) {
+                    probability = 1 - clamp(0, 1, (Volume * Volume * Volume * options.ui_audio_audioSensetivity));
+                    lightness = Math.floor(clamp(40, 80, Volume * 100 * options.ui_audio_audioSensetivity));
                 }
             }
 
@@ -318,11 +322,11 @@ window.onload = function () {
             drops[i][0]++;
         }
 
-        if (hasSilenceAnimation) {
+        if (options.ui_audio_silenceAnimation) {
             if (!isSilent) {
                 AudioTimeout = false;
                 LastSoundTime = new Date();
-            } else if ((new Date() - LastSoundTime) > SilenceTimeoutSeconds * 1000) {
+            } else if ((new Date() - LastSoundTime) > options.ui_audio_silenceTimeoutSeconds * 1000) {
                 AudioTimeout = true;
             }
         }
