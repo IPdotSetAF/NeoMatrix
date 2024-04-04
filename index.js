@@ -7,7 +7,7 @@ window.onload = function () {
         if (tags[0]['name'] > version)
             Log("New release available: " + tags[0]['name']);
     }
-
+    var gui;
     var options = {
         ui_rain_matrixSpeed: 24,
         fpsInterval: calculateFpsInterval(24),
@@ -29,7 +29,23 @@ window.onload = function () {
         ui_audio_audioResponsive: false,
         ui_audio_audioSensetivity: 50,
         ui_audio_silenceAnimation: true,
-        ui_audio_silenceTimeoutSeconds: 3
+        ui_audio_silenceTimeoutSeconds: 3,
+        Save() {
+            window.localStorage.setItem("preset", JSON.stringify(gui.save()));
+            Log("Saved preset.");
+        },
+        Load() {
+            let preset = JSON.parse(window.localStorage.getItem("preset"));
+            if (preset) {
+                gui.load(preset);
+                Log("Loaded preset.");
+            } else
+                Log("No preset found.");
+        },
+        Reset() {
+            gui.reset();
+            Log("Settings reset to default.");
+        }
     }
 
     if (window.wallpaperRegisterAudioListener)
@@ -40,8 +56,8 @@ window.onload = function () {
         drawGui();
 
     function drawGui() {
-        gui = new lil.GUI({ autoPlace: false });
-        
+        gui = new lil.GUI({ autoPlace: false, width: 400 });
+
         const rainFolder = gui.addFolder('Rain');
         rainFolder.add(options, 'ui_rain_matrixSpeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
             options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
@@ -77,6 +93,10 @@ window.onload = function () {
             options.codes = makeCodes(options.ui_other_codesCommaSeparated);
             fallAnimation();
         });
+
+        gui.add(options, "Save");
+        gui.add(options, "Load");
+        gui.add(options, "Reset");
 
         customContainer = document.getElementById('gui');
         customContainer.appendChild(gui.domElement);
@@ -154,6 +174,8 @@ window.onload = function () {
     updateMask();
     updateCharSet();
     updateFont();
+    if (gui)
+        options.Load();
     startAnimating();
 
     function updateCanvasSize() {
@@ -390,17 +412,15 @@ window.onload = function () {
         return map(value, -1, 1, 0.05, -0.05);
     }
 
-    function makeCodes(codesText){
+    function makeCodes(codesText) {
         var codes = codesText.split(",")
         codes.push("IP.AF");
         return codes;
     }
 
     function Log(text) {
-        if (logs.length > 0)
-            if (logs[logs.length - 1] == text)
-                return;
         debug.classList.remove("hide");
+        void debug.offsetWidth;
         logs.push(text);
         if (logs.length > 10)
             logs.splice(0, 1);
