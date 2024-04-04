@@ -47,6 +47,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Silence Timeout
 - Codes (these will be shown as decrypted Messages)
 - Web Browser Compatible
+   - Preset save/load
 
 ## Are you ready to be free?
 
