@@ -1,5 +1,5 @@
 window.onload = function () {
-    const version = "v2.0.0";
+    const version = "v2.1.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
