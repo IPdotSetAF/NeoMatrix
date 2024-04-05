@@ -12,11 +12,11 @@ window.onload = function () {
         return await fetch('project.json').then(_ => _.json());
     }
 
-    function optionsToDict(options){
+    function optionsToDict(options) {
         return options.reduce((acc, option) => {
             acc[option.label] = option.value;
             return acc;
-          }, {});
+        }, {});
     }
 
     var gui;
@@ -106,12 +106,6 @@ window.onload = function () {
 
             gui.addFolder("Audio (not available in web version)");
 
-            const otherFolder = gui.addFolder("Other");
-            otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
-                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
-                fallAnimation();
-            });
-
             const logoFolder = gui.addFolder("Logo");
             logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateMask);
             logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
@@ -120,13 +114,19 @@ window.onload = function () {
             logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
             logoPositionFolder.add(options, "ui_logo_positionY").min(-5000).max(5000).step(1).name("Y").onChange(updateMask);
 
+            const otherFolder = gui.addFolder("Other");
+            otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
+                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
+                fallAnimation();
+            });
+
             gui.add(options, "Save");
             gui.add(options, "Load");
             gui.add(options, "Reset");
 
             customContainer = document.getElementById('gui');
             customContainer.appendChild(gui.domElement);
-            
+
             options.Load();
         });
     }
@@ -242,8 +242,8 @@ window.onload = function () {
         img.onload = function () {
             drawBlackMask();
 
-            let img_width = (c.height/2) * (img.width/img.height) * options.ui_logo_scale;
-            let img_height = (c.height/2) * options.ui_logo_scale;
+            let img_width = (c.height / 2) * (img.width / img.height) * options.ui_logo_scale;
+            let img_height = (c.height / 2) * options.ui_logo_scale;
 
             mask.globalCompositeOperation = 'destination-out';
             mask.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
