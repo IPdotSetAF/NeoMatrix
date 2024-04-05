@@ -242,8 +242,8 @@ window.onload = function () {
         img.onload = function () {
             drawBlackMask();
 
-            let img_width = img.width * options.ui_logo_scale;
-            let img_height = img.height * options.ui_logo_scale;
+            let img_width = (c.height/2) * (img.width/img.height) * options.ui_logo_scale;
+            let img_height = (c.height/2) * options.ui_logo_scale;
 
             mask.globalCompositeOperation = 'destination-out';
             mask.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
