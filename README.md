@@ -51,7 +51,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Silence Timeout
 - Logo Customization
    - Logo
-      - 13 presets
+      - 23 presets
 
       <p align="left">
          <img src="images/ipaf.svg" alt="IP.AF" width=40px/>
