@@ -80,6 +80,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
       </p>
 
       - CUSTOM
+   - Preserve Logo Color
    - Scale
    - Position
 - Other Customizations
