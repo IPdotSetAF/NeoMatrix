@@ -214,7 +214,7 @@
 			},
 			"ui_font_customfont" : 
 			{
-				"condition" : "ui_font_font.value == 3",
+				"condition" : "ui_font_font.value == 0",
 				"index" : 14,
 				"order" : 114,
 				"text" : "Custom Font",
@@ -227,26 +227,27 @@
 				"options" : 
 				[
 					{
-						"label" : "MonoSpace",
+						"label" : "Custom",
 						"value" : "0"
 					},
 					{
-						"label" : "Consolas",
+						"label" : "MonoSpace",
 						"value" : "1"
 					},
 					{
-						"label" : "Courier Bold",
+						"label" : "Consolas",
 						"value" : "2"
 					},
 					{
-						"label" : "Custom",
+						"label" : "Courier Bold",
 						"value" : "3"
 					}
+					
 				],
 				"order" : 113,
 				"text" : "Font",
 				"type" : "combo",
-				"value" : "2"
+				"value" : "3"
 			},
 			"ui_font_size" : 
 			{
@@ -261,7 +262,7 @@
 			},
 			"ui_logo_customlogo" : 
 			{
-				"condition" : "ui_logo_logo.value == 4",
+				"condition" : "ui_logo_logo.value == 1",
 				"index" : 22,
 				"order" : 122,
 				"text" : "Custom Logo URL (SVG)",
@@ -278,20 +279,80 @@
 						"value" : "0"
 					},
 					{
-						"label" : "IP.AF",
+						"label" : "Custom",
 						"value" : "1"
 					},
 					{
-						"label" : "Kali 1",
+						"label" : "IP.AF",
 						"value" : "2"
 					},
 					{
-						"label" : "Kali 2",
+						"label" : "Kali 1",
 						"value" : "3"
 					},
 					{
-						"label" : "Custom",
+						"label" : "Kali 2",
 						"value" : "4"
+					},
+					{
+						"label" : "Ubuntu 1",
+						"value" : "5"
+					},
+					{
+						"label" : "Ubuntu 2",
+						"value" : "6"
+					},
+					{
+						"label" : "Windows 11",
+						"value" : "7"
+					},
+					{
+						"label" : "Windows 10/8",
+						"value" : "8"
+					},
+					{
+						"label" : "Windows 7",
+						"value" : "9"
+					},
+					{
+						"label" : "Visual Studio",
+						"value" : "10"
+					},
+					{
+						"label" : "VS Code",
+						"value" : "11"
+					},
+					{
+						"label" : "Unity 1",
+						"value" : "12"
+					},
+					{
+						"label" : "Unity 2",
+						"value" : "13"
+					},
+					{
+						"label" : "Unreal",
+						"value" : "14"
+					},
+					{
+						"label" : "Python",
+						"value" : "15"
+					},
+					{
+						"label" : "Blazor",
+						"value" : "16"
+					},
+					{
+						"label" : "Docker",
+						"value" : "17"
+					},
+					{
+						"label" : "Flutter",
+						"value" : "18"
+					},
+					{
+						"label" : "Git",
+						"value" : "19"
 					}
 				],
 				"order" : 121,

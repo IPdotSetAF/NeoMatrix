@@ -7,6 +7,18 @@ window.onload = function () {
         if (tags[0]['name'] > version)
             Log("New release available: " + tags[0]['name']);
     }
+
+    readProjectConfig = async () => {
+        return await fetch('project.json').then(_ => _.json());
+    }
+
+    function optionsToDict(options){
+        return options.reduce((acc, option) => {
+            acc[option.label] = option.value;
+            return acc;
+          }, {});
+    }
+
     var gui;
     var options = {
         ui_rain_matrixSpeed: 24,
@@ -15,7 +27,7 @@ window.onload = function () {
         trailLength: calculateTrailLength(0.86),
         ui_characters_charset: "4",
         ui_characters_customCharset: "0123456789ABCDEF",
-        ui_font_font: "2",
+        ui_font_font: "3",
         ui_font_customFont: "monospace",
         ui_font_size: 15,
         ui_other_codesCommaSeparated: "THE MATRIX",
@@ -61,58 +73,62 @@ window.onload = function () {
         drawGui();
 
     function drawGui() {
-        gui = new lil.GUI({ autoPlace: false, width: 300 });
+        readProjectConfig().then((config) => {
+            gui = new lil.GUI({ autoPlace: false, width: 300 });
 
-        const rainFolder = gui.addFolder('Rain');
-        rainFolder.add(options, 'ui_rain_matrixSpeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
-            options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
+            const rainFolder = gui.addFolder('Rain');
+            rainFolder.add(options, 'ui_rain_matrixSpeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
+                options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
+            });
+            rainFolder.add(options, 'ui_rain_trailLength').min(0).max(1).step(0.01).name('Trail Length').onChange(() => {
+                options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
+                updateMask();
+            });
+
+            const colorFolder = gui.addFolder("Color");
+            colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
+            colorFolder.addColor(options, 'ui_color_matrixColor').name('Matrix Color').onChange(() => {
+                options.matrixColor = rgbToHue(options.ui_color_matrixColor);
+            });
+            colorFolder.add(options, 'ui_color_colorAnimationSpeed').min(-1).max(1).step(0.01).name('Color Animation Speed').onChange(() => {
+                options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
+            });
+            colorFolder.add(options, 'ui_color_highlightFirstCharacter').name('Highlight First Character');
+
+            const characterFolder = gui.addFolder("Characters");
+            characterFolder.add(options, 'ui_characters_charset', optionsToDict(config.general.properties.ui_characters_charset.options)).name('Char set').onChange(updateCharSet);
+            characterFolder.add(options, 'ui_characters_customCharset').name('Custom Char Set').onChange(updateCharSet);
+
+            const fontFolder = gui.addFolder("Font");
+            fontFolder.add(options, 'ui_font_size').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
+            fontFolder.add(options, 'ui_font_font', optionsToDict(config.general.properties.ui_font_font.options)).name('Font').onChange(updateFont);
+            fontFolder.add(options, 'ui_font_customFont').name('Custom Font').onChange(updateFont);
+
+            gui.addFolder("Audio (not available in web version)");
+
+            const otherFolder = gui.addFolder("Other");
+            otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
+                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
+                fallAnimation();
+            });
+
+            const logoFolder = gui.addFolder("Logo");
+            logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateMask);
+            logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
+            logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateMask);
+            const logoPositionFolder = logoFolder.addFolder("Position");
+            logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
+            logoPositionFolder.add(options, "ui_logo_positionY").min(-5000).max(5000).step(1).name("Y").onChange(updateMask);
+
+            gui.add(options, "Save");
+            gui.add(options, "Load");
+            gui.add(options, "Reset");
+
+            customContainer = document.getElementById('gui');
+            customContainer.appendChild(gui.domElement);
+            
+            options.Load();
         });
-        rainFolder.add(options, 'ui_rain_trailLength').min(0).max(1).step(0.01).name('Trail Length').onChange(() => {
-            options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
-            updateMask();
-        });
-
-        const colorFolder = gui.addFolder("Color");
-        colorFolder.add(options, 'ui_color_colorMode', { "Single": "0", "RGB Cycle": "1", "Vertical Rainbow": "2", "Horizontal Rainbow": "3" }).name('Color Mode');
-        colorFolder.addColor(options, 'ui_color_matrixColor').name('Matrix Color').onChange(() => {
-            options.matrixColor = rgbToHue(options.ui_color_matrixColor);
-        });
-        colorFolder.add(options, 'ui_color_colorAnimationSpeed').min(-1).max(1).step(0.01).name('Color Animation Speed').onChange(() => {
-            options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
-        });
-        colorFolder.add(options, 'ui_color_highlightFirstCharacter').name('Highlight First Character');
-
-        const characterFolder = gui.addFolder("Characters");
-        characterFolder.add(options, 'ui_characters_charset', { "Custom": "0", "English Lttrs": "1", "Lttrs+Nums": "2", "Lttrs+Nums+Chars": "3", "Original Matrix": "4", "Binary": "5", "Hex": "6", "Morse Code": "7" }).name('Char set').onChange(updateCharSet);
-        characterFolder.add(options, 'ui_characters_customCharset').name('Custom Char Set').onChange(updateCharSet);
-
-        const fontFolder = gui.addFolder("Font");
-        fontFolder.add(options, 'ui_font_size').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
-        fontFolder.add(options, 'ui_font_font', { "MonoSpace": "0", "Consolas": "1", "Courier Bold": "2", "Custom": "3" }).name('Font').onChange(updateFont);
-        fontFolder.add(options, 'ui_font_customFont').name('Custom Font').onChange(updateFont);
-
-        gui.addFolder("Audio (not available in web version)");
-
-        const otherFolder = gui.addFolder("Other");
-        otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
-            options.codes = makeCodes(options.ui_other_codesCommaSeparated);
-            fallAnimation();
-        });
-
-        const logoFolder = gui.addFolder("Logo");
-        logoFolder.add(options, "ui_logo_logo", { "None": "0", "IP.AF": "1", "Kali 1": "2", "Kali 2": "3", "Custom": "4" }).name("Logo").onChange(updateMask);
-        logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
-        logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateMask);
-        const logoPositionFolder = logoFolder.addFolder("Position");
-        logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
-        logoPositionFolder.add(options, "ui_logo_positionY").min(-5000).max(5000).step(1).name("Y").onChange(updateMask);
-
-        gui.add(options, "Save");
-        gui.add(options, "Load");
-        gui.add(options, "Reset");
-
-        customContainer = document.getElementById('gui');
-        customContainer.appendChild(gui.domElement);
     }
 
     window.wallpaperPropertyListener = {
@@ -186,6 +202,17 @@ window.onload = function () {
         fallAnimation();
     }, false);
 
+    var fonts = ["monospace", "consolas", "courier-bold"];
+    var charsets = [
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}",
+        "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日Z:・.\"=*+-<>¦｜_╌",
+        "01",
+        "0123456789ABCDEF",
+        "|."
+    ];
+    var logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git"];
     var debug = document.getElementById("debug"), logs = [];
     var startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
@@ -200,8 +227,6 @@ window.onload = function () {
     updateMask();
     updateCharSet();
     updateFont();
-    if (gui)
-        options.Load();
     startAnimating();
 
     function updateCanvasSize() {
@@ -225,25 +250,16 @@ window.onload = function () {
         };
 
         switch (options.ui_logo_logo) {
+            case "0": {
+                drawBlackMask();
+                break;
+            }
             case "1": {
-                img.src = 'images/ipaf.svg';
-                break;
-            }
-            case "2": {
-                img.src = 'images/kali-1.svg';
-                break;
-            }
-            case "3": {
-                img.src = 'images/kali-2.svg';
-                break;
-            }
-            case "4": {
                 img.src = options.ui_logo_customLogo;
                 break;
             }
             default: {
-                drawBlackMask();
-                break;
+                img.src = "images/" + logos[parseInt(options.ui_logo_logo) - 2] + ".svg";
             }
         }
     }
@@ -260,64 +276,21 @@ window.onload = function () {
     }
 
     function updateCharSet() {
-        switch (options.ui_characters_charset) {
-            case "0": {
-                letters = options.ui_characters_customCharset;
-                break;
-            }
-            case "1": {
-                letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                break;
-            }
-            case "2": {
-                letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                break;
-            }
-            case "3": {
-                letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}";
-                break;
-            }
-            case "4": {
-                letters = "1234567890アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン日Z:・.\"=*+-<>¦｜_╌";
-                break;
-            }
-            case "5": {
-                letters = "01";
-                break;
-            }
-            case "6": {
-                letters = "0123456789ABCDEF";
-                break;
-            }
-            case "7": {
-                letters = "|.";
-                break;
-            }
-        }
+        if (options.ui_characters_charset == "0")
+            letters = options.ui_characters_customCharset;
+        else
+            letters = charsets[parseInt(options.ui_characters_charset) - 1];
 
         letters = letters.split("");
     }
 
     function updateFont() {
         var font_name;
-        switch (options.ui_font_font) {
-            case "0": {
-                font_name = "monospace";
-                break;
-            }
-            case "1": {
-                font_name = "consolas";
-                break;
-            }
-            case "2": {
-                font_name = "courier-bold";
-                break;
-            }
-            case "3": {
-                font_name = options.ui_font_customFont;
-                break;
-            }
-        }
+
+        if (options.ui_font_font == "0")
+            font_name = options.ui_font_customFont;
+        else
+            font_name = fonts[parseInt(options.ui_font_font) - 1];
 
         ctx.font = options.ui_font_size + "px " + font_name;
         font_fraction = options.ui_font_size / 4;

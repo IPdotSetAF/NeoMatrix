@@ -51,7 +51,29 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Silence Timeout
 - Logo Customization
    - Logo
-      - 3 presets
+      - 13 presets
+
+      <p align="left">
+         <img src="images/ipaf.svg" alt="IP.AF" width=40px/>
+         <img src="images/kali-1.svg" alt="Kali Linux" width=40px/>
+         <img src="images/kali-2.svg" alt="Kali Linux" width=40px/>
+         <img src="images/ubuntu-1.svg" alt="Ubuntu Linux" width=40px/>
+         <img src="images/ubuntu-2.svg" alt="Ubuntu Linux" width=40px/>
+         <img src="images/windows-11.svg" alt="Windows 11" width=40px/>
+         <img src="images/windows-10-8.svg" alt="Windows 10/8" width=40px/>
+         <img src="images/windows-7.svg" alt="Windows 7" width=40px/>
+         <img src="images/visual-studio.svg" alt="Visual Studio" width=40px/>
+         <img src="images/vs-code.svg" alt="VS Code" width=40px/>
+         <img src="images/unity-1.svg" alt="Unity Engine" width=40px/>
+         <img src="images/unity-2.svg" alt="Unity Engine" width=40px/>
+         <img src="images/unreal.svg" alt="Unreal Engine"  width=40px/>
+         <img src="images/python.svg" alt="Python" width=40px/>
+         <img src="images/blazor.svg" alt="Blazor" width=40px/>
+         <img src="images/docker.svg" alt="Docker" width=40px/>
+         <img src="images/flutter.svg" alt="Flutter" width=40px/>
+         <img src="images/git.svg" alt="Git" width=40px/>
+      </p>
+
       - CUSTOM
    - Scale
    - Position
