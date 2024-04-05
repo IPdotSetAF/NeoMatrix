@@ -42,8 +42,8 @@
 			},
 			"folder_other" : 
 			{
-				"index" : 26,
-				"order" : 126,
+				"index" : 27,
+				"order" : 127,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
@@ -242,7 +242,6 @@
 						"label" : "Courier Bold",
 						"value" : "3"
 					}
-					
 				],
 				"order" : 113,
 				"text" : "Font",
@@ -384,10 +383,10 @@
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 24,
+				"index" : 25,
 				"max" : 5000,
 				"min" : -5000,
-				"order" : 124,
+				"order" : 125,
 				"text" : "Logo Position X",
 				"type" : "slider",
 				"value" : 0
@@ -396,22 +395,31 @@
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 25,
+				"index" : 26,
 				"max" : 5000,
 				"min" : -5000,
-				"order" : 125,
+				"order" : 126,
 				"text" : "Logo Position Y",
 				"type" : "slider",
 				"value" : 0
+			},
+			"ui_logo_preservecolor" : 
+			{
+				"condition" : "ui_logo_logo.value != 0",
+				"index" : 23,
+				"order" : 123,
+				"text" : "Preserve Logo Color",
+				"type" : "bool",
+				"value" : false
 			},
 			"ui_logo_scale" : 
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : true,
-				"index" : 23,
+				"index" : 24,
 				"max" : 10,
 				"min" : 0,
-				"order" : 123,
+				"order" : 124,
 				"precision" : 1.1,
 				"step" : 0.79432823,
 				"text" : "Logo Scale",
@@ -420,8 +428,8 @@
 			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 27,
-				"order" : 127,
+				"index" : 28,
+				"order" : 128,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THE MATRIX"

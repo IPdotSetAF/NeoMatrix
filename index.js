@@ -44,6 +44,7 @@ window.onload = function () {
         ui_audio_silenceTimeoutSeconds: 3,
         ui_logo_logo: "0",
         ui_logo_customLogo: "",
+        ui_logo_preserveColor: false,
         ui_logo_scale: 1,
         ui_logo_positionX: 0,
         ui_logo_positionY: 0,
@@ -109,6 +110,7 @@ window.onload = function () {
             const logoFolder = gui.addFolder("Logo");
             logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateMask);
             logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
+            logoFolder.add(options, "ui_logo_preserveColor").name("Preserve Logo Color").onChange(updateMask);
             logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateMask);
             const logoPositionFolder = logoFolder.addFolder("Position");
             logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
@@ -184,7 +186,9 @@ window.onload = function () {
                 options.ui_logo_positionX = properties.ui_logo_positionx.value;
             if (properties.ui_logo_positiony)
                 options.ui_logo_positionY = properties.ui_logo_positiony.value;
-            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony)
+            if (properties.ui_logo_preservecolor)
+                options.ui_logo_preserveColor = properties.ui_logo_preservecolor.value;
+            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -218,8 +222,10 @@ window.onload = function () {
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
     var font_fraction;
-    var maskDom = document.getElementById("mask");
-    var mask = maskDom.getContext("2d");
+    var mask1Dom = document.getElementById("m1");
+    var mask1 = mask1Dom.getContext("2d");
+    var mask2Dom = document.getElementById("m2");
+    var mask2 = mask2Dom.getContext("2d");
     var c = document.getElementById("neomatrix");
     var ctx = c.getContext("2d");
 
@@ -232,8 +238,10 @@ window.onload = function () {
     function updateCanvasSize() {
         c.height = window.innerHeight;
         c.width = window.innerWidth;
-        maskDom.height = window.innerHeight;
-        maskDom.width = window.innerWidth;
+        mask1Dom.height = window.innerHeight;
+        mask1Dom.width = window.innerWidth;
+        mask2Dom.height = window.innerHeight;
+        mask2Dom.width = window.innerWidth;
     }
 
     function updateMask() {
@@ -245,8 +253,11 @@ window.onload = function () {
             let img_width = (c.height / 2) * (img.width / img.height) * options.ui_logo_scale;
             let img_height = (c.height / 2) * options.ui_logo_scale;
 
-            mask.globalCompositeOperation = 'destination-out';
-            mask.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
+            mask1.globalCompositeOperation = 'destination-out';
+            mask1.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
+
+            mask2.clearRect(0, 0, c.width, c.height);
+            mask2.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
         };
 
         switch (options.ui_logo_logo) {
@@ -265,14 +276,21 @@ window.onload = function () {
     }
 
     function drawBlackMask() {
-        mask.globalCompositeOperation = 'source-over';
-        mask.clearRect(0, 0, c.width, c.height);
-        mask.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
-        mask.fillRect(0, 0, c.width, c.height);
+        mask1.globalCompositeOperation = 'source-over';
+        mask1.clearRect(0, 0, c.width, c.height);
+        mask1.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
+        mask1.fillRect(0, 0, c.width, c.height);
     }
 
     function drawMask() {
-        ctx.drawImage(maskDom, 0, 0);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.drawImage(mask1Dom, 0, 0);
+
+        if (options.ui_logo_preserveColor) {
+            ctx.globalCompositeOperation = 'source-atop';
+            ctx.drawImage(mask2Dom, 0, 0);
+            ctx.globalCompositeOperation = 'source-over';
+        }
     }
 
     function updateCharSet() {
