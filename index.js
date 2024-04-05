@@ -1,5 +1,5 @@
 window.onload = function () {
-    const version = "v2.2.0";
+    const version = "v3.0.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -30,7 +30,7 @@ window.onload = function () {
         ui_audio_audioSensetivity: 50,
         ui_audio_silenceAnimation: true,
         ui_audio_silenceTimeoutSeconds: 3,
-        ui_logo_logo: "1",
+        ui_logo_logo: "0",
         ui_logo_customLogo: "",
         ui_logo_scale: 1,
         ui_logo_positionX: 0,

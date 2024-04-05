@@ -297,7 +297,7 @@
 				"order" : 121,
 				"text" : "Logo",
 				"type" : "combo",
-				"value" : "1"
+				"value" : "0"
 			},
 			"ui_logo_positionx" : 
 			{

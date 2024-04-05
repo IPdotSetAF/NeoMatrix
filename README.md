@@ -5,6 +5,8 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ## Preview [(Web Demo)](https://ipdotsetaf.github.io/NeoMatrix/)
 
 <img src="preview.gif" width=300px/>
+<img src="preview2.gif" width=300px/>
+<img src="preview3.gif" width=300px/>
 
 ##
 
