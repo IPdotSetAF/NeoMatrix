@@ -5,6 +5,62 @@
 	{
 		"properties" : 
 		{
+			"folder_audio" : 
+			{
+				"index" : 15,
+				"order" : 115,
+				"text" : "<h4>Audio</h4>",
+				"type" : "text"
+			},
+			"folder_characters" : 
+			{
+				"index" : 8,
+				"order" : 108,
+				"text" : "<h4>Characters</h4>",
+				"type" : "text"
+			},
+			"folder_color" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "<h4>Color</h4>",
+				"type" : "text"
+			},
+			"folder_font" : 
+			{
+				"index" : 11,
+				"order" : 111,
+				"text" : "<h4>Font</h4>",
+				"type" : "text"
+			},
+			"folder_logo" : 
+			{
+				"index" : 20,
+				"order" : 120,
+				"text" : "<h4>Logo</h4>",
+				"type" : "text"
+			},
+			"folder_other" : 
+			{
+				"index" : 26,
+				"order" : 126,
+				"text" : "<h4>Other</h4>",
+				"type" : "text"
+			},
+			"folder_rain" : 
+			{
+				"index" : 0,
+				"order" : 100,
+				"text" : "<h4>Rain</h4>",
+				"type" : "text"
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "Scheme color",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
 			"ui_audio_audioresponsive" : 
 			{
 				"index" : 16,
@@ -24,6 +80,27 @@
 				"text" : "Audio Sensetivity",
 				"type" : "slider",
 				"value" : 50
+			},
+			"ui_audio_silenceanimation" : 
+			{
+				"condition" : "ui_audio_audioresponsive.value == true",
+				"index" : 18,
+				"order" : 118,
+				"text" : "Silence Animation",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_audio_silencetimeoutseconds" : 
+			{
+				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
+				"fraction" : false,
+				"index" : 19,
+				"max" : 15,
+				"min" : 1,
+				"order" : 119,
+				"text" : "Silence Timeout (Seconds)",
+				"type" : "slider",
+				"value" : 3
 			},
 			"ui_characters_charset" : 
 			{
@@ -68,13 +145,14 @@
 				"type" : "combo",
 				"value" : "3"
 			},
-			"ui_other_codescommaseparated" : 
+			"ui_characters_customcharset" : 
 			{
-				"index" : 21,
-				"order" : 121,
-				"text" : "Codes (comma separated)",
+				"condition" : "ui_characters_charset.value == 0",
+				"index" : 10,
+				"order" : 110,
+				"text" : "Custom Char set",
 				"type" : "textinput",
-				"value" : "THE MATRIX"
+				"value" : "0123456789ABCDEF"
 			},
 			"ui_color_coloranimationspeed" : 
 			{
@@ -117,14 +195,22 @@
 				"type" : "combo",
 				"value" : "2"
 			},
-			"ui_characters_customcharset" : 
+			"ui_color_highlightfirstcharacter" : 
 			{
-				"condition" : "ui_characters_charset.value == 0",
-				"index" : 10,
-				"order" : 110,
-				"text" : "Custom Char set",
-				"type" : "textinput",
-				"value" : "0123456789ABCDEF"
+				"index" : 7,
+				"order" : 107,
+				"text" : "Highlight First Character",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_color_matrixcolor" : 
+			{
+				"condition" : "ui_color_colormode.value == 0",
+				"index" : 5,
+				"order" : 105,
+				"text" : "Matrix Color",
+				"type" : "color",
+				"value" : "0 1 0"
 			},
 			"ui_font_customfont" : 
 			{
@@ -162,7 +248,7 @@
 				"type" : "combo",
 				"value" : "2"
 			},
-			"ui_font_fontsize" : 
+			"ui_font_size" : 
 			{
 				"fraction" : false,
 				"index" : 12,
@@ -173,22 +259,91 @@
 				"type" : "slider",
 				"value" : 15
 			},
-			"ui_color_highlightfirstcharacter" : 
+			"ui_logo_customlogo" : 
 			{
-				"index" : 7,
-				"order" : 107,
-				"text" : "Highlight First Character",
-				"type" : "bool",
-				"value" : true
+				"condition" : "ui_logo_logo.value == 4",
+				"index" : 22,
+				"order" : 122,
+				"text" : "Custom Logo URL (SVG)",
+				"type" : "textinput",
+				"value" : ""
 			},
-			"ui_color_matrixcolor" : 
+			"ui_logo_logo" : 
 			{
-				"condition" : "ui_color_colormode.value == 0",
-				"index" : 5,
-				"order" : 105,
-				"text" : "Matrix Color",
-				"type" : "color",
-				"value" : "0 1 0"
+				"index" : 21,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "IP.AF",
+						"value" : "1"
+					},
+					{
+						"label" : "Kali 1",
+						"value" : "2"
+					},
+					{
+						"label" : "Kali 2",
+						"value" : "3"
+					},
+					{
+						"label" : "Custom",
+						"value" : "4"
+					}
+				],
+				"order" : 121,
+				"text" : "Logo",
+				"type" : "combo",
+				"value" : "1"
+			},
+			"ui_logo_positionx" : 
+			{
+				"condition" : "ui_logo_logo.value != 0",
+				"fraction" : false,
+				"index" : 24,
+				"max" : 5000,
+				"min" : -5000,
+				"order" : 124,
+				"text" : "Logo Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_logo_positiony" : 
+			{
+				"condition" : "ui_logo_logo.value != 0",
+				"fraction" : false,
+				"index" : 25,
+				"max" : 5000,
+				"min" : -5000,
+				"order" : 125,
+				"text" : "Logo Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_logo_scale" : 
+			{
+				"condition" : "ui_logo_logo.value != 0",
+				"fraction" : true,
+				"index" : 23,
+				"max" : 10,
+				"min" : 0,
+				"order" : 123,
+				"precision" : 1.1,
+				"step" : 0.79432823,
+				"text" : "Logo Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_other_codescommaseparated" : 
+			{
+				"index" : 27,
+				"order" : 127,
+				"text" : "Codes (comma separated)",
+				"type" : "textinput",
+				"value" : "THE MATRIX"
 			},
 			"ui_rain_matrixspeed" : 
 			{
@@ -200,76 +355,6 @@
 				"text" : "Matrix Speed",
 				"type" : "slider",
 				"value" : 25
-			},
-			"schemecolor" : 
-			{
-				"order" : 0,
-				"text" : "Scheme color",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"ui_audio_silenceanimation" : 
-			{
-				"condition" : "ui_audio_audioresponsive.value == true",
-				"index" : 18,
-				"order" : 118,
-				"text" : "Silence Animation",
-				"type" : "bool",
-				"value" : true
-			},
-			"ui_audio_silencetimeoutseconds" : 
-			{
-				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
-				"fraction" : false,
-				"index" : 19,
-				"max" : 15,
-				"min" : 1,
-				"order" : 119,
-				"text" : "Silence Timeout (Seconds)",
-				"type" : "slider",
-				"value" : 3
-			},
-			"folder_audio" : 
-			{
-				"index" : 15,
-				"order" : 115,
-				"text" : "<h4>Audio</h4>",
-				"type" : "text"
-			},
-			"folder_characters" : 
-			{
-				"index" : 8,
-				"order" : 108,
-				"text" : "<h4>Characters</h4>",
-				"type" : "text"
-			},
-			"folder_color" : 
-			{
-				"index" : 3,
-				"order" : 103,
-				"text" : "<h4>Color</h4>",
-				"type" : "text"
-			},
-			"folder_font" : 
-			{
-				"index" : 11,
-				"order" : 111,
-				"text" : "<h4>Font</h4>",
-				"type" : "text"
-			},
-			"folder_other" : 
-			{
-				"index" : 20,
-				"order" : 120,
-				"text" : "<h4>Other</h4>",
-				"type" : "text"
-			},
-			"folder_rain" : 
-			{
-				"index" : 0,
-				"order" : 100,
-				"text" : "<h4>Rain</h4>",
-				"type" : "text"
 			},
 			"ui_rain_traillength" : 
 			{
@@ -293,7 +378,7 @@
 	"snapshotoverlay" : "",
 	"tags" : [ "Sci-Fi", "Technology", "Multi-monitor optimized" ],
 	"title" : "Neo Matrix",
-	"type" : "Web",
+	"type" : "web",
 	"version" : 0,
 	"visibility" : "public"
 }

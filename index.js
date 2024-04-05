@@ -17,7 +17,7 @@ window.onload = function () {
         ui_characters_customCharset: "0123456789ABCDEF",
         ui_font_font: "2",
         ui_font_customFont: "monospace",
-        ui_font_fontSize: 15,
+        ui_font_size: 15,
         ui_other_codesCommaSeparated: "THE MATRIX",
         codes: makeCodes("THE MATRIX"),
         ui_color_colorMode: "2",
@@ -30,6 +30,11 @@ window.onload = function () {
         ui_audio_audioSensetivity: 50,
         ui_audio_silenceAnimation: true,
         ui_audio_silenceTimeoutSeconds: 3,
+        ui_logo_logo: "1",
+        ui_logo_customLogo: "",
+        ui_logo_scale: 1,
+        ui_logo_positionX: 0,
+        ui_logo_positionY: 0,
         Save() {
             window.localStorage.setItem("preset", JSON.stringify(gui.save()));
             Log("Saved preset.");
@@ -56,7 +61,7 @@ window.onload = function () {
         drawGui();
 
     function drawGui() {
-        gui = new lil.GUI({ autoPlace: false, width: 400 });
+        gui = new lil.GUI({ autoPlace: false, width: 300 });
 
         const rainFolder = gui.addFolder('Rain');
         rainFolder.add(options, 'ui_rain_matrixSpeed').min(1).max(60).step(1).name('Matrix Speed').onChange(() => {
@@ -82,7 +87,7 @@ window.onload = function () {
         characterFolder.add(options, 'ui_characters_customCharset').name('Custom Char Set').onChange(updateCharSet);
 
         const fontFolder = gui.addFolder("Font");
-        fontFolder.add(options, 'ui_font_fontSize').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
+        fontFolder.add(options, 'ui_font_size').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
         fontFolder.add(options, 'ui_font_font', { "MonoSpace": "0", "Consolas": "1", "Courier Bold": "2", "Custom": "3" }).name('Font').onChange(updateFont);
         fontFolder.add(options, 'ui_font_customFont').name('Custom Font').onChange(updateFont);
 
@@ -93,6 +98,14 @@ window.onload = function () {
             options.codes = makeCodes(options.ui_other_codesCommaSeparated);
             fallAnimation();
         });
+
+        const logoFolder = gui.addFolder("Logo");
+        logoFolder.add(options, "ui_logo_logo", { "None": "0", "IP.AF": "1", "Kali 1": "2", "Kali 2": "3", "Custom": "4" }).name("Logo").onChange(updateMask);
+        logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
+        logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateMask);
+        const logoPositionFolder = logoFolder.addFolder("Position");
+        logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
+        logoPositionFolder.add(options, "ui_logo_positionY").min(-5000).max(5000).step(1).name("Y").onChange(updateMask);
 
         gui.add(options, "Save");
         gui.add(options, "Load");
@@ -131,9 +144,9 @@ window.onload = function () {
                 options.ui_font_font = properties.ui_font_font.value;
             if (properties.ui_font_customFont)
                 options.ui_font_customFont = properties.ui_font_customFont.value;
-            if (properties.ui_font_fontsize)
-                options.ui_font_fontSize = properties.ui_font_fontsize.value;
-            if (properties.ui_font_font || properties.ui_font_customFont || properties.ui_font_fontsize)
+            if (properties.ui_font_size)
+                options.ui_font_size = properties.ui_font_size.value;
+            if (properties.ui_font_font || properties.ui_font_customFont || properties.ui_font_size)
                 updateFont();
 
             if (properties.ui_audio_audioresponsive)
@@ -144,6 +157,19 @@ window.onload = function () {
                 options.ui_audio_silenceAnimation = properties.ui_audio_silenceanimation.value;
             if (properties.ui_audio_silencetimeoutseconds)
                 options.ui_audio_silenceTimeoutSeconds = properties.ui_audio_silencetimeoutseconds.value;
+
+            if (properties.ui_logo_logo)
+                options.ui_logo_logo = properties.ui_logo_logo.value;
+            if (properties.ui_logo_customlogo)
+                options.ui_logo_customLogo = properties.ui_logo_customlogo.value;
+            if (properties.ui_logo_scale)
+                options.ui_logo_scale = properties.ui_logo_scale.value;
+            if (properties.ui_logo_positionx)
+                options.ui_logo_positionX = properties.ui_logo_positionx.value;
+            if (properties.ui_logo_positiony)
+                options.ui_logo_positionY = properties.ui_logo_positiony.value;
+            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony)
+                updateMask();
 
             if (properties.ui_other_codescommaseparated) {
                 options.codes = makeCodes(properties.ui_other_codescommaseparated.value);
@@ -186,6 +212,44 @@ window.onload = function () {
     }
 
     function updateMask() {
+        let img = new Image();
+
+        img.onload = function () {
+            drawBlackMask();
+
+            let img_width = img.width * options.ui_logo_scale;
+            let img_height = img.height * options.ui_logo_scale;
+
+            mask.globalCompositeOperation = 'destination-out';
+            mask.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
+        };
+
+        switch (options.ui_logo_logo) {
+            case "1": {
+                img.src = 'images/ipaf.svg';
+                break;
+            }
+            case "2": {
+                img.src = 'images/kali-1.svg';
+                break;
+            }
+            case "3": {
+                img.src = 'images/kali-2.svg';
+                break;
+            }
+            case "4": {
+                img.src = options.ui_logo_customLogo;
+                break;
+            }
+            default: {
+                drawBlackMask();
+                break;
+            }
+        }
+    }
+
+    function drawBlackMask() {
+        mask.globalCompositeOperation = 'source-over';
         mask.clearRect(0, 0, c.width, c.height);
         mask.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
         mask.fillRect(0, 0, c.width, c.height);
@@ -255,16 +319,16 @@ window.onload = function () {
             }
         }
 
-        ctx.font = options.ui_font_fontSize + "px " + font_name;
-        font_fraction = options.ui_font_fontSize / 4;
+        ctx.font = options.ui_font_size + "px " + font_name;
+        font_fraction = options.ui_font_size / 4;
 
         updateGrid();
         fallAnimation();
     }
 
     function updateGrid() {
-        columns = c.width / options.ui_font_fontSize;
-        rows = c.height / options.ui_font_fontSize;
+        columns = c.width / options.ui_font_size;
+        rows = c.height / options.ui_font_size;
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
         column_frequency = frequencyArrayLength / (columns * 2);
@@ -322,20 +386,20 @@ window.onload = function () {
                 lightness = 100;
 
             if (options.ui_color_highlightFirstCharacter) {
-                ctx.fillStyle = "#000";
-                ctx.fillRect(i * options.ui_font_fontSize, ((drops[i][0] - 2) * options.ui_font_fontSize) + font_fraction, options.ui_font_fontSize, options.ui_font_fontSize);
+                ctx.clearRect(i * options.ui_font_size, ((drops[i][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
 
                 var tmp = drops[i][0] - 1;
                 ctx.fillStyle = calculateColor(i, tmp, drop_chars[i][1]);
-                ctx.fillText(drop_chars[i][0], i * options.ui_font_fontSize, tmp * options.ui_font_fontSize);
+                ctx.fillText(drop_chars[i][0], i * options.ui_font_size, tmp * options.ui_font_size);
 
                 ctx.fillStyle = "#FFF";
             }
             else
                 ctx.fillStyle = calculateColor(i, drops[i][0], lightness);
 
+            ctx.clearRect(i * options.ui_font_size, ((drops[i][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
             drop_chars[i] = [character, lightness];
-            ctx.fillText(character, i * options.ui_font_fontSize, drops[i][0] * options.ui_font_fontSize);
+            ctx.fillText(character, i * options.ui_font_size, drops[i][0] * options.ui_font_size);
 
             if (drops[i][0] > rows && Math.random() > probability)
                 drops[i] = [0, 0, 0];

@@ -9,7 +9,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ##
 
 <p align="center">
-   <img src="thereisnomeme.jpg"/>
+   <img src="images/thereisnomeme.jpg"/>
 </p>
 
 <p align="center">
@@ -48,6 +48,10 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 - Codes (these will be shown as decrypted Messages)
 - Web Browser Compatible
    - Preset save/load
+- SVG Logo
+   - 3 presets + CUSTOM
+   - Scale
+   - Position
 
 ## Are you ready to be free?
 
@@ -60,7 +64,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 
 ## TODO:
 - Multiple drops (customizable count)
-- SVG Logo support
 - Clock support
 - Big Message support
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
