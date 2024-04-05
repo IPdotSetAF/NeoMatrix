@@ -23,39 +23,43 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ##
 
 ## Features
-- Customizable Color Mode:
-   - Static Color
-   - RGB Cycle
-   - Vertical Rainbow
-   - Horizontal Rainbow
-- Configurable Animation Speed (Rainbow and RGB Cycle)
-- Matrix Speed Customization
-- Trail Length Customization
-- Togglable First Character Highlighting 
-- Character Set Choice
-   - English Letters
-   - English Letters + Numbers
-   - English Letters + Numbers + Special Characters
-   - Original Matrix Characters
-   - Binary
-   - Hex
-   - Morse code
-   - CUSTOM
-- Font Size Customization
-- Font Customization:
-   - 3 Presets
-   - CUSTOM
-- Audio responsive (inspired by [Colorful Matrix](https://steamcommunity.com/sharedfiles/filedetails/?id=1103493745))
+- Rain Customization
+   - Matrix Speed
+   - Trail Length
+- Color Customization
+   - Color Mode
+      - Static Color
+      - RGB Cycle
+      - Vertical Rainbow
+      - Horizontal Rainbow
+   - Animation Speed (Rainbow and RGB Cycle)
+   - First Character HighLighting 
+- Characters Customization
+   - Char set
+      - 6 Presets
+      - Original Matrix Characters
+      - CUSTOM
+- Font Customization
+   - Size
+   - Font
+      - 3 Presets
+      - CUSTOM
+- Audio Customization (inspired by [Colorful Matrix](https://steamcommunity.com/sharedfiles/filedetails/?id=1103493745))
+   - Audio Response
    - Sensetivity
    - Silence Animation
    - Silence Timeout
-- Codes (these will be shown as decrypted Messages)
-- Web Browser Compatible
-   - Preset save/load
-- SVG Logo
-   - 3 presets + CUSTOM
+- Logo Customization
+   - Logo
+      - 3 presets
+      - CUSTOM
    - Scale
    - Position
+- Other Customizations
+   - Codes (these will be shown as decrypted Messages)
+
+### ✔️ Web Browser Compatible
+   - Preset save/load
 
 ## Are you ready to be free?
 
