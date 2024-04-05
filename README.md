@@ -6,8 +6,8 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 
 <p>
    <img src="preview.gif" width=300px/>
-   <img src="preview2.gif" width=300px/>
-   <img src="preview3.gif" width=300px/>
+   <img src="images/preview2.gif" width=300px/>
+   <img src="images/preview3.gif" width=300px/>
 </p>
 
 ##
@@ -72,6 +72,11 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
          <img src="images/docker.svg" alt="Docker" width=40px/>
          <img src="images/flutter.svg" alt="Flutter" width=40px/>
          <img src="images/git.svg" alt="Git" width=40px/>
+         <img src="images/blender.svg" alt="Blender" width=40px/>
+         <img src="images/angular.svg" alt="Angular" width=40px/>
+         <img src="images/c-sharp.svg" alt="C#" width=40px/>
+         <img src="images/c-plus-plus.svg" alt="C++" width=40px/>
+         <img src="images/qt.svg" alt="QT" width=40px/>
       </p>
 
       - CUSTOM

@@ -353,6 +353,26 @@
 					{
 						"label" : "Git",
 						"value" : "19"
+					},
+					{
+						"label" : "Blender",
+						"value" : "20"
+					},
+					{
+						"label" : "Angular",
+						"value" : "21"
+					},
+					{
+						"label" : "C#",
+						"value" : "22"
+					},
+					{
+						"label" : "C++",
+						"value" : "23"
+					},
+					{
+						"label" : "QT",
+						"value" : "24"
 					}
 				],
 				"order" : 121,
