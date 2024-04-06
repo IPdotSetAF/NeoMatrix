@@ -1,3 +1,11 @@
+<p align=left>
+   <img src="https://img.shields.io/github/v/release/IPdotSetAF/NeoMatrix"/>
+   <img src="https://img.shields.io/github/release-date/IPdotSetAF/NeoMatrix"/>
+   <img src="https://img.shields.io/github/last-commit/IPdotSetAF/NeoMatrix"/>
+   <img src="https://img.shields.io/github/license/IPdotSetAF/NeoMatrix"/>
+   <!--<img src="https://img.shields.io/github/downloads/IPdotSetAF/NeoMatrix/total"/>-->
+</p>
+
 # [WE] NeoMatrix (The Red 💊)
 
 This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (Web Browser Compatible)
