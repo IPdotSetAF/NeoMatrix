@@ -99,6 +99,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
+- Option for disabling initial fall animation
 - Multiple drops (customizable count)
 - Clock support
 - Big Message support
