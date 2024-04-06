@@ -48,6 +48,16 @@ window.onload = function () {
         ui_logo_scale: 1,
         ui_logo_positionX: 0,
         ui_logo_positionY: 0,
+        ui_clock_clock: "0",
+        ui_clock_24HourFormat: true,
+        ui_clock_scale: 1,
+        ui_clock_positionX: 0,
+        ui_clock_positionY: 0,
+        ui_message_message: "0",
+        ui_message_text: "THE MATRIX",
+        ui_message_scale: 1,
+        ui_message_positionX: 0,
+        ui_message_positionY: 0,
         Save() {
             window.localStorage.setItem("preset", JSON.stringify(gui.save()));
             Log("Saved preset.");
@@ -108,13 +118,32 @@ window.onload = function () {
             gui.addFolder("Audio (not available in web version)");
 
             const logoFolder = gui.addFolder("Logo");
-            logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateMask);
-            logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateMask);
-            logoFolder.add(options, "ui_logo_preserveColor").name("Preserve Logo Color").onChange(updateMask);
-            logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateMask);
+            logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateLogo);
+            logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateLogo);
+            logoFolder.add(options, "ui_logo_preserveColor").name("Preserve Logo Color").onChange(updateLogo);
+            logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateLogo);
             const logoPositionFolder = logoFolder.addFolder("Position");
-            logoPositionFolder.add(options, "ui_logo_positionX").min(-5000).max(5000).step(1).name("X").onChange(updateMask);
-            logoPositionFolder.add(options, "ui_logo_positionY").min(-5000).max(5000).step(1).name("Y").onChange(updateMask);
+            logoPositionFolder.add(options, "ui_logo_positionX").min(-2500).max(2500).step(1).name("X").onChange(updateLogo);
+            logoPositionFolder.add(options, "ui_logo_positionY").min(-2500).max(2500).step(1).name("Y").onChange(updateLogo);
+
+            const clockfolder = gui.addFolder("Clock");
+            clockfolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
+            clockfolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
+                updateTime();
+                updateMask();
+            });
+            clockfolder.add(options, "ui_clock_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            const clockPositionFolder = clockfolder.addFolder("Position");
+            clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+
+            const messagefolder = gui.addFolder("Message");
+            messagefolder.add(options, "ui_message_message", optionsToDict(config.general.properties.ui_message_message.options)).name("Message").onChange(updateMask);
+            messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
+            messagefolder.add(options, "ui_message_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            const messagePositionFolder = messagefolder.addFolder("Position");
+            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -189,6 +218,34 @@ window.onload = function () {
             if (properties.ui_logo_preservecolor)
                 options.ui_logo_preserveColor = properties.ui_logo_preservecolor.value;
             if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
+                updateLogo();
+
+            if (properties.ui_clock_clock)
+                options.ui_clock_clock = properties.ui_clock_clock.value;
+            if (properties.ui_clock_24hourformat) {
+                options.ui_clock_24HourFormat = properties.ui_clock_24hourformat.value;
+                updateTime();
+            }
+            if (properties.ui_clock_scale)
+                options.ui_clock_scale = properties.ui_clock_scale.value;
+            if (properties.ui_clock_positionx)
+                options.ui_clock_positionX = properties.ui_clock_positionx.value;
+            if (properties.ui_clock_positiony)
+                options.ui_clock_positionY = properties.ui_clock_positiony.value;
+            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
+                updateMask();
+
+            if (properties.ui_message_message)
+                options.ui_message_message = properties.ui_message_message.value;
+            if (properties.ui_message_text)
+                options.ui_message_text = properties.ui_message_text.value;
+            if (properties.ui_message_scale)
+                options.ui_message_scale = properties.ui_message_scale.value;
+            if (properties.ui_message_positionx)
+                options.ui_message_positionX = properties.ui_message_positionx.value;
+            if (properties.ui_message_positiony)
+                options.ui_message_positionY = properties.ui_message_positiony.value;
+            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -206,6 +263,12 @@ window.onload = function () {
         fallAnimation();
     }, false);
 
+    setInterval(() => {
+        updateTime();
+        if (options.ui_clock_clock != "0")
+            updateMask();
+    }, 60000);
+
     var fonts = ["monospace", "consolas", "courier-bold"];
     var charsets = [
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -216,8 +279,9 @@ window.onload = function () {
         "0123456789ABCDEF",
         "|."
     ];
-    var logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
+    var logo = null, logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
     var debug = document.getElementById("debug"), logs = [];
+    var hour = "", minute = "";
     var startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
@@ -231,6 +295,7 @@ window.onload = function () {
 
     updateCanvasSize();
     updateCharSet();
+    updateTime();
     updateFont();
     startAnimating();
 
@@ -243,56 +308,86 @@ window.onload = function () {
         mask2Dom.width = window.innerWidth;
     }
 
-    function updateMask() {
-        let img = new Image();
-
-        img.onload = function () {
-            drawBlackMask();
-
-            let img_width = (c.height / 2) * (img.width / img.height) * options.ui_logo_scale;
-            let img_height = (c.height / 2) * options.ui_logo_scale;
-
-            mask1.globalCompositeOperation = 'destination-out';
-            mask1.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
-
-            mask2.clearRect(0, 0, c.width, c.height);
-            mask2.drawImage(img, c.width / 2 - img_width / 2 + options.ui_logo_positionX, c.height / 2 - img_height / 2 + options.ui_logo_positionY, img_width, img_height);
-        };
+    function updateLogo() {
+        logo = new Image();
+        logo.onload = updateMask;
 
         switch (options.ui_logo_logo) {
             case "0": {
-                drawBlackMask();
+                logo = null;
+                updateMask();
                 break;
             }
             case "1": {
-                img.src = options.ui_logo_customLogo;
+                logo.src = options.ui_logo_customLogo;
                 break;
             }
             default: {
-                img.src = "images/" + logos[parseInt(options.ui_logo_logo) - 2] + ".svg";
+                logo.src = "images/" + logos[parseInt(options.ui_logo_logo) - 2] + ".svg";
             }
         }
     }
 
-    function drawBlackMask() {
+    function updateTime() {
+        let today = new Date();
+        hour = today.getHours();
+        minute = today.getMinutes();
+
+        if (!options.ui_clock_24HourFormat && hour > 12) {
+            hour = hour % 12;
+            if (hour == 0)
+                hour = 12;
+        }
+        if (hour < 10)
+            hour = "0" + hour;
+        if (minute < 10)
+            minute = "0" + minute;
+    }
+
+    function updateMask() {
         mask1.globalCompositeOperation = 'source-over';
         mask1.clearRect(0, 0, c.width, c.height);
         mask1.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
         mask1.fillRect(0, 0, c.width, c.height);
 
-        if (true) {
-            mask1.globalCompositeOperation = 'destination-out';
-            mask1.fillStyle = "#FFF";
-            mask1.fillText("Hello this is a Text", options.ui_font_size * 3 - font_fraction, options.ui_font_size * 10 +font_fraction);
-            mask1.globalCompositeOperation = 'source-over';
+        mask1.globalCompositeOperation = 'destination-out';
+
+        if (logo) {
+            let logo_width = (c.height / 2) * (logo.width / logo.height) * options.ui_logo_scale;
+            let logo_height = (c.height / 2) * options.ui_logo_scale;
+
+            mask1.drawImage(logo, c.width / 2 - logo_width / 2 + options.ui_logo_positionX, c.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
+
+            mask2.clearRect(0, 0, c.width, c.height);
+            mask2.drawImage(logo, c.width / 2 - logo_width / 2 + options.ui_logo_positionX, c.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
         }
+
+        switch (options.ui_clock_clock) {
+            case "3": {
+                let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows + 5 * options.ui_clock_scale) / 2)];
+                drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+                break;
+            }
+            case "4": {
+                let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows + options.ui_clock_scale) / 2)];
+                drawTextOnMask(hour, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
+                drawTextOnMask(minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY + 5 * options.ui_clock_scale, options.ui_clock_scale);
+                break;
+            }
+        }
+    }
+
+    function drawTextOnMask(text, x, y, scale) {
+        mask1.font = options.ui_font_size * 5 * scale + "px neo-matrix";
+        mask1.fillStyle = "#FFF";
+        mask1.fillText(text, options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction);
     }
 
     function drawMask() {
         ctx.globalCompositeOperation = 'source-over';
         ctx.drawImage(mask1Dom, 0, 0);
 
-        if (options.ui_logo_preserveColor) {
+        if (logo && options.ui_logo_preserveColor) {
             ctx.globalCompositeOperation = 'source-atop';
             ctx.drawImage(mask2Dom, 0, 0);
             ctx.globalCompositeOperation = 'source-over';
@@ -317,7 +412,6 @@ window.onload = function () {
             font_name = fonts[parseInt(options.ui_font_font) - 1];
 
         ctx.font = options.ui_font_size + "px " + font_name;
-        mask1.font = options.ui_font_size * 5 + "px neo-matrix";
         font_fraction = options.ui_font_size / 4;
 
         updateGrid();
