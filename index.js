@@ -230,7 +230,6 @@ window.onload = function () {
     var ctx = c.getContext("2d");
 
     updateCanvasSize();
-    updateMask();
     updateCharSet();
     updateFont();
     startAnimating();
@@ -280,6 +279,13 @@ window.onload = function () {
         mask1.clearRect(0, 0, c.width, c.height);
         mask1.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
         mask1.fillRect(0, 0, c.width, c.height);
+
+        if (true) {
+            mask1.globalCompositeOperation = 'destination-out';
+            mask1.fillStyle = "#FFF";
+            mask1.fillText("Hello this is a Text", options.ui_font_size * 3 - font_fraction, options.ui_font_size * 10 +font_fraction);
+            mask1.globalCompositeOperation = 'source-over';
+        }
     }
 
     function drawMask() {
@@ -311,9 +317,11 @@ window.onload = function () {
             font_name = fonts[parseInt(options.ui_font_font) - 1];
 
         ctx.font = options.ui_font_size + "px " + font_name;
+        mask1.font = options.ui_font_size * 5 + "px neo-matrix";
         font_fraction = options.ui_font_size / 4;
 
         updateGrid();
+        updateMask();
         fallAnimation();
     }
 
