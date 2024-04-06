@@ -286,12 +286,12 @@ window.onload = function () {
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
     var font_fraction;
-    var mask1Dom = document.getElementById("m1");
-    var mask1 = mask1Dom.getContext("2d");
-    var mask2Dom = document.getElementById("m2");
-    var mask2 = mask2Dom.getContext("2d");
-    var c = document.getElementById("neomatrix");
-    var ctx = c.getContext("2d");
+    var maskDom = document.getElementById("mask");
+    var mask = maskDom.getContext("2d");
+    var colorOverlayDom = document.getElementById("color-overlay");
+    var colorOverlay = colorOverlayDom.getContext("2d");
+    var neoMatrixDom = document.getElementById("neo-matrix");
+    var neoMatrix = neoMatrixDom.getContext("2d");
 
     updateCanvasSize();
     updateCharSet();
@@ -300,12 +300,12 @@ window.onload = function () {
     startAnimating();
 
     function updateCanvasSize() {
-        c.height = window.innerHeight;
-        c.width = window.innerWidth;
-        mask1Dom.height = window.innerHeight;
-        mask1Dom.width = window.innerWidth;
-        mask2Dom.height = window.innerHeight;
-        mask2Dom.width = window.innerWidth;
+        neoMatrixDom.height = window.innerHeight;
+        neoMatrixDom.width = window.innerWidth;
+        maskDom.height = window.innerHeight;
+        maskDom.width = window.innerWidth;
+        colorOverlayDom.height = window.innerHeight;
+        colorOverlayDom.width = window.innerWidth;
     }
 
     function updateLogo() {
@@ -345,21 +345,21 @@ window.onload = function () {
     }
 
     function updateMask() {
-        mask1.globalCompositeOperation = 'source-over';
-        mask1.clearRect(0, 0, c.width, c.height);
-        mask1.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
-        mask1.fillRect(0, 0, c.width, c.height);
+        mask.globalCompositeOperation = 'source-over';
+        mask.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
+        mask.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
+        mask.fillRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
 
-        mask1.globalCompositeOperation = 'destination-out';
+        mask.globalCompositeOperation = 'destination-out';
 
         if (logo) {
-            let logo_width = (c.height / 2) * (logo.width / logo.height) * options.ui_logo_scale;
-            let logo_height = (c.height / 2) * options.ui_logo_scale;
+            let logo_width = (neoMatrixDom.height / 2) * (logo.width / logo.height) * options.ui_logo_scale;
+            let logo_height = (neoMatrixDom.height / 2) * options.ui_logo_scale;
 
-            mask1.drawImage(logo, c.width / 2 - logo_width / 2 + options.ui_logo_positionX, c.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
+            mask.drawImage(logo, neoMatrixDom.width / 2 - logo_width / 2 + options.ui_logo_positionX, neoMatrixDom.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
 
-            mask2.clearRect(0, 0, c.width, c.height);
-            mask2.drawImage(logo, c.width / 2 - logo_width / 2 + options.ui_logo_positionX, c.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
+            colorOverlay.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
+            colorOverlay.drawImage(logo, neoMatrixDom.width / 2 - logo_width / 2 + options.ui_logo_positionX, neoMatrixDom.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
         }
 
         switch (options.ui_clock_clock) {
@@ -378,19 +378,19 @@ window.onload = function () {
     }
 
     function drawTextOnMask(text, x, y, scale) {
-        mask1.font = options.ui_font_size * 5 * scale + "px neo-matrix";
-        mask1.fillStyle = "#FFF";
-        mask1.fillText(text, options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction);
+        mask.font = options.ui_font_size * 5 * scale + "px neo-matrix";
+        mask.fillStyle = "#FFF";
+        mask.fillText(text, options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction);
     }
 
     function drawMask() {
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(mask1Dom, 0, 0);
+        neoMatrix.globalCompositeOperation = 'source-over';
+        neoMatrix.drawImage(maskDom, 0, 0);
 
         if (logo && options.ui_logo_preserveColor) {
-            ctx.globalCompositeOperation = 'source-atop';
-            ctx.drawImage(mask2Dom, 0, 0);
-            ctx.globalCompositeOperation = 'source-over';
+            neoMatrix.globalCompositeOperation = 'source-atop';
+            neoMatrix.drawImage(colorOverlayDom, 0, 0);
+            neoMatrix.globalCompositeOperation = 'source-over';
         }
     }
 
@@ -411,7 +411,7 @@ window.onload = function () {
         else
             font_name = fonts[parseInt(options.ui_font_font) - 1];
 
-        ctx.font = options.ui_font_size + "px " + font_name;
+        neoMatrix.font = options.ui_font_size + "px " + font_name;
         font_fraction = options.ui_font_size / 4;
 
         updateGrid();
@@ -420,8 +420,8 @@ window.onload = function () {
     }
 
     function updateGrid() {
-        columns = c.width / options.ui_font_size;
-        rows = c.height / options.ui_font_size;
+        columns = neoMatrixDom.width / options.ui_font_size;
+        rows = neoMatrixDom.height / options.ui_font_size;
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
         column_frequency = frequencyArrayLength / (columns * 2);
@@ -479,20 +479,20 @@ window.onload = function () {
                 lightness = 100;
 
             if (options.ui_color_highlightFirstCharacter) {
-                ctx.clearRect(i * options.ui_font_size, ((drops[i][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+                neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
 
                 var tmp = drops[i][0] - 1;
-                ctx.fillStyle = calculateColor(i, tmp, drop_chars[i][1]);
-                ctx.fillText(drop_chars[i][0], i * options.ui_font_size, tmp * options.ui_font_size);
+                neoMatrix.fillStyle = calculateColor(i, tmp, drop_chars[i][1]);
+                neoMatrix.fillText(drop_chars[i][0], i * options.ui_font_size, tmp * options.ui_font_size);
 
-                ctx.fillStyle = "#FFF";
+                neoMatrix.fillStyle = "#FFF";
             }
             else
-                ctx.fillStyle = calculateColor(i, drops[i][0], lightness);
+                neoMatrix.fillStyle = calculateColor(i, drops[i][0], lightness);
 
-            ctx.clearRect(i * options.ui_font_size, ((drops[i][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+            neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
             drop_chars[i] = [character, lightness];
-            ctx.fillText(character, i * options.ui_font_size, drops[i][0] * options.ui_font_size);
+            neoMatrix.fillText(character, i * options.ui_font_size, drops[i][0] * options.ui_font_size);
 
             if (drops[i][0] > rows && Math.random() > probability)
                 drops[i] = [0, 0, 0];
