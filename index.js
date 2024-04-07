@@ -269,7 +269,7 @@ window.onload = function () {
             updateMask();
     }, 60000);
 
-    var fonts = ["monospace", "consolas", "courier-bold"];
+    var fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
     var charsets = [
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",

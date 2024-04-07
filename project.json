@@ -331,6 +331,10 @@
 					{
 						"label" : "Courier Bold",
 						"value" : "3"
+					},
+					{
+						"label" : "Neo Matrix",
+						"value" : "4"
 					}
 				],
 				"order" : 113,
