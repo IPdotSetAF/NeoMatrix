@@ -374,6 +374,14 @@ window.onload = function () {
                 break;
             }
         }
+
+        switch (options.ui_message_message) {
+            case "3": {
+                let position = [0,  5 * options.ui_message_scale];
+                drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
+                break;
+            }
+        }
     }
 
     function drawTextOnMask(text, x, y, scale) {
@@ -381,7 +389,7 @@ window.onload = function () {
         mask.fillStyle = "#FFF";
         lines = text.split("\n");
         for (let i = 0; i < lines.length; i++) {
-            mask.fillText(lines[i], options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction + (6 * i * options.ui_font_size * options.ui_clock_scale));
+            mask.fillText(lines[i], options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction + (6 * i * options.ui_font_size * scale));
         }
     }
 

@@ -187,19 +187,11 @@
 						"value" : "0"
 					},
 					{
-						"label" : "Small Horizontal",
-						"value" : "1"
-					},
-					{
-						"label" : "Small Vertical",
-						"value" : "2"
-					},
-					{
-						"label" : "Big Horizontal",
+						"label" : "Horizontal",
 						"value" : "3"
 					},
 					{
-						"label" : "Big Vertical",
+						"label" : "Vertical",
 						"value" : "4"
 					}
 				],
@@ -331,10 +323,6 @@
 					{
 						"label" : "Courier Bold",
 						"value" : "3"
-					},
-					{
-						"label" : "Neo Matrix",
-						"value" : "4"
 					}
 				],
 				"order" : 113,
@@ -530,20 +518,8 @@
 						"value" : "0"
 					},
 					{
-						"label" : "Small Horizontal",
-						"value" : "1"
-					},
-					{
-						"label" : "Small Vertical",
-						"value" : "2"
-					},
-					{
-						"label" : "Big Horizontal",
+						"label" : "Horizontal",
 						"value" : "3"
-					},
-					{
-						"label" : "Big Vertical",
-						"value" : "4"
 					}
 				],
 				"order" : 134,

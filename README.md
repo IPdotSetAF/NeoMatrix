@@ -83,6 +83,16 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Preserve Logo Color
    - Scale
    - Position
+- Clock
+   - Horizontal/Vertical
+   - 12/24 Hour Format
+   - Scale
+   - Position
+- Message
+   - Horizontal
+   - Text
+   - Scale
+   - Position
 - Other Customizations
    - Codes (these will be shown as decrypted Messages)
 
@@ -101,8 +111,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ## TODO:
 - Option for disabling initial fall animation
 - Multiple drops (customizable count)
-- Clock support
-- Big Message support
+- Small Clock and Messsage
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
 
