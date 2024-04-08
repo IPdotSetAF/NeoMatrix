@@ -9,6 +9,11 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    <img src="images/preview2.gif" width=300px/>
    <img src="images/preview3.gif" width=300px/>
 </p>
+<p>
+   <img src="images/preview4.gif" width=300px/>
+   <img src="images/preview5.gif" width=300px/>
+   <img src="images/preview6.gif" width=300px/>
+</p>
 
 ##
 
