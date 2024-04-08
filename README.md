@@ -13,9 +13,14 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ## Preview [(Web Demo)](https://ipdotsetaf.github.io/NeoMatrix/)
 
 <p>
-   <img src="preview.gif" width=300px/>
-   <img src="images/preview2.gif" width=300px/>
-   <img src="images/preview3.gif" width=300px/>
+   <img src="preview.gif" width=270px height=270px/>
+   <img src="images/preview2.gif" width=270px height=270px/>
+   <img src="images/preview3.gif" width=270px height=270px/>
+</p>
+<p>
+   <img src="images/preview4.gif" width=270px height=270px/>
+   <img src="images/preview5.gif" width=270px height=270px/>
+   <img src="images/preview6.gif" width=270px height=270px/>
 </p>
 
 ##
@@ -91,6 +96,16 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Preserve Logo Color
    - Scale
    - Position
+- Clock
+   - Horizontal/Vertical
+   - 12/24 Hour Format
+   - Scale
+   - Position
+- Message
+   - Horizontal
+   - Text
+   - Scale
+   - Position
 - Other Customizations
    - Codes (these will be shown as decrypted Messages)
 
@@ -109,8 +124,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 ## TODO:
 - Option for disabling initial fall animation
 - Multiple drops (customizable count)
-- Clock support
-- Big Message support
+- Small Clock and Messsage
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
 

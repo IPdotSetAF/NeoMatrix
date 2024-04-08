@@ -19,6 +19,13 @@
 				"text" : "<h4>Characters</h4>",
 				"type" : "text"
 			},
+			"folder_clock" : 
+			{
+				"index" : 27,
+				"order" : 127,
+				"text" : "<h4>Clock</h4>",
+				"type" : "text"
+			},
 			"folder_color" : 
 			{
 				"index" : 3,
@@ -40,10 +47,17 @@
 				"text" : "<h4>Logo</h4>",
 				"type" : "text"
 			},
+			"folder_message" : 
+			{
+				"index" : 33,
+				"order" : 133,
+				"text" : "<h4>Message</h4>",
+				"type" : "text"
+			},
 			"folder_other" : 
 			{
-				"index" : 27,
-				"order" : 127,
+				"index" : 39,
+				"order" : 139,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
@@ -153,6 +167,74 @@
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
+			},
+			"ui_clock_24hourformat" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"index" : 29,
+				"order" : 129,
+				"text" : "24 Hour format",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_clock_clock" : 
+			{
+				"index" : 28,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Horizontal",
+						"value" : "3"
+					},
+					{
+						"label" : "Vertical",
+						"value" : "4"
+					}
+				],
+				"order" : 128,
+				"text" : "Clock",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_clock_positionx" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 31,
+				"max" : 100,
+				"min" : -100,
+				"order" : 131,
+				"text" : "Clock Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_clock_positiony" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 32,
+				"max" : 100,
+				"min" : -100,
+				"order" : 132,
+				"text" : "Clock Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_clock_scale" : 
+			{
+				"condition" : "ui_clock_clock.value == 3 || ui_clock_clock.value == 4",
+				"fraction" : false,
+				"index" : 30,
+				"max" : 10,
+				"min" : 1,
+				"order" : 130,
+				"text" : "Clock Scale",
+				"type" : "slider",
+				"value" : 1
 			},
 			"ui_color_coloranimationspeed" : 
 			{
@@ -384,8 +466,8 @@
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
 				"index" : 25,
-				"max" : 5000,
-				"min" : -5000,
+				"max" : 2500,
+				"min" : -2500,
 				"order" : 125,
 				"text" : "Logo Position X",
 				"type" : "slider",
@@ -396,8 +478,8 @@
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
 				"index" : 26,
-				"max" : 5000,
-				"min" : -5000,
+				"max" : 2500,
+				"min" : -2500,
 				"order" : 126,
 				"text" : "Logo Position Y",
 				"type" : "slider",
@@ -426,10 +508,74 @@
 				"type" : "slider",
 				"value" : 1
 			},
+			"ui_message_message" : 
+			{
+				"index" : 34,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Horizontal",
+						"value" : "3"
+					}
+				],
+				"order" : 134,
+				"text" : "Message",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_message_positionx" : 
+			{
+				"condition" : "ui_message_message.value != 0",
+				"fraction" : false,
+				"index" : 37,
+				"max" : 100,
+				"min" : -100,
+				"order" : 137,
+				"text" : "Message Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_message_positiony" : 
+			{
+				"condition" : "ui_message_message.value != 0",
+				"fraction" : false,
+				"index" : 38,
+				"max" : 100,
+				"min" : -100,
+				"order" : 138,
+				"text" : "Message Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_message_scale" : 
+			{
+				"condition" : "ui_message_message.value == 3 || ui_message_message.value == 4",
+				"fraction" : false,
+				"index" : 36,
+				"max" : 10,
+				"min" : 1,
+				"order" : 136,
+				"text" : "Message Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_message_text" : 
+			{
+				"condition" : "ui_message_message.value != 0",
+				"index" : 35,
+				"order" : 135,
+				"text" : "Message Text",
+				"type" : "textinput",
+				"value" : "THE MATRIX"
+			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 28,
-				"order" : 128,
+				"index" : 40,
+				"order" : 140,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
