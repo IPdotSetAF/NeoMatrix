@@ -142,8 +142,8 @@ window.onload = function () {
             messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
             messagefolder.add(options, "ui_message_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
             const messagePositionFolder = messagefolder.addFolder("Position");
-            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionX").min(0).max(200).step(1).name("X").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionY").min(0).max(200).step(1).name("Y").onChange(updateMask);
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
