@@ -1,5 +1,5 @@
 window.onload = function () {
-    const version = "v4.0.0";
+    const version = "v4.1.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -370,7 +370,7 @@ window.onload = function () {
             }
             case "4": {
                 let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows + options.ui_clock_scale) / 2)];
-                drawTextOnMask(hour + "\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
+                drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
                 break;
             }
         }
@@ -387,7 +387,7 @@ window.onload = function () {
     function drawTextOnMask(text, x, y, scale) {
         mask.font = options.ui_font_size * 5 * scale + "px neo-matrix";
         mask.fillStyle = "#FFF";
-        lines = text.split("\n");
+        lines = text.split("\\n");
         for (let i = 0; i < lines.length; i++) {
             mask.fillText(lines[i], options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction + (6 * i * options.ui_font_size * scale));
         }
