@@ -1,5 +1,5 @@
 window.onload = function () {
-    const version = "v4.1.0";
+    const version = "v4.2.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -25,6 +25,7 @@ window.onload = function () {
         fpsInterval: calculateFpsInterval(24),
         ui_rain_trailLength: 0.86,
         trailLength: calculateTrailLength(0.86),
+        ui_rain_initialAnimation: true,
         ui_characters_charset: "4",
         ui_characters_customCharset: "0123456789ABCDEF",
         ui_font_font: "3",
@@ -95,6 +96,7 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
                 updateMask();
             });
+            rainFolder.add(options, "ui_rain_initialAnimation").name("Initial Animation");
 
             const colorFolder = gui.addFolder("Color");
             colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
@@ -170,6 +172,8 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(properties.ui_rain_traillength.value);
                 updateMask();
             }
+            if (properties.ui_rain_initialanimation)
+                options.ui_rain_initialAnimation = properties.ui_rain_initialanimation.value;
 
             if (properties.ui_color_colormode)
                 options.ui_color_colorMode = properties.ui_color_colormode.value;
@@ -377,7 +381,7 @@ window.onload = function () {
 
         switch (options.ui_message_message) {
             case "3": {
-                let position = [0,  5 * options.ui_message_scale];
+                let position = [0, 5 * options.ui_message_scale];
                 drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
                 break;
             }
@@ -440,10 +444,16 @@ window.onload = function () {
     function fallAnimation() {
         drops = [];
         drop_chars = [];
-        for (var i = 0; i < columns; i++) {
-            drops[i] = [1, 0, 0];
-            drop_chars[i] = ["", false];
-        }
+        if (options.ui_rain_initialAnimation)
+            for (var i = 0; i < columns; i++) {
+                drops[i] = [1, 0, 0];
+                drop_chars[i] = ["", false];
+            }
+        else
+            for (var i = 0; i < columns; i++) {
+                drops[i] = [Math.floor(Math.random() * rows), 0, 0];
+                drop_chars[i] = ["", false];
+            }
     }
 
     function startAnimating() {

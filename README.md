@@ -39,6 +39,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 - Rain Customization
    - Matrix Speed
    - Trail Length
+   - Enable/Disable Initial Fall Animation
 - Color Customization
    - Color Mode
       - Static Color
@@ -122,12 +123,18 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
-- Option for disabling initial fall animation
 - Multiple drops (customizable count)
 - Small Clock and Messsage
+- Random Character Mutations
+- Random Character Flip
+- Random drop length (not to the bottom of the screen)
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
 
 ## Contribution
 - You can open Issues for any bug report or feature request.
-- You are free to contribute to this project by Forking this repository, Doing what you want to do, then creating a pull request.
+- You are free to contribute to this project by following these steps:
+   1. Fork this Repo.
+   2. Create a new branch for your feature/bugfix in your forked Repo.
+   3. Commit your changes to the new branch you just made.
+   4. Create a pull request from your branch into the `master` branch of This Repo([https://github.com/IPdotSetAF/NeoMatrix](https://github.com/IPdotSetAF/NeoMatrix)).

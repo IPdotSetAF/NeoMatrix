@@ -7,57 +7,57 @@
 		{
 			"folder_audio" : 
 			{
-				"index" : 15,
-				"order" : 115,
+				"index" : 16,
+				"order" : 116,
 				"text" : "<h4>Audio</h4>",
 				"type" : "text"
 			},
 			"folder_characters" : 
 			{
-				"index" : 8,
-				"order" : 108,
+				"index" : 9,
+				"order" : 109,
 				"text" : "<h4>Characters</h4>",
 				"type" : "text"
 			},
 			"folder_clock" : 
 			{
-				"index" : 27,
-				"order" : 127,
+				"index" : 28,
+				"order" : 128,
 				"text" : "<h4>Clock</h4>",
 				"type" : "text"
 			},
 			"folder_color" : 
 			{
-				"index" : 3,
-				"order" : 103,
+				"index" : 4,
+				"order" : 104,
 				"text" : "<h4>Color</h4>",
 				"type" : "text"
 			},
 			"folder_font" : 
 			{
-				"index" : 11,
-				"order" : 111,
+				"index" : 12,
+				"order" : 112,
 				"text" : "<h4>Font</h4>",
 				"type" : "text"
 			},
 			"folder_logo" : 
 			{
-				"index" : 20,
-				"order" : 120,
+				"index" : 21,
+				"order" : 121,
 				"text" : "<h4>Logo</h4>",
 				"type" : "text"
 			},
 			"folder_message" : 
 			{
-				"index" : 33,
-				"order" : 133,
+				"index" : 34,
+				"order" : 134,
 				"text" : "<h4>Message</h4>",
 				"type" : "text"
 			},
 			"folder_other" : 
 			{
-				"index" : 39,
-				"order" : 139,
+				"index" : 40,
+				"order" : 140,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
@@ -77,8 +77,8 @@
 			},
 			"ui_audio_audioresponsive" : 
 			{
-				"index" : 16,
-				"order" : 116,
+				"index" : 17,
+				"order" : 117,
 				"text" : "Audio Responsive",
 				"type" : "bool",
 				"value" : false
@@ -87,10 +87,10 @@
 			{
 				"condition" : "ui_audio_audioresponsive.value == true",
 				"fraction" : false,
-				"index" : 17,
+				"index" : 18,
 				"max" : 100,
 				"min" : 0,
-				"order" : 117,
+				"order" : 118,
 				"text" : "Audio Sensetivity",
 				"type" : "slider",
 				"value" : 50
@@ -98,8 +98,8 @@
 			"ui_audio_silenceanimation" : 
 			{
 				"condition" : "ui_audio_audioresponsive.value == true",
-				"index" : 18,
-				"order" : 118,
+				"index" : 19,
+				"order" : 119,
 				"text" : "Silence Animation",
 				"type" : "bool",
 				"value" : true
@@ -108,17 +108,17 @@
 			{
 				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
 				"fraction" : false,
-				"index" : 19,
+				"index" : 20,
 				"max" : 15,
 				"min" : 1,
-				"order" : 119,
+				"order" : 120,
 				"text" : "Silence Timeout (Seconds)",
 				"type" : "slider",
 				"value" : 3
 			},
 			"ui_characters_charset" : 
 			{
-				"index" : 9,
+				"index" : 10,
 				"options" : 
 				[
 					{
@@ -154,7 +154,7 @@
 						"value" : "7"
 					}
 				],
-				"order" : 109,
+				"order" : 110,
 				"text" : "Char set",
 				"type" : "combo",
 				"value" : "3"
@@ -162,8 +162,8 @@
 			"ui_characters_customcharset" : 
 			{
 				"condition" : "ui_characters_charset.value == 0",
-				"index" : 10,
-				"order" : 110,
+				"index" : 11,
+				"order" : 111,
 				"text" : "Custom Char set",
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
@@ -171,15 +171,15 @@
 			"ui_clock_24hourformat" : 
 			{
 				"condition" : "ui_clock_clock.value != 0",
-				"index" : 29,
-				"order" : 129,
+				"index" : 30,
+				"order" : 130,
 				"text" : "24 Hour format",
 				"type" : "bool",
 				"value" : true
 			},
 			"ui_clock_clock" : 
 			{
-				"index" : 28,
+				"index" : 29,
 				"options" : 
 				[
 					{
@@ -195,7 +195,7 @@
 						"value" : "4"
 					}
 				],
-				"order" : 128,
+				"order" : 129,
 				"text" : "Clock",
 				"type" : "combo",
 				"value" : "0"
@@ -204,10 +204,10 @@
 			{
 				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 31,
+				"index" : 32,
 				"max" : 100,
 				"min" : -100,
-				"order" : 131,
+				"order" : 132,
 				"text" : "Clock Position X",
 				"type" : "slider",
 				"value" : 0
@@ -216,10 +216,10 @@
 			{
 				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 32,
+				"index" : 33,
 				"max" : 100,
 				"min" : -100,
-				"order" : 132,
+				"order" : 133,
 				"text" : "Clock Position Y",
 				"type" : "slider",
 				"value" : 0
@@ -228,10 +228,10 @@
 			{
 				"condition" : "ui_clock_clock.value == 3 || ui_clock_clock.value == 4",
 				"fraction" : false,
-				"index" : 30,
+				"index" : 31,
 				"max" : 10,
 				"min" : 1,
-				"order" : 130,
+				"order" : 131,
 				"text" : "Clock Scale",
 				"type" : "slider",
 				"value" : 1
@@ -240,10 +240,10 @@
 			{
 				"condition" : "ui_color_colormode.value != 0",
 				"fraction" : true,
-				"index" : 6,
+				"index" : 7,
 				"max" : 1,
 				"min" : -1,
-				"order" : 106,
+				"order" : 107,
 				"precision" : 3,
 				"step" : 0.01,
 				"text" : "Color Animation Speed",
@@ -252,7 +252,7 @@
 			},
 			"ui_color_colormode" : 
 			{
-				"index" : 4,
+				"index" : 5,
 				"options" : 
 				[
 					{
@@ -272,15 +272,15 @@
 						"value" : "3"
 					}
 				],
-				"order" : 104,
+				"order" : 105,
 				"text" : "Color Mode",
 				"type" : "combo",
 				"value" : "2"
 			},
 			"ui_color_highlightfirstcharacter" : 
 			{
-				"index" : 7,
-				"order" : 107,
+				"index" : 8,
+				"order" : 108,
 				"text" : "Highlight First Character",
 				"type" : "bool",
 				"value" : true
@@ -288,8 +288,8 @@
 			"ui_color_matrixcolor" : 
 			{
 				"condition" : "ui_color_colormode.value == 0",
-				"index" : 5,
-				"order" : 105,
+				"index" : 6,
+				"order" : 106,
 				"text" : "Matrix Color",
 				"type" : "color",
 				"value" : "0 1 0"
@@ -297,15 +297,15 @@
 			"ui_font_customfont" : 
 			{
 				"condition" : "ui_font_font.value == 0",
-				"index" : 14,
-				"order" : 114,
+				"index" : 15,
+				"order" : 115,
 				"text" : "Custom Font",
 				"type" : "textinput",
 				"value" : "monospace"
 			},
 			"ui_font_font" : 
 			{
-				"index" : 13,
+				"index" : 14,
 				"options" : 
 				[
 					{
@@ -325,7 +325,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 113,
+				"order" : 114,
 				"text" : "Font",
 				"type" : "combo",
 				"value" : "3"
@@ -333,10 +333,10 @@
 			"ui_font_size" : 
 			{
 				"fraction" : false,
-				"index" : 12,
+				"index" : 13,
 				"max" : 30,
 				"min" : 5,
-				"order" : 112,
+				"order" : 113,
 				"text" : "Font size",
 				"type" : "slider",
 				"value" : 15
@@ -344,15 +344,15 @@
 			"ui_logo_customlogo" : 
 			{
 				"condition" : "ui_logo_logo.value == 1",
-				"index" : 22,
-				"order" : 122,
+				"index" : 23,
+				"order" : 123,
 				"text" : "Custom Logo URL (SVG)",
 				"type" : "textinput",
 				"value" : ""
 			},
 			"ui_logo_logo" : 
 			{
-				"index" : 21,
+				"index" : 22,
 				"options" : 
 				[
 					{
@@ -456,7 +456,7 @@
 						"value" : "24"
 					}
 				],
-				"order" : 121,
+				"order" : 122,
 				"text" : "Logo",
 				"type" : "combo",
 				"value" : "0"
@@ -465,10 +465,10 @@
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 25,
+				"index" : 26,
 				"max" : 2500,
 				"min" : -2500,
-				"order" : 125,
+				"order" : 126,
 				"text" : "Logo Position X",
 				"type" : "slider",
 				"value" : 0
@@ -477,10 +477,10 @@
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 26,
+				"index" : 27,
 				"max" : 2500,
 				"min" : -2500,
-				"order" : 126,
+				"order" : 127,
 				"text" : "Logo Position Y",
 				"type" : "slider",
 				"value" : 0
@@ -488,8 +488,8 @@
 			"ui_logo_preservecolor" : 
 			{
 				"condition" : "ui_logo_logo.value != 0",
-				"index" : 23,
-				"order" : 123,
+				"index" : 24,
+				"order" : 124,
 				"text" : "Preserve Logo Color",
 				"type" : "bool",
 				"value" : false
@@ -498,10 +498,10 @@
 			{
 				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : true,
-				"index" : 24,
+				"index" : 25,
 				"max" : 10,
 				"min" : 0,
-				"order" : 124,
+				"order" : 125,
 				"precision" : 1.1,
 				"step" : 0.79432823,
 				"text" : "Logo Scale",
@@ -510,7 +510,7 @@
 			},
 			"ui_message_message" : 
 			{
-				"index" : 34,
+				"index" : 35,
 				"options" : 
 				[
 					{
@@ -522,7 +522,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 134,
+				"order" : 135,
 				"text" : "Message",
 				"type" : "combo",
 				"value" : "0"
@@ -531,10 +531,10 @@
 			{
 				"condition" : "ui_message_message.value != 0",
 				"fraction" : false,
-				"index" : 37,
+				"index" : 38,
 				"max" : 200,
 				"min" : 0,
-				"order" : 137,
+				"order" : 138,
 				"text" : "Message Position X",
 				"type" : "slider",
 				"value" : 0
@@ -543,10 +543,10 @@
 			{
 				"condition" : "ui_message_message.value != 0",
 				"fraction" : false,
-				"index" : 38,
+				"index" : 39,
 				"max" : 200,
 				"min" : 0,
-				"order" : 138,
+				"order" : 139,
 				"text" : "Message Position Y",
 				"type" : "slider",
 				"value" : 0
@@ -555,10 +555,10 @@
 			{
 				"condition" : "ui_message_message.value == 3 || ui_message_message.value == 4",
 				"fraction" : false,
-				"index" : 36,
+				"index" : 37,
 				"max" : 10,
 				"min" : 1,
-				"order" : 136,
+				"order" : 137,
 				"text" : "Message Scale",
 				"type" : "slider",
 				"value" : 1
@@ -566,19 +566,27 @@
 			"ui_message_text" : 
 			{
 				"condition" : "ui_message_message.value != 0",
-				"index" : 35,
-				"order" : 135,
+				"index" : 36,
+				"order" : 136,
 				"text" : "Message Text",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
 			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 40,
-				"order" : 140,
+				"index" : 41,
+				"order" : 141,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
+			},
+			"ui_rain_initialanimation" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "Initial Animation",
+				"type" : "bool",
+				"value" : true
 			},
 			"ui_rain_matrixspeed" : 
 			{
