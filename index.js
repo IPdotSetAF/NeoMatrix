@@ -1,6 +1,6 @@
 window.onload = function () {
     //MARK: Update
-    const version = "v4.3.0";
+    const version = "v5.0.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -20,6 +20,7 @@ window.onload = function () {
         fpsInterval: calculateFpsInterval(24),
         ui_rain_trailLength: 0.86,
         trailLength: calculateTrailLength(0.86),
+        ui_rain_dropCount: 1,
         ui_rain_initialAnimation: "1",
         ui_characters_charset: "4",
         ui_characters_customCharset: "0123456789ABCDEF",
@@ -93,6 +94,7 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
                 updateMask();
             });
+            rainFolder.add(options, "ui_rain_dropCount").min(1).max(5).step(1).name("Drop Count/Column").onChange(initialAnimation);
             rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(initialAnimation);
 
             const colorFolder = gui.addFolder("Color");
@@ -174,10 +176,12 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(properties.ui_rain_traillength.value);
                 updateMask();
             }
-            if (properties.ui_rain_initialanimation) {
+            if (properties.ui_rain_initialanimation)
                 options.ui_rain_initialAnimation = properties.ui_rain_initialanimation.value;
+            if (properties.ui_rain_dropcount)
+                options.ui_rain_dropCount = properties.ui_rain_dropcount.value;
+            if (properties.ui_rain_initialanimation || properties.ui_rain_dropcount)
                 initialAnimation();
-            }
 
             if (properties.ui_color_colormode)
                 options.ui_color_colorMode = properties.ui_color_colormode.value;
@@ -468,21 +472,31 @@ window.onload = function () {
 
         switch (options.ui_rain_initialAnimation) {
             case "0": {
-                for (var i = 0; i < columns; i++)
-                    drops[i] = [rows + 1, 0, 0, "", 0];
+                for (var i = 0; i < columns; i++) {
+                    drops[i] = [];
+                    for (var j = 0; j < options.ui_rain_dropCount; j++)
+                        drops[i][j] = [rows + 1, 0, 0, "", 0];
+                }
                 break;
             }
             case "1": {
-                for (var i = 0; i < columns; i++)
-                    drops[i] = [1, 0, 0, "", 0];
+                for (var i = 0; i < columns; i++) {
+                    drops[i] = [];
+                    drops[i][0] = [1, 0, 0, "", 0];
+                    for (var j = 1; j < options.ui_rain_dropCount; j++)
+                        drops[i][j] = [rows + 1, 0, 0, "", 0];
+                }
                 break;
             }
             case "2": {
-                for (var i = 0; i < columns; i++)
-                    drops[i] = [Math.floor(Math.random() * rows), 0, 0, "", 0];
+                for (var i = 0; i < columns; i++) {
+                    drops[i] = [];
+                    for (var j = 0; j < options.ui_rain_dropCount; j++)
+                        drops[i][j] = [Math.floor(Math.random() * rows), 0, 0, "", 0];
+                }
                 break;
             }
-            }
+        }
     }
 
     function startAnimating() {
@@ -508,9 +522,8 @@ window.onload = function () {
         isSilent = true;
 
         for (var i = 0; i < drops.length; i++) {
-            var character = calculateCharacter(drops[i]);
             var probability = 0.975;
-            var lightness = 50;
+            var audio_lightness = 50;
 
             if (options.ui_audio_audioResponsive) {
                 var frequency = Math.floor(i * column_frequency);
@@ -521,33 +534,38 @@ window.onload = function () {
 
                 if (!AudioTimeout || !options.ui_audio_silenceAnimation) {
                     probability = 1 - clamp(0, 1, (Volume * Volume * Volume * options.ui_audio_audioSensetivity));
-                    lightness = Math.floor(clamp(40, 80, Volume * 100 * options.ui_audio_audioSensetivity));
+                    audio_lightness = Math.floor(clamp(40, 80, Volume * 100 * options.ui_audio_audioSensetivity));
                 }
             }
 
-            if (drops[i][1] > 0)
-                lightness = 100;
+            for (var j = 0; j < options.ui_rain_dropCount; j++) {
+                var character = calculateCharacter(drops[i][j]);
+                var lightness = audio_lightness;
 
-            if (options.ui_color_highlightFirstCharacter) {
-                neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+                if (drops[i][j][1] > 0)
+                    lightness = 100;
 
-                var tmp = drops[i][0] - 1;
-                neoMatrix.fillStyle = calculateColor(i, tmp, drops[i][4]);
-                neoMatrix.fillText(drops[i][3], i * options.ui_font_size, tmp * options.ui_font_size);
+                if (options.ui_color_highlightFirstCharacter) {
+                    neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][j][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
 
-                neoMatrix.fillStyle = "#FFF";
+                    var tmp = drops[i][j][0] - 1;
+                    neoMatrix.fillStyle = calculateColor(i, tmp, drops[i][j][4]);
+                    neoMatrix.fillText(drops[i][j][3], i * options.ui_font_size, tmp * options.ui_font_size);
+
+                    neoMatrix.fillStyle = "#FFF";
+                }
+                else
+                    neoMatrix.fillStyle = calculateColor(i, drops[i][j][0], lightness);
+
+                neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][j][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+                drops[i][j][3] = character, drops[i][j][4] = lightness;
+                neoMatrix.fillText(character, i * options.ui_font_size, drops[i][j][0] * options.ui_font_size);
+
+                if (drops[i][j][0] > rows && Math.random() > probability)
+                    drops[i][j] = [0, 0, 0, "", 0];
+
+                drops[i][j][0]++;
             }
-            else
-                neoMatrix.fillStyle = calculateColor(i, drops[i][0], lightness);
-
-            neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
-            drops[i][3] = character, drops[i][4] = lightness;
-            neoMatrix.fillText(character, i * options.ui_font_size, drops[i][0] * options.ui_font_size);
-
-            if (drops[i][0] > rows && Math.random() > probability)
-                drops[i] = [0, 0, 0, "", 0];
-
-            drops[i][0]++;
         }
 
         if (options.ui_audio_silenceAnimation) {

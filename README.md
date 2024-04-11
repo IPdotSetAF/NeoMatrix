@@ -39,6 +39,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 - Rain Customization
    - Matrix Speed
    - Trail Length
+   - Drop Count/Column (1-5)
    - Initial Fall Animation
       - None
       - Fall
@@ -133,7 +134,6 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
-- Multiple drops (customizable count)
 - Small Clock and Messsage
 - Random Character Mutations
 - Random Character Flip
