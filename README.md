@@ -100,6 +100,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 - Clock
    - Horizontal/Vertical
    - 12/24 Hour Format
+   - Day-light Saving
    - Scale
    - Position
 - Message

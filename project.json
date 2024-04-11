@@ -49,15 +49,15 @@
 			},
 			"folder_message" : 
 			{
-				"index" : 34,
-				"order" : 134,
+				"index" : 35,
+				"order" : 135,
 				"text" : "<h4>Message</h4>",
 				"type" : "text"
 			},
 			"folder_other" : 
 			{
-				"index" : 40,
-				"order" : 140,
+				"index" : 41,
+				"order" : 141,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
@@ -200,14 +200,26 @@
 				"type" : "combo",
 				"value" : "0"
 			},
+			"ui_clock_daylightsaving" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 31,
+				"max" : 1,
+				"min" : -1,
+				"order" : 131,
+				"text" : "Day-light Saving",
+				"type" : "slider",
+				"value" : 0
+			},
 			"ui_clock_positionx" : 
 			{
 				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 32,
+				"index" : 33,
 				"max" : 100,
 				"min" : -100,
-				"order" : 132,
+				"order" : 133,
 				"text" : "Clock Position X",
 				"type" : "slider",
 				"value" : 0
@@ -216,10 +228,10 @@
 			{
 				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 33,
+				"index" : 34,
 				"max" : 100,
 				"min" : -100,
-				"order" : 133,
+				"order" : 134,
 				"text" : "Clock Position Y",
 				"type" : "slider",
 				"value" : 0
@@ -228,10 +240,10 @@
 			{
 				"condition" : "ui_clock_clock.value == 3 || ui_clock_clock.value == 4",
 				"fraction" : false,
-				"index" : 31,
+				"index" : 32,
 				"max" : 10,
 				"min" : 1,
-				"order" : 131,
+				"order" : 132,
 				"text" : "Clock Scale",
 				"type" : "slider",
 				"value" : 1
@@ -510,7 +522,7 @@
 			},
 			"ui_message_message" : 
 			{
-				"index" : 35,
+				"index" : 36,
 				"options" : 
 				[
 					{
@@ -522,7 +534,7 @@
 						"value" : "3"
 					}
 				],
-				"order" : 135,
+				"order" : 136,
 				"text" : "Message",
 				"type" : "combo",
 				"value" : "0"
@@ -531,10 +543,10 @@
 			{
 				"condition" : "ui_message_message.value != 0",
 				"fraction" : false,
-				"index" : 38,
+				"index" : 39,
 				"max" : 200,
 				"min" : 0,
-				"order" : 138,
+				"order" : 139,
 				"text" : "Message Position X",
 				"type" : "slider",
 				"value" : 0
@@ -543,10 +555,10 @@
 			{
 				"condition" : "ui_message_message.value != 0",
 				"fraction" : false,
-				"index" : 39,
+				"index" : 40,
 				"max" : 200,
 				"min" : 0,
-				"order" : 139,
+				"order" : 140,
 				"text" : "Message Position Y",
 				"type" : "slider",
 				"value" : 0
@@ -555,10 +567,10 @@
 			{
 				"condition" : "ui_message_message.value == 3 || ui_message_message.value == 4",
 				"fraction" : false,
-				"index" : 37,
+				"index" : 38,
 				"max" : 10,
 				"min" : 1,
-				"order" : 137,
+				"order" : 138,
 				"text" : "Message Scale",
 				"type" : "slider",
 				"value" : 1
@@ -566,16 +578,16 @@
 			"ui_message_text" : 
 			{
 				"condition" : "ui_message_message.value != 0",
-				"index" : 36,
-				"order" : 136,
+				"index" : 37,
+				"order" : 137,
 				"text" : "Message Text",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
 			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 41,
-				"order" : 141,
+				"index" : 42,
+				"order" : 142,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "THE MATRIX"

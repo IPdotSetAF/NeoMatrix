@@ -1,5 +1,5 @@
 window.onload = function () {
-    const version = "v4.2.0";
+    const version = "v4.3.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -51,6 +51,7 @@ window.onload = function () {
         ui_logo_positionY: 0,
         ui_clock_clock: "0",
         ui_clock_24HourFormat: true,
+        ui_clock_dayLightSaving: 0,
         ui_clock_scale: 1,
         ui_clock_positionX: 0,
         ui_clock_positionY: 0,
@@ -131,6 +132,10 @@ window.onload = function () {
             const clockfolder = gui.addFolder("Clock");
             clockfolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
             clockfolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
+                updateTime();
+                updateMask();
+            });
+            clockfolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
                 updateTime();
                 updateMask();
             });
@@ -230,13 +235,17 @@ window.onload = function () {
                 options.ui_clock_24HourFormat = properties.ui_clock_24hourformat.value;
                 updateTime();
             }
+            if (properties.ui_clock_daylightsaving) {
+                options.ui_clock_dayLightSaving = properties.ui_clock_daylightsaving.value;
+                updateTime();
+            }
             if (properties.ui_clock_scale)
                 options.ui_clock_scale = properties.ui_clock_scale.value;
             if (properties.ui_clock_positionx)
                 options.ui_clock_positionX = properties.ui_clock_positionx.value;
             if (properties.ui_clock_positiony)
                 options.ui_clock_positionY = properties.ui_clock_positiony.value;
-            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
+            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
                 updateMask();
 
             if (properties.ui_message_message)
@@ -336,6 +345,12 @@ window.onload = function () {
         let today = new Date();
         hour = today.getHours();
         minute = today.getMinutes();
+
+        hour += options.ui_clock_dayLightSaving;
+        if (hour < 0)
+            hour = 23;
+        if (hour > 23)
+            hour = 0;
 
         if (!options.ui_clock_24HourFormat && hour > 12) {
             hour = hour % 12;
