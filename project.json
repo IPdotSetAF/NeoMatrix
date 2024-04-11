@@ -595,10 +595,25 @@
 			"ui_rain_initialanimation" : 
 			{
 				"index" : 3,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Fall",
+						"value" : "1"
+					},
+					{
+						"label" : "Scatter",
+						"value" : "2"
+					}
+				],
 				"order" : 103,
 				"text" : "Initial Animation",
-				"type" : "bool",
-				"value" : true
+				"type" : "combo",
+				"value" : "1"
 			},
 			"ui_rain_matrixspeed" : 
 			{

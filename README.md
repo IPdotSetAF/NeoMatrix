@@ -39,7 +39,10 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
 - Rain Customization
    - Matrix Speed
    - Trail Length
-   - Enable/Disable Initial Fall Animation
+   - Initial Fall Animation
+      - None
+      - Fall
+      - Scatter
 - Color Customization
    - Color Mode
       - Static Color
@@ -65,6 +68,7 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Silence Timeout
 - Logo Customization
    - Logo
+      - None
       - 23 presets
 
       <p align="left">
@@ -98,13 +102,18 @@ This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (We
    - Scale
    - Position
 - Clock
-   - Horizontal/Vertical
+   - Clock
+      - None
+      - Horizontal
+      - Vertical
    - 12/24 Hour Format
    - Day-light Saving
    - Scale
    - Position
 - Message
-   - Horizontal
+   - Message
+      - None
+      - Horizontal
    - Text
    - Scale
    - Position

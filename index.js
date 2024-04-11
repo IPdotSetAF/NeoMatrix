@@ -25,7 +25,7 @@ window.onload = function () {
         fpsInterval: calculateFpsInterval(24),
         ui_rain_trailLength: 0.86,
         trailLength: calculateTrailLength(0.86),
-        ui_rain_initialAnimation: true,
+        ui_rain_initialAnimation: "1",
         ui_characters_charset: "4",
         ui_characters_customCharset: "0123456789ABCDEF",
         ui_font_font: "3",
@@ -97,7 +97,7 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
                 updateMask();
             });
-            rainFolder.add(options, "ui_rain_initialAnimation").name("Initial Animation");
+            rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(fallAnimation);
 
             const colorFolder = gui.addFolder("Color");
             colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
@@ -177,8 +177,10 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(properties.ui_rain_traillength.value);
                 updateMask();
             }
-            if (properties.ui_rain_initialanimation)
+            if (properties.ui_rain_initialanimation) {
                 options.ui_rain_initialAnimation = properties.ui_rain_initialanimation.value;
+                fallAnimation();
+            }
 
             if (properties.ui_color_colormode)
                 options.ui_color_colorMode = properties.ui_color_colormode.value;
@@ -459,15 +461,29 @@ window.onload = function () {
     function fallAnimation() {
         drops = [];
         drop_chars = [];
-        if (options.ui_rain_initialAnimation)
+
+        switch (options.ui_rain_initialAnimation) {
+            case "0": {
+                for (var i = 0; i < columns; i++) {
+                    drops[i] = [rows + 1, 0, 0];
+                    drop_chars[i] = ["", false];
+                }
+                break;
+            }
+            case "1": {
             for (var i = 0; i < columns; i++) {
                 drops[i] = [1, 0, 0];
                 drop_chars[i] = ["", false];
             }
-        else
+                break;
+            }
+            case "2": {
             for (var i = 0; i < columns; i++) {
                 drops[i] = [Math.floor(Math.random() * rows), 0, 0];
                 drop_chars[i] = ["", false];
+                }
+                break;
+            }
             }
     }
 
