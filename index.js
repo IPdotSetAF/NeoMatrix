@@ -1,4 +1,5 @@
 window.onload = function () {
+    //MARK: Update
     const version = "v4.3.0";
 
     checkForUpdates = async () => {
@@ -12,13 +13,7 @@ window.onload = function () {
         return await fetch('project.json').then(_ => _.json());
     }
 
-    function optionsToDict(options) {
-        return options.reduce((acc, option) => {
-            acc[option.label] = option.value;
-            return acc;
-        }, {});
-    }
-
+    //MARK: Options
     var gui;
     var options = {
         ui_rain_matrixSpeed: 24,
@@ -85,6 +80,7 @@ window.onload = function () {
     else
         drawGui();
 
+    //MARK: GUI
     function drawGui() {
         readProjectConfig().then((config) => {
             gui = new lil.GUI({ autoPlace: false, width: 300 });
@@ -97,7 +93,7 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
                 updateMask();
             });
-            rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(fallAnimation);
+            rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(initialAnimation);
 
             const colorFolder = gui.addFolder("Color");
             colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
@@ -155,7 +151,7 @@ window.onload = function () {
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
                 options.codes = makeCodes(options.ui_other_codesCommaSeparated);
-                fallAnimation();
+                initialAnimation();
             });
 
             gui.add(options, "Save");
@@ -169,6 +165,7 @@ window.onload = function () {
         });
     }
 
+    //MARK: Wallpaper Engine
     window.wallpaperPropertyListener = {
         applyUserProperties: function (properties) {
             if (properties.ui_rain_matrixspeed)
@@ -179,7 +176,7 @@ window.onload = function () {
             }
             if (properties.ui_rain_initialanimation) {
                 options.ui_rain_initialAnimation = properties.ui_rain_initialanimation.value;
-                fallAnimation();
+                initialAnimation();
             }
 
             if (properties.ui_color_colormode)
@@ -265,7 +262,7 @@ window.onload = function () {
 
             if (properties.ui_other_codescommaseparated) {
                 options.codes = makeCodes(properties.ui_other_codescommaseparated.value);
-                fallAnimation();
+                initialAnimation();
             }
         }
     };
@@ -275,15 +272,10 @@ window.onload = function () {
         updateMask();
         updateFont();
         updateGrid();
-        fallAnimation();
+        initialAnimation();
     }, false);
 
-    setInterval(() => {
-        updateTime();
-        if (options.ui_clock_clock != "0")
-            updateMask();
-    }, 60000);
-
+    //MARK: Variables
     var fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
     var charsets = [
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -297,7 +289,7 @@ window.onload = function () {
     var logo = null, logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
     var debug = document.getElementById("debug"), logs = [];
     var hour = "", minute = "";
-    var startTime, now, then, elapsed, letters, columns, rows, drops, drop_chars;
+    var startTime, now, then, elapsed, letters, columns, rows, drops;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
     var font_fraction;
@@ -323,6 +315,7 @@ window.onload = function () {
         colorOverlayDom.width = window.innerWidth;
     }
 
+    //MARK: Logo
     function updateLogo() {
         logo = new Image();
         logo.onload = updateMask;
@@ -342,6 +335,13 @@ window.onload = function () {
             }
         }
     }
+
+    //MARK: Time
+    setInterval(() => {
+        updateTime();
+        if (options.ui_clock_clock != "0")
+            updateMask();
+    }, 60000);
 
     function updateTime() {
         let today = new Date();
@@ -365,6 +365,7 @@ window.onload = function () {
             minute = "0" + minute;
     }
 
+    //MARK: Mask
     function updateMask() {
         mask.globalCompositeOperation = 'source-over';
         mask.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
@@ -425,6 +426,7 @@ window.onload = function () {
         }
     }
 
+    //MARK: Charset
     function updateCharSet() {
         if (options.ui_characters_charset == "0")
             letters = options.ui_characters_customCharset;
@@ -434,6 +436,7 @@ window.onload = function () {
         letters = letters.split("");
     }
 
+    //MARK: Font
     function updateFont() {
         var font_name;
 
@@ -447,9 +450,10 @@ window.onload = function () {
 
         updateGrid();
         updateMask();
-        fallAnimation();
+        initialAnimation();
     }
 
+    //MARK: Grid
     function updateGrid() {
         columns = neoMatrixDom.width / options.ui_font_size;
         rows = neoMatrixDom.height / options.ui_font_size;
@@ -458,30 +462,24 @@ window.onload = function () {
         column_frequency = frequencyArrayLength / (columns * 2);
     }
 
-    function fallAnimation() {
+    //MARK: Initial Animation
+    function initialAnimation() {
         drops = [];
-        drop_chars = [];
 
         switch (options.ui_rain_initialAnimation) {
             case "0": {
-                for (var i = 0; i < columns; i++) {
-                    drops[i] = [rows + 1, 0, 0];
-                    drop_chars[i] = ["", false];
-                }
+                for (var i = 0; i < columns; i++)
+                    drops[i] = [rows + 1, 0, 0, "", 0];
                 break;
             }
             case "1": {
-            for (var i = 0; i < columns; i++) {
-                drops[i] = [1, 0, 0];
-                drop_chars[i] = ["", false];
-            }
+                for (var i = 0; i < columns; i++)
+                    drops[i] = [1, 0, 0, "", 0];
                 break;
             }
             case "2": {
-            for (var i = 0; i < columns; i++) {
-                drops[i] = [Math.floor(Math.random() * rows), 0, 0];
-                drop_chars[i] = ["", false];
-                }
+                for (var i = 0; i < columns; i++)
+                    drops[i] = [Math.floor(Math.random() * rows), 0, 0, "", 0];
                 break;
             }
             }
@@ -504,6 +502,7 @@ window.onload = function () {
         }
     }
 
+    //MARK: Draw Matrix
     function drawMatrix() {
         drawMask();
         isSilent = true;
@@ -533,8 +532,8 @@ window.onload = function () {
                 neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
 
                 var tmp = drops[i][0] - 1;
-                neoMatrix.fillStyle = calculateColor(i, tmp, drop_chars[i][1]);
-                neoMatrix.fillText(drop_chars[i][0], i * options.ui_font_size, tmp * options.ui_font_size);
+                neoMatrix.fillStyle = calculateColor(i, tmp, drops[i][4]);
+                neoMatrix.fillText(drops[i][3], i * options.ui_font_size, tmp * options.ui_font_size);
 
                 neoMatrix.fillStyle = "#FFF";
             }
@@ -542,11 +541,11 @@ window.onload = function () {
                 neoMatrix.fillStyle = calculateColor(i, drops[i][0], lightness);
 
             neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
-            drop_chars[i] = [character, lightness];
+            drops[i][3] = character, drops[i][4] = lightness;
             neoMatrix.fillText(character, i * options.ui_font_size, drops[i][0] * options.ui_font_size);
 
             if (drops[i][0] > rows && Math.random() > probability)
-                drops[i] = [0, 0, 0];
+                drops[i] = [0, 0, 0, "", 0];
 
             drops[i][0]++;
         }
@@ -561,6 +560,7 @@ window.onload = function () {
         }
     }
 
+    //MARK: Calculate Character
     function calculateCharacter(dropItem) {
 
         if (Math.random() > 0.995 && dropItem[1] == 0) {
@@ -579,6 +579,7 @@ window.onload = function () {
         return letters[Math.floor(Math.random() * letters.length)];
     }
 
+    //MARK: Calculate Color
     function calculateColor(i, j, lightness) {
         var hue, offset = Math.floor(options.colorAnimationSpeed * then);
 
@@ -626,6 +627,7 @@ window.onload = function () {
         return codes;
     }
 
+    //MARK: Helpers
     function Log(text) {
         debug.classList.remove("hide");
         void debug.offsetWidth;
@@ -679,6 +681,13 @@ window.onload = function () {
         if (value > max)
             return max;
         return value;
+    }
+
+    function optionsToDict(options) {
+        return options.reduce((acc, option) => {
+            acc[option.label] = option.value;
+            return acc;
+        }, {});
     }
 };
 
