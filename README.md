@@ -145,7 +145,6 @@ Click on each preview to watch live
 - Random Character Mutations
 - Random Character Flip
 - Random drop length (not to the bottom of the screen)
-- Multiple web presets
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
 - Mobile support
 
