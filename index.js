@@ -739,8 +739,8 @@ window.onload = function () {
             if (params.get(key) === value)
                 params.delete(key);
         });
-        debugger;
-        return window.location.protocol + "//" + window.location.host +"/"+window.location.pathname+ "/?" + params.toString();
+        
+        return window.location.origin + window.location.pathname + "?" + params.toString();
     }
 
     function copyToClipboard(text) {
