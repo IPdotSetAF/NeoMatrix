@@ -15,7 +15,6 @@ window.onload = function () {
 
     //MARK: Options
     var gui;
-    var defaultOptions;
     var options = {
         ui_rain_matrixSpeed: 24,
         fpsInterval: calculateFpsInterval(24),
@@ -96,7 +95,6 @@ window.onload = function () {
 
     //MARK: GUI
     function drawGui() {
-        defaultOptions = JSON.parse(JSON.stringify(options));
         const params = getUrlParams();
 
         readProjectConfig().then((config) => {
@@ -741,8 +739,8 @@ window.onload = function () {
             if (params.get(key) === value)
                 params.delete(key);
         });
-
-        return window.location.protocol + "//" + window.location.host + "/?" + params.toString();
+        debugger;
+        return window.location.protocol + "//" + window.location.host +"/"+window.location.pathname+ "/?" + params.toString();
     }
 
     function copyToClipboard(text) {
