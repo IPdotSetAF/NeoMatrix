@@ -1,6 +1,6 @@
 window.onload = function () {
     //MARK: Update
-    const version = "v5.0.0";
+    const version = "v5.1.0";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
@@ -15,6 +15,7 @@ window.onload = function () {
 
     //MARK: Options
     var gui;
+    var defaultOptions;
     var options = {
         ui_rain_matrixSpeed: 24,
         fpsInterval: calculateFpsInterval(24),
@@ -56,6 +57,10 @@ window.onload = function () {
         ui_message_scale: 1,
         ui_message_positionX: 0,
         ui_message_positionY: 0,
+        Share() {
+            copyToClipboard(paramsToUrl({ preset: btoa(JSON.stringify(gui.save())) }, {}, []));
+            Log("Copied Preset URL to clipboard.");
+        },
         Save() {
             window.localStorage.setItem("preset", JSON.stringify(gui.save()));
             Log("Saved preset.");
@@ -71,6 +76,14 @@ window.onload = function () {
         Reset() {
             gui.reset();
             Log("Settings reset to default.");
+        },
+        LoadFrom(params) {
+            let preset = gui.load(JSON.parse(atob(params.preset)));
+            if (preset) {
+                gui.load(preset);
+                Log("Loaded preset from URL.");
+            } else
+                Log("Preset URl is not correct.");
         }
     }
 
@@ -83,6 +96,9 @@ window.onload = function () {
 
     //MARK: GUI
     function drawGui() {
+        defaultOptions = JSON.parse(JSON.stringify(options));
+        const params = getUrlParams();
+
         readProjectConfig().then((config) => {
             gui = new lil.GUI({ autoPlace: false, width: 300 });
 
@@ -156,6 +172,7 @@ window.onload = function () {
                 initialAnimation();
             });
 
+            gui.add(options, "Share");
             gui.add(options, "Save");
             gui.add(options, "Load");
             gui.add(options, "Reset");
@@ -163,7 +180,10 @@ window.onload = function () {
             customContainer = document.getElementById('gui');
             customContainer.appendChild(gui.domElement);
 
-            options.Load();
+            if (params)
+                options.LoadFrom(params);
+            else
+                options.Load();
         });
     }
 
@@ -706,6 +726,45 @@ window.onload = function () {
             acc[option.label] = option.value;
             return acc;
         }, {});
+    }
+
+    function paramsToUrl(urlParams, paramDefaults, filter) {
+        var defaults = new URLSearchParams(paramDefaults)
+        var params = new URLSearchParams(urlParams)
+
+        filter.forEach(key => {
+            params.delete(key);
+            defaults.delete(key);
+        });
+
+        defaults.forEach((value, key) => {
+            if (params.get(key) === value)
+                params.delete(key);
+        });
+
+        return window.location.protocol + "//" + window.location.host + "/?" + params.toString();
+    }
+
+    function copyToClipboard(text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.setAttribute('readonly', '');
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    }
+
+    function getUrlParams() {
+        urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.size == 0)
+            return null;
+
+        params = {};
+        for (const [key, value] of urlParams)
+            params[key] = value;
+
+        return params;
     }
 };
 
