@@ -358,7 +358,7 @@
 				"condition" : "ui_logo_logo.value == 1",
 				"index" : 24,
 				"order" : 124,
-				"text" : "Custom Logo URL (SVG)",
+				"text" : "Custom Logo URL (SVG/PNG)",
 				"type" : "textinput",
 				"value" : ""
 			},

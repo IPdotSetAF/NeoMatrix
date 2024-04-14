@@ -134,7 +134,7 @@ window.onload = function () {
 
             const logoFolder = gui.addFolder("Logo");
             logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateLogo);
-            logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG)").onChange(updateLogo);
+            logoFolder.add(options, "ui_logo_customLogo").name("Custom Logo URL (SVG/PNG)").onChange(updateLogo);
             logoFolder.add(options, "ui_logo_preserveColor").name("Preserve Logo Color").onChange(updateLogo);
             logoFolder.add(options, "ui_logo_scale").min(0).max(10).step(0.1).name("Scale").onChange(updateLogo);
             const logoPositionFolder = logoFolder.addFolder("Position");
