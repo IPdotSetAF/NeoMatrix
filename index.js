@@ -27,8 +27,8 @@ window.onload = function () {
         ui_font_font: "3",
         ui_font_customFont: "monospace",
         ui_font_size: 15,
-        ui_other_codesCommaSeparated: "THE MATRIX",
-        codes: makeCodes("THE MATRIX"),
+        ui_other_codesCommaSeparated: "IP.AF,THE MATRIX",
+        codes: makeCodes("IP.AF,THE MATRIX"),
         ui_color_colorMode: "2",
         ui_color_matrixColor: [0, 1, 0],
         matrixColor: rgbToHue([0, 1, 0]),
@@ -658,8 +658,7 @@ window.onload = function () {
     }
 
     function makeCodes(codesText) {
-        var codes = codesText.split(",")
-        codes.push("IP.AF");
+        var codes = codesText.split(",");
         return codes;
     }
 

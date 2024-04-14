@@ -590,7 +590,7 @@
 				"order" : 143,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
-				"value" : "THE MATRIX"
+				"value" : "IP.AF,THE MATRIX"
 			},
 			"ui_rain_dropcount" : 
 			{
