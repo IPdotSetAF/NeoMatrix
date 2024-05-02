@@ -579,8 +579,12 @@ window.onload = function () {
                 drops[i][j][3] = character, drops[i][j][4] = lightness;
                 neoMatrix.fillText(character, i * options.ui_font_size, drops[i][j][0] * options.ui_font_size);
 
-                if (drops[i][j][0] > rows && Math.random() > probability)
+                if (drops[i][j][0] > rows && Math.random() > probability) {
                     drops[i][j] = [0, 0, 0, "", 0];
+                    for (; j < options.ui_rain_dropCount; j++) 
+                        drops[i][j][0]++;
+                    break;
+                }
 
                 drops[i][j][0]++;
             }
@@ -738,7 +742,7 @@ window.onload = function () {
             if (params.get(key) === value)
                 params.delete(key);
         });
-        
+
         return window.location.origin + window.location.pathname + "?" + params.toString();
     }
 
