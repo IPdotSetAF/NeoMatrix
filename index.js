@@ -51,7 +51,7 @@ window.onload = function () {
         ui_clock_scale: 1,
         ui_clock_positionX: 0,
         ui_clock_positionY: 0,
-        ui_message_message: "0",
+        ui_message_message: false,
         ui_message_text: "THE MATRIX",
         ui_message_scale: 1,
         ui_message_positionX: 0,
@@ -151,15 +151,15 @@ window.onload = function () {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            clockfolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const clockPositionFolder = clockfolder.addFolder("Position");
             clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const messagefolder = gui.addFolder("Message");
-            messagefolder.add(options, "ui_message_message", optionsToDict(config.general.properties.ui_message_message.options)).name("Message").onChange(updateMask);
+            messagefolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
             messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messagefolder.add(options, "ui_message_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            messagefolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const messagePositionFolder = messagefolder.addFolder("Position");
             messagePositionFolder.add(options, "ui_message_positionX").min(0).max(200).step(1).name("X").onChange(updateMask);
             messagePositionFolder.add(options, "ui_message_positionY").min(0).max(200).step(1).name("Y").onChange(updateMask);
@@ -407,24 +407,21 @@ window.onload = function () {
         }
 
         switch (options.ui_clock_clock) {
-            case "3": {
+            case "1": {
                 let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows + 5 * options.ui_clock_scale) / 2)];
                 drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 break;
             }
-            case "4": {
+            case "2": {
                 let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows + options.ui_clock_scale) / 2)];
                 drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
                 break;
             }
         }
 
-        switch (options.ui_message_message) {
-            case "3": {
-                let position = [0, 5 * options.ui_message_scale];
-                drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
-                break;
-            }
+        if (options.ui_message_message) {
+            let position = [0, 5 * options.ui_message_scale];
+            drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
         }
     }
 
@@ -581,7 +578,7 @@ window.onload = function () {
 
                 if (drops[i][j][0] > rows && Math.random() > probability) {
                     drops[i][j] = [0, 0, 0, "", 0];
-                    for (; j < options.ui_rain_dropCount; j++) 
+                    for (; j < options.ui_rain_dropCount; j++)
                         drops[i][j][0]++;
                     break;
                 }

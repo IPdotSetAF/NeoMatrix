@@ -188,11 +188,11 @@
 					},
 					{
 						"label" : "Horizontal",
-						"value" : "3"
+						"value" : "1"
 					},
 					{
 						"label" : "Vertical",
-						"value" : "4"
+						"value" : "2"
 					}
 				],
 				"order" : 130,
@@ -242,7 +242,7 @@
 				"fraction" : false,
 				"index" : 33,
 				"max" : 10,
-				"min" : 1,
+				"min" : 0,
 				"order" : 133,
 				"text" : "Clock Scale",
 				"type" : "slider",
@@ -523,21 +523,10 @@
 			"ui_message_message" : 
 			{
 				"index" : 37,
-				"options" : 
-				[
-					{
-						"label" : "None",
-						"value" : "0"
-					},
-					{
-						"label" : "Horizontal",
-						"value" : "3"
-					}
-				],
 				"order" : 137,
 				"text" : "Message",
-				"type" : "combo",
-				"value" : "0"
+				"type" : "bool",
+				"value" : false
 			},
 			"ui_message_positionx" : 
 			{
@@ -569,7 +558,7 @@
 				"fraction" : false,
 				"index" : 39,
 				"max" : 10,
-				"min" : 1,
+				"min" : 0,
 				"order" : 139,
 				"text" : "Message Scale",
 				"type" : "slider",
