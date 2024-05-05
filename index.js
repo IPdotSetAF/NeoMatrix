@@ -411,7 +411,7 @@ window.onload = function () {
         switch (options.ui_clock_clock) {
             case "1": {
                 if (options.ui_clock_scale > 0) {
-                    let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows + 5 * options.ui_clock_scale) / 2)];
+                    let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows - 5 * options.ui_clock_scale) / 2)];
                     drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 5) / 2), Math.floor(rows / 2)];
@@ -421,8 +421,8 @@ window.onload = function () {
             }
             case "2": {
                 if (options.ui_clock_scale > 0) {
-                    let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows + options.ui_clock_scale) / 2)];
-                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
+                    let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
+                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY , options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
                     drawTextOnMatrix(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
