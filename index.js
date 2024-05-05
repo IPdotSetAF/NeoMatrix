@@ -432,12 +432,13 @@ window.onload = function () {
         }
 
         if (options.ui_message_message) {
-            let bb = getTextBoundingBox(options.ui_message_text);
+            let cc = getCharsCount(options.ui_message_text);
             if (options.ui_message_scale > 0) {
-                let center = [Math.floor((columns - bb[0] * 4 * options.ui_message_scale) / 2), Math.floor((rows - bb[1] * 6 * options.ui_message_scale) / 2)];
+                let bb = getTextBoundingBox(options.ui_message_text, options.ui_message_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
                 drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
             } else {
-                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
                 drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
             }
         }
@@ -447,13 +448,10 @@ window.onload = function () {
         mask.fillStyle = "#FFF";
         lines = text.split("\\n");
 
-        var maxChars = 0;
-        for (let i = 0; i < lines.length; i++)
-            if (lines[i].length > maxChars)
-                maxChars = lines[i].length;
+        let cc = getCharsCount(text);
 
-        x = clamp(0, columns - maxChars, x);
-        y = clamp(0, rows - lines.length, y);
+        x = clamp(0, columns - cc[0], x);
+        y = clamp(0, rows - cc[1], y);
 
         for (let i = 0; i < lines.length; i++) {
 
@@ -473,11 +471,17 @@ window.onload = function () {
         mask.font = options.ui_font_size * 5 * scale + "px neo-matrix";
         mask.fillStyle = "#FFF";
         lines = text.split("\\n");
+
         for (let i = 0; i < lines.length; i++)
-            mask.fillText(lines[i], options.ui_font_size * x - font_offset_x, options.ui_font_size * (y + (6 * (i + 1) * scale)) + font_offset_y);
+            mask.fillText(lines[i], options.ui_font_size * x - font_offset_x, options.ui_font_size * (y + ((6 * (i + 1)) - 1) * scale) + font_offset_y);
     }
 
-    function getTextBoundingBox(text) {
+    function getTextBoundingBox(text, scale) {
+        let cc = getCharsCount(text);
+        return [(cc[0] * 4 - 1) * scale, (cc[1] * 6 - 1) * scale];
+    }
+
+    function getCharsCount(text) {
         lines = text.split("\\n");
         var maxChars = 0;
         for (let i = 0; i < lines.length; i++)
