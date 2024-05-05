@@ -620,6 +620,7 @@ window.onload = function () {
                 }
             }
 
+            var newDrop = true;
             for (var j = 0; j < options.ui_rain_dropCount; j++) {
                 var character = calculateCharacter(drops[i][j], i);
                 var lightness = audio_lightness;
@@ -643,11 +644,9 @@ window.onload = function () {
                 drops[i][j][3] = character, drops[i][j][4] = lightness;
                 neoMatrix.fillText(character, i * options.ui_font_size, drops[i][j][0] * options.ui_font_size);
 
-                if (drops[i][j][0] > rows && Math.random() > probability) {
+                if (drops[i][j][0] > rows && Math.random() > probability && newDrop) {
                     drops[i][j] = [0, 0, 0, "", 0];
-                    for (; j < options.ui_rain_dropCount; j++)
-                        drops[i][j][0]++;
-                    break;
+                    newDrop = false;
                 }
 
                 drops[i][j][0]++;
