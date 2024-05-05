@@ -161,8 +161,8 @@ window.onload = function () {
             messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
             messagefolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const messagePositionFolder = messagefolder.addFolder("Position");
-            messagePositionFolder.add(options, "ui_message_positionX").min(0).max(200).step(1).name("X").onChange(updateMask);
-            messagePositionFolder.add(options, "ui_message_positionY").min(0).max(200).step(1).name("Y").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -432,11 +432,14 @@ window.onload = function () {
         }
 
         if (options.ui_message_message) {
+            let bb = getTextBoundingBox(options.ui_message_text);
             if (options.ui_message_scale > 0) {
-                let position = [0, 5 * options.ui_message_scale];
-                drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
-            } else
-                drawTextOnMatrix(options.ui_message_text, options.ui_message_positionX, options.ui_message_positionY);
+                let center = [Math.floor((columns - bb[0] * 4 * options.ui_message_scale) / 2), Math.floor((rows - bb[1] * 6 * options.ui_message_scale) / 2)];
+                drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
+            } else {
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
+            }
         }
     }
 
@@ -453,9 +456,16 @@ window.onload = function () {
         y = clamp(0, rows - lines.length, y);
 
         for (let i = 0; i < lines.length; i++) {
-            mask.fillRect(x * options.ui_font_size - font_offset_x, (y + i) * options.ui_font_size + font_offset_y, lines[i].length * options.ui_font_size, options.ui_font_size);
+
+            let sections = lines[i].split(" "), currentCharIndex = 0;
+            for (let j = 0; j < sections.length; j++) {
+                if (sections[j].length > 0)
+                    mask.fillRect((x + currentCharIndex) * options.ui_font_size - font_offset_x, (y + i) * options.ui_font_size + font_offset_y, sections[j].length * options.ui_font_size, options.ui_font_size);
+                currentCharIndex += sections[j].length + 1;
+            }
+
             for (let j = 0; j < lines[i].length; j++)
-                staticChars[x + j][y + i + 1] = lines[i][j];
+                staticChars[x + j][y + i + 1] = lines[i][j] != " " ? lines[i][j] : null;
         }
     }
 
@@ -464,7 +474,16 @@ window.onload = function () {
         mask.fillStyle = "#FFF";
         lines = text.split("\\n");
         for (let i = 0; i < lines.length; i++)
-            mask.fillText(lines[i], options.ui_font_size * x - font_offset_x, options.ui_font_size * y + font_offset_y + (6 * i * options.ui_font_size * scale));
+            mask.fillText(lines[i], options.ui_font_size * x - font_offset_x, options.ui_font_size * (y + (6 * (i + 1) * scale)) + font_offset_y);
+    }
+
+    function getTextBoundingBox(text) {
+        lines = text.split("\\n");
+        var maxChars = 0;
+        for (let i = 0; i < lines.length; i++)
+            if (lines[i].length > maxChars)
+                maxChars = lines[i].length;
+        return [maxChars, lines.length];
     }
 
     function drawMask() {
@@ -508,8 +527,8 @@ window.onload = function () {
 
     //MARK: Grid
     function updateGrid() {
-        columns = neoMatrixDom.width / options.ui_font_size;
-        rows = neoMatrixDom.height / options.ui_font_size;
+        columns = Math.floor(neoMatrixDom.width / options.ui_font_size);
+        rows = Math.floor(neoMatrixDom.height / options.ui_font_size);
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
         column_frequency = frequencyArrayLength / (columns * 2);
