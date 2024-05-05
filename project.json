@@ -188,11 +188,11 @@
 					},
 					{
 						"label" : "Horizontal",
-						"value" : "3"
+						"value" : "1"
 					},
 					{
 						"label" : "Vertical",
-						"value" : "4"
+						"value" : "2"
 					}
 				],
 				"order" : 130,
@@ -238,11 +238,11 @@
 			},
 			"ui_clock_scale" : 
 			{
-				"condition" : "ui_clock_clock.value == 3 || ui_clock_clock.value == 4",
+				"condition" : "ui_clock_clock.value == 1 || ui_clock_clock.value == 2",
 				"fraction" : false,
 				"index" : 33,
 				"max" : 10,
-				"min" : 1,
+				"min" : 0,
 				"order" : 133,
 				"text" : "Clock Scale",
 				"type" : "slider",
@@ -523,29 +523,18 @@
 			"ui_message_message" : 
 			{
 				"index" : 37,
-				"options" : 
-				[
-					{
-						"label" : "None",
-						"value" : "0"
-					},
-					{
-						"label" : "Horizontal",
-						"value" : "3"
-					}
-				],
 				"order" : 137,
 				"text" : "Message",
-				"type" : "combo",
-				"value" : "0"
+				"type" : "bool",
+				"value" : false
 			},
 			"ui_message_positionx" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 40,
-				"max" : 200,
-				"min" : 0,
+				"max" : 100,
+				"min" : -100,
 				"order" : 140,
 				"text" : "Message Position X",
 				"type" : "slider",
@@ -553,11 +542,11 @@
 			},
 			"ui_message_positiony" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 41,
-				"max" : 200,
-				"min" : 0,
+				"max" : 100,
+				"min" : -100,
 				"order" : 141,
 				"text" : "Message Position Y",
 				"type" : "slider",
@@ -565,11 +554,11 @@
 			},
 			"ui_message_scale" : 
 			{
-				"condition" : "ui_message_message.value == 3 || ui_message_message.value == 4",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 39,
 				"max" : 10,
-				"min" : 1,
+				"min" : 0,
 				"order" : 139,
 				"text" : "Message Scale",
 				"type" : "slider",
@@ -577,7 +566,7 @@
 			},
 			"ui_message_text" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"index" : 38,
 				"order" : 138,
 				"text" : "Message Text",

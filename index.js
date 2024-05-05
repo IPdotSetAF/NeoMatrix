@@ -51,7 +51,7 @@ window.onload = function () {
         ui_clock_scale: 1,
         ui_clock_positionX: 0,
         ui_clock_positionY: 0,
-        ui_message_message: "0",
+        ui_message_message: false,
         ui_message_text: "THE MATRIX",
         ui_message_scale: 1,
         ui_message_positionX: 0,
@@ -151,18 +151,18 @@ window.onload = function () {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            clockfolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const clockPositionFolder = clockfolder.addFolder("Position");
             clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const messagefolder = gui.addFolder("Message");
-            messagefolder.add(options, "ui_message_message", optionsToDict(config.general.properties.ui_message_message.options)).name("Message").onChange(updateMask);
+            messagefolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
             messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messagefolder.add(options, "ui_message_scale").min(1).max(10).step(1).name("Scale").onChange(updateMask);
+            messagefolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const messagePositionFolder = messagefolder.addFolder("Position");
-            messagePositionFolder.add(options, "ui_message_positionX").min(0).max(200).step(1).name("X").onChange(updateMask);
-            messagePositionFolder.add(options, "ui_message_positionY").min(0).max(200).step(1).name("Y").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -291,9 +291,9 @@ window.onload = function () {
 
     window.addEventListener('resize', function () {
         updateCanvasSize();
+        updateGrid();
         updateMask();
         updateFont();
-        updateGrid();
         initialAnimation();
     }, false);
 
@@ -311,10 +311,10 @@ window.onload = function () {
     var logo = null, logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
     var debug = document.getElementById("debug"), logs = [];
     var hour = "", minute = "";
-    var startTime, now, then, elapsed, letters, columns, rows, drops;
+    var startTime, now, then, elapsed, letters, columns, rows, drops, staticChars;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
-    var font_fraction;
+    var font_offset_y, font_offset_x;
     var maskDom = document.getElementById("mask");
     var mask = maskDom.getContext("2d");
     var colorOverlayDom = document.getElementById("color-overlay");
@@ -389,6 +389,8 @@ window.onload = function () {
 
     //MARK: Mask
     function updateMask() {
+        clearStaticChars();
+
         mask.globalCompositeOperation = 'source-over';
         mask.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
         mask.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
@@ -407,24 +409,61 @@ window.onload = function () {
         }
 
         switch (options.ui_clock_clock) {
-            case "3": {
-                let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows + 5 * options.ui_clock_scale) / 2)];
-                drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+            case "1": {
+                if (options.ui_clock_scale > 0) {
+                    let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows - 5 * options.ui_clock_scale) / 2)];
+                    drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+                } else {
+                    let center = [Math.floor((columns - 5) / 2), Math.floor(rows / 2)];
+                    drawTextOnMatrix(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+                }
                 break;
             }
-            case "4": {
-                let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows + options.ui_clock_scale) / 2)];
-                drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY - 1 * options.ui_clock_scale, options.ui_clock_scale);
+            case "2": {
+                if (options.ui_clock_scale > 0) {
+                    let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
+                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY , options.ui_clock_scale);
+                } else {
+                    let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
+                    drawTextOnMatrix(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+                }
                 break;
             }
         }
 
-        switch (options.ui_message_message) {
-            case "3": {
-                let position = [0, 5 * options.ui_message_scale];
-                drawTextOnMask(options.ui_message_text, position[0] + options.ui_message_positionX, position[1] + options.ui_message_positionY, options.ui_message_scale);
-                break;
+        if (options.ui_message_message) {
+            let cc = getCharsCount(options.ui_message_text);
+            if (options.ui_message_scale > 0) {
+                let bb = getTextBoundingBox(options.ui_message_text, options.ui_message_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
+            } else {
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+                drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
             }
+        }
+    }
+
+    function drawTextOnMatrix(text, x, y) {
+        mask.fillStyle = "#FFF";
+        lines = text.split("\\n");
+
+        let cc = getCharsCount(text);
+
+        x = clamp(0, columns - cc[0], x);
+        y = clamp(0, rows - cc[1], y);
+
+        for (let i = 0; i < lines.length; i++) {
+
+            let sections = lines[i].split(" "), currentCharIndex = 0;
+            for (let j = 0; j < sections.length; j++) {
+                if (sections[j].length > 0)
+                    mask.fillRect((x + currentCharIndex) * options.ui_font_size - font_offset_x, (y + i) * options.ui_font_size + font_offset_y, sections[j].length * options.ui_font_size, options.ui_font_size);
+                currentCharIndex += sections[j].length + 1;
+            }
+
+            for (let j = 0; j < lines[i].length; j++)
+                staticChars[x + j][y + i + 1] = lines[i][j] != " " ? lines[i][j] : null;
         }
     }
 
@@ -432,9 +471,23 @@ window.onload = function () {
         mask.font = options.ui_font_size * 5 * scale + "px neo-matrix";
         mask.fillStyle = "#FFF";
         lines = text.split("\\n");
-        for (let i = 0; i < lines.length; i++) {
-            mask.fillText(lines[i], options.ui_font_size * x - font_fraction, options.ui_font_size * y + font_fraction + (6 * i * options.ui_font_size * scale));
-        }
+
+        for (let i = 0; i < lines.length; i++)
+            mask.fillText(lines[i], options.ui_font_size * x - font_offset_x, options.ui_font_size * (y + ((6 * (i + 1)) - 1) * scale) + font_offset_y);
+    }
+
+    function getTextBoundingBox(text, scale) {
+        let cc = getCharsCount(text);
+        return [(cc[0] * 4 - 1) * scale, (cc[1] * 6 - 1) * scale];
+    }
+
+    function getCharsCount(text) {
+        lines = text.split("\\n");
+        var maxChars = 0;
+        for (let i = 0; i < lines.length; i++)
+            if (lines[i].length > maxChars)
+                maxChars = lines[i].length;
+        return [maxChars, lines.length];
     }
 
     function drawMask() {
@@ -468,7 +521,8 @@ window.onload = function () {
             font_name = fonts[parseInt(options.ui_font_font) - 1];
 
         neoMatrix.font = options.ui_font_size + "px " + font_name;
-        font_fraction = options.ui_font_size / 4;
+        font_offset_y = options.ui_font_size / 8;
+        font_offset_x = options.ui_font_size / 16;
 
         updateGrid();
         updateMask();
@@ -477,11 +531,21 @@ window.onload = function () {
 
     //MARK: Grid
     function updateGrid() {
-        columns = neoMatrixDom.width / options.ui_font_size;
-        rows = neoMatrixDom.height / options.ui_font_size;
+        columns = Math.floor(neoMatrixDom.width / options.ui_font_size);
+        rows = Math.floor(neoMatrixDom.height / options.ui_font_size);
         column_hue = Math.floor(360 / columns);
         row_hue = Math.floor(360 / rows);
         column_frequency = frequencyArrayLength / (columns * 2);
+        clearStaticChars();
+    }
+
+    function clearStaticChars() {
+        staticChars = [];
+        for (let i = 0; i < columns; i++) {
+            staticChars[i] = [];
+            for (let j = 0; j < rows; j++)
+                staticChars[i][j] = null;
+        }
     }
 
     //MARK: Initial Animation
@@ -558,14 +622,14 @@ window.onload = function () {
 
             var newDrop = true;
             for (var j = 0; j < options.ui_rain_dropCount; j++) {
-                var character = calculateCharacter(drops[i][j]);
+                var character = calculateCharacter(drops[i][j], i);
                 var lightness = audio_lightness;
 
                 if (drops[i][j][1] > 0)
                     lightness = 100;
 
                 if (options.ui_color_highlightFirstCharacter) {
-                    neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][j][0] - 2) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+                    neoMatrix.clearRect(i * options.ui_font_size - font_offset_x, ((drops[i][j][0] - 2) * options.ui_font_size) + font_offset_y, options.ui_font_size, options.ui_font_size);
 
                     var tmp = drops[i][j][0] - 1;
                     neoMatrix.fillStyle = calculateColor(i, tmp, drops[i][j][4]);
@@ -576,7 +640,7 @@ window.onload = function () {
                 else
                     neoMatrix.fillStyle = calculateColor(i, drops[i][j][0], lightness);
 
-                neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][j][0] - 1) * options.ui_font_size) + font_fraction, options.ui_font_size, options.ui_font_size);
+                neoMatrix.clearRect(i * options.ui_font_size, ((drops[i][j][0] - 1) * options.ui_font_size) + font_offset_y, options.ui_font_size, options.ui_font_size);
                 drops[i][j][3] = character, drops[i][j][4] = lightness;
                 neoMatrix.fillText(character, i * options.ui_font_size, drops[i][j][0] * options.ui_font_size);
 
@@ -600,7 +664,9 @@ window.onload = function () {
     }
 
     //MARK: Calculate Character
-    function calculateCharacter(dropItem) {
+    function calculateCharacter(dropItem, column) {
+        if (staticChars[column][dropItem[0]])
+            return staticChars[column][dropItem[0]];
 
         if (Math.random() > 0.995 && dropItem[1] == 0) {
             dropItem[1] = Math.floor(Math.random() * options.codes.length) + 1;
