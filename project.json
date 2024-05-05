@@ -238,7 +238,7 @@
 			},
 			"ui_clock_scale" : 
 			{
-				"condition" : "ui_clock_clock.value == 3 || ui_clock_clock.value == 4",
+				"condition" : "ui_clock_clock.value == 1 || ui_clock_clock.value == 2",
 				"fraction" : false,
 				"index" : 33,
 				"max" : 10,
@@ -530,7 +530,7 @@
 			},
 			"ui_message_positionx" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 40,
 				"max" : 100,
@@ -542,7 +542,7 @@
 			},
 			"ui_message_positiony" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 41,
 				"max" : 100,
@@ -554,7 +554,7 @@
 			},
 			"ui_message_scale" : 
 			{
-				"condition" : "ui_message_message.value == 3 || ui_message_message.value == 4",
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 39,
 				"max" : 10,
@@ -566,7 +566,7 @@
 			},
 			"ui_message_text" : 
 			{
-				"condition" : "ui_message_message.value != 0",
+				"condition" : "ui_message_message.value",
 				"index" : 38,
 				"order" : 138,
 				"text" : "Message Text",
