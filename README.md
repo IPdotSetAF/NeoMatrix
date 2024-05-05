@@ -136,7 +136,6 @@ Click on each preview to watch live
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
-- Small Clock and Messsage
 - Date and Day 
 - Random Character Mutations
 - Random Character Flip
