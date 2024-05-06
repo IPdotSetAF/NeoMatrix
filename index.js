@@ -56,6 +56,17 @@ window.onload = function () {
         ui_message_scale: 1,
         ui_message_positionX: 0,
         ui_message_positionY: 0,
+        ui_day_day: "0",
+        ui_day_orientation: "0",
+        ui_day_scale: 1,
+        ui_day_positionX: 0,
+        ui_day_positionY: 0,
+        ui_date_date: "0",
+        ui_date_orientation: "0",
+        ui_date_delimiter: "0",
+        ui_date_scale: 1,
+        ui_date_positionX: 0,
+        ui_date_positionY: 0,
         Share() {
             copyToClipboard(paramsToUrl({ preset: btoa(JSON.stringify(gui.save())) }, {}, []));
             Log("Copied Preset URL to clipboard.");
@@ -141,28 +152,45 @@ window.onload = function () {
             logoPositionFolder.add(options, "ui_logo_positionX").min(-2500).max(2500).step(1).name("X").onChange(updateLogo);
             logoPositionFolder.add(options, "ui_logo_positionY").min(-2500).max(2500).step(1).name("Y").onChange(updateLogo);
 
-            const clockfolder = gui.addFolder("Clock");
-            clockfolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
-            clockfolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
+            const clockFolder = gui.addFolder("Clock");
+            clockFolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
+            clockFolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
+            clockFolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
-            const clockPositionFolder = clockfolder.addFolder("Position");
+            clockFolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const clockPositionFolder = clockFolder.addFolder("Position");
             clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
-            const messagefolder = gui.addFolder("Message");
-            messagefolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
-            messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messagefolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
-            const messagePositionFolder = messagefolder.addFolder("Position");
+            const messageFolder = gui.addFolder("Message");
+            messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
+            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
+            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const messagePositionFolder = messageFolder.addFolder("Position");
             messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+
+            const dayFolder = gui.addFolder("Day");
+            dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(updateMask);
+            dayFolder.add(options, "ui_day_orientation", optionsToDict(config.general.properties.ui_day_orientation.options)).name("Orientation").onChange(updateMask);
+            dayFolder.add(options, "ui_day_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const dayPositionFolder = dayFolder.addFolder("Position");
+            dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            dayPositionFolder.add(options, "ui_day_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+
+            const dateFolder = gui.addFolder("Date");
+            dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Day").onChange(updateMask);
+            dateFolder.add(options, "ui_date_orientation", optionsToDict(config.general.properties.ui_date_orientation.options)).name("Orientation").onChange(updateMask);
+            dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
+            dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const datePositionFolder = dateFolder.addFolder("Position");
+            datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -280,6 +308,34 @@ window.onload = function () {
             if (properties.ui_message_positiony)
                 options.ui_message_positionY = properties.ui_message_positiony.value;
             if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
+                updateMask();
+
+            if (properties.ui_day_day)
+                options.ui_day_day = properties.ui_day_day.value;
+            if (properties.ui_day_orientation)
+                options.ui_day_orientation = properties.ui_day_orientation.value;
+            if (properties.ui_day_scale)
+                options.ui_day_scale = properties.ui_day_scale.value;
+            if (properties.ui_day_positionx)
+                options.ui_day_positionX = properties.ui_day_positionx.value;
+            if (properties.ui_day_positiony)
+                options.ui_day_positionY = properties.ui_day_positiony.value;
+            if (properties.ui_day_day || properties.ui_day_orientation || properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
+                updateMask();
+
+            if (properties.ui_date_date)
+                options.ui_date_date = properties.ui_date_date.value;
+            if (properties.ui_date_orientation)
+                options.ui_date_orientation = properties.ui_date_orientation.value;
+            if (properties.ui_date_delimiter)
+                options.ui_date_delimiter = properties.ui_date_delimiter.value;
+            if (properties.ui_date_scale)
+                options.ui_date_scale = properties.ui_date_scale.value;
+            if (properties.ui_date_positionx)
+                options.ui_date_positionX = properties.ui_date_positionx.value;
+            if (properties.ui_date_positiony)
+                options.ui_date_positionY = properties.ui_date_positiony.value;
+            if (properties.ui_date_date || properties.ui_date_orientation || properties.ui_date_delimiter || properties.ui_date_scale || properties.ui_date_positionx || properties.ui_date_positiony)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -422,7 +478,7 @@ window.onload = function () {
             case "2": {
                 if (options.ui_clock_scale > 0) {
                     let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
-                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY , options.ui_clock_scale);
+                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
                     drawTextOnMatrix(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);

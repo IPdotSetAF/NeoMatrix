@@ -54,10 +54,24 @@
 				"text" : "<h4>Message</h4>",
 				"type" : "text"
 			},
+			"folder_day" : 
+			{
+				"index" : 43,
+				"order" : 143,
+				"text" : "<h4>Day</h4>",
+				"type" : "text"
+			},
+			"folder_date" : 
+			{
+				"index" : 49,
+				"order" : 149,
+				"text" : "<h4>Date</h4>",
+				"type" : "text"
+			},
 			"folder_other" : 
 			{
-				"index" : 42,
-				"order" : 142,
+				"index" : 56,
+				"order" : 156,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
@@ -238,7 +252,7 @@
 			},
 			"ui_clock_scale" : 
 			{
-				"condition" : "ui_clock_clock.value == 1 || ui_clock_clock.value == 2",
+				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
 				"index" : 33,
 				"max" : 10,
@@ -575,8 +589,8 @@
 			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 43,
-				"order" : 143,
+				"index" : 57,
+				"order" : 157,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "IP.AF,THE MATRIX"
@@ -638,6 +652,220 @@
 				"text" : "Trail Length",
 				"type" : "slider",
 				"value" : 0.86
+			},
+			"ui_day_day" : 
+			{
+				"index" : 44,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Friday",
+						"value" : "1"
+					},
+					{
+						"label" : "FRIDAY",
+						"value" : "2"
+					},
+					{
+						"label" : "FRI",
+						"value" : "3"
+					},
+					{
+						"label" : "Fri",
+						"value" : "4"
+					},
+					{
+						"label" : "7",
+						"value" : "5"
+					}
+				],
+				"order" : 144,
+				"text" : "Day",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_day_positionx" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"fraction" : false,
+				"index" : 47,
+				"max" : 100,
+				"min" : -100,
+				"order" : 147,
+				"text" : "Day Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_day_positiony" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"fraction" : false,
+				"index" : 48,
+				"max" : 100,
+				"min" : -100,
+				"order" : 148,
+				"text" : "Day Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_day_scale" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"fraction" : false,
+				"index" : 46,
+				"max" : 10,
+				"min" : 0,
+				"order" : 146,
+				"text" : "Day Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_day_orientation" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"index" : 45,
+				"options" : 
+				[
+					{
+						"label" : "Horizontal",
+						"value" : "0"
+					},
+					{
+						"label" : "Vertical",
+						"value" : "1"
+					}
+				],
+				"order" : 145,
+				"text" : "Day Orientation",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_date_date" : 
+			{
+				"index" : 50,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "YYYY/MM/DD",
+						"value" : "1"
+					},
+					{
+						"label" : "YYYY/DD/MM",
+						"value" : "1"
+					},
+					{
+						"label" : "YY/DD/MM",
+						"value" : "1"
+					},
+					{
+						"label" : "YY/MM/DD",
+						"value" : "1"
+					},
+					{
+						"label" : "MM/DD",
+						"value" : "2"
+					},
+					{
+						"label" : "DD/MM",
+						"value" : "2"
+					}
+				],
+				"order" : 150,
+				"text" : "Date",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_date_delimiter" : 
+			{
+				"index" : 52,
+				"condition" : "ui_date_orientation.value == 0",
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Space",
+						"value" : "1"
+					},
+					{
+						"label" : "-",
+						"value" : "2"
+					},
+					{
+						"label" : "/",
+						"value" : "3"
+					}
+				],
+				"order" : 152,
+				"text" : "Date Delimiter",
+				"type" : "combo",
+				"value" : "0"
+			},
+			"ui_date_positionx" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"fraction" : false,
+				"index" : 54,
+				"max" : 100,
+				"min" : -100,
+				"order" : 154,
+				"text" : "Date Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_date_positiony" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"fraction" : false,
+				"index" : 55,
+				"max" : 100,
+				"min" : -100,
+				"order" : 155,
+				"text" : "Date Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_date_scale" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"fraction" : false,
+				"index" : 53,
+				"max" : 10,
+				"min" : 0,
+				"order" : 153,
+				"text" : "Date Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_date_orientation" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"index" : 51,
+				"options" : 
+				[
+					{
+						"label" : "Horizontal",
+						"value" : "0"
+					},
+					{
+						"label" : "Vertical",
+						"value" : "1"
+					}
+				],
+				"order" : 151,
+				"text" : "Date Orientation",
+				"type" : "combo",
+				"value" : "0"
 			}
 		},
 		"supportsaudioprocessing" : true
