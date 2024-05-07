@@ -57,12 +57,13 @@ window.onload = function () {
         ui_message_positionX: 0,
         ui_message_positionY: 0,
         ui_day_day: "0",
-        ui_day_orientation: "0",
+        ui_day_allCaps: false,
+        ui_day_orientation: false,
         ui_day_scale: 1,
         ui_day_positionX: 0,
         ui_day_positionY: 0,
         ui_date_date: "0",
-        ui_date_orientation: "0",
+        ui_date_orientation: false,
         ui_date_delimiter: "0",
         ui_date_scale: 1,
         ui_date_positionX: 0,
@@ -173,18 +174,10 @@ window.onload = function () {
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
             clockFolder.close();
 
-            const messageFolder = gui.addFolder("Message");
-            messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
-            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
-            const messagePositionFolder = messageFolder.addFolder("Position");
-            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
-            messageFolder.close();
-
             const dayFolder = gui.addFolder("Day");
             dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(updateMask);
-            dayFolder.add(options, "ui_day_orientation", optionsToDict(config.general.properties.ui_day_orientation.options)).name("Orientation").onChange(updateMask);
+            dayFolder.add(options, "ui_day_allCaps").name("All CAPS").onChange(updateMask);
+            dayFolder.add(options, "ui_day_orientation").name("Vertical Orientation").onChange(updateMask);
             dayFolder.add(options, "ui_day_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const dayPositionFolder = dayFolder.addFolder("Position");
             dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
@@ -193,13 +186,22 @@ window.onload = function () {
 
             const dateFolder = gui.addFolder("Date");
             dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Day").onChange(updateMask);
-            dateFolder.add(options, "ui_date_orientation", optionsToDict(config.general.properties.ui_date_orientation.options)).name("Orientation").onChange(updateMask);
+            dateFolder.add(options, "ui_date_orientation").name("Vertical Orientation").onChange(updateMask);
             dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
             dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const datePositionFolder = dateFolder.addFolder("Position");
             datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
             dateFolder.close();
+
+            const messageFolder = gui.addFolder("Message");
+            messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
+            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
+            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const messagePositionFolder = messageFolder.addFolder("Position");
+            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            messageFolder.close();
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -307,21 +309,10 @@ window.onload = function () {
             if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
                 updateMask();
 
-            if (properties.ui_message_message)
-                options.ui_message_message = properties.ui_message_message.value;
-            if (properties.ui_message_text)
-                options.ui_message_text = properties.ui_message_text.value;
-            if (properties.ui_message_scale)
-                options.ui_message_scale = properties.ui_message_scale.value;
-            if (properties.ui_message_positionx)
-                options.ui_message_positionX = properties.ui_message_positionx.value;
-            if (properties.ui_message_positiony)
-                options.ui_message_positionY = properties.ui_message_positiony.value;
-            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
-                updateMask();
-
             if (properties.ui_day_day)
                 options.ui_day_day = properties.ui_day_day.value;
+            if (properties.ui_day_allcaps)
+                options.ui_day_allCaps = properties.ui_day_allcaps.value;
             if (properties.ui_day_orientation)
                 options.ui_day_orientation = properties.ui_day_orientation.value;
             if (properties.ui_day_scale)
@@ -330,7 +321,7 @@ window.onload = function () {
                 options.ui_day_positionX = properties.ui_day_positionx.value;
             if (properties.ui_day_positiony)
                 options.ui_day_positionY = properties.ui_day_positiony.value;
-            if (properties.ui_day_day || properties.ui_day_orientation || properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
+            if (properties.ui_day_day || properties.ui_day_allcaps || properties.ui_day_orientation || properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
                 updateMask();
 
             if (properties.ui_date_date)
@@ -346,6 +337,19 @@ window.onload = function () {
             if (properties.ui_date_positiony)
                 options.ui_date_positionY = properties.ui_date_positiony.value;
             if (properties.ui_date_date || properties.ui_date_orientation || properties.ui_date_delimiter || properties.ui_date_scale || properties.ui_date_positionx || properties.ui_date_positiony)
+                updateMask();
+
+            if (properties.ui_message_message)
+                options.ui_message_message = properties.ui_message_message.value;
+            if (properties.ui_message_text)
+                options.ui_message_text = properties.ui_message_text.value;
+            if (properties.ui_message_scale)
+                options.ui_message_scale = properties.ui_message_scale.value;
+            if (properties.ui_message_positionx)
+                options.ui_message_positionX = properties.ui_message_positionx.value;
+            if (properties.ui_message_positiony)
+                options.ui_message_positionY = properties.ui_message_positiony.value;
+            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -364,8 +368,9 @@ window.onload = function () {
     }, false);
 
     //MARK: Variables
-    var fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
-    var charsets = [
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
+    let charsets = [
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}",
@@ -500,6 +505,40 @@ window.onload = function () {
                 break;
             }
         }
+
+        if (options.ui_day_day != "0") {
+            var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
+            if (options.ui_day_day == "2")
+                dayText = dayText.substring(0, 3);
+            if (options.ui_day_orientation)
+                dayText = dayText.split("").join("\\n");
+            if (options.ui_day_scale > 0) {
+                let bb = getTextBoundingBox(dayText, options.ui_day_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY, options.ui_day_scale);
+            } else {
+                let cc = getCharsCount(dayText);
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+                drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY);
+            }
+        }
+
+        // if (options.ui_date_date != "0") {
+        //     var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
+        //     if (options.ui_day_day == "2")
+        //         dayText = dayText.substring(0, 3);
+        //     if (options.ui_day_orientation)
+        //         dayText = dayText.split("").join("\\n");
+        //     if (options.ui_day_scale > 0) {
+        //         let bb = getTextBoundingBox(dayText, options.ui_day_scale);
+        //         let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+        //         drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_date_positionY, options.ui_day_scale);
+        //     } else {
+        //         let cc = getCharsCount(dayText);
+        //         let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+        //         drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_date_positionY);
+        //     }
+        // }
 
         if (options.ui_message_message) {
             if (options.ui_message_scale > 0) {

@@ -5,75 +5,12 @@
 	{
 		"properties" : 
 		{
-			"folder_audio" : 
+			"schemecolor" : 
 			{
-				"index" : 17,
-				"order" : 117,
-				"text" : "<h4>Audio</h4>",
-				"type" : "text"
-			},
-			"folder_characters" : 
-			{
-				"index" : 10,
-				"order" : 110,
-				"text" : "<h4>Characters</h4>",
-				"type" : "text"
-			},
-			"folder_clock" : 
-			{
-				"index" : 29,
-				"order" : 129,
-				"text" : "<h4>Clock</h4>",
-				"type" : "text"
-			},
-			"folder_color" : 
-			{
-				"index" : 5,
-				"order" : 105,
-				"text" : "<h4>Color</h4>",
-				"type" : "text"
-			},
-			"folder_font" : 
-			{
-				"index" : 13,
-				"order" : 113,
-				"text" : "<h4>Font</h4>",
-				"type" : "text"
-			},
-			"folder_logo" : 
-			{
-				"index" : 22,
-				"order" : 122,
-				"text" : "<h4>Logo</h4>",
-				"type" : "text"
-			},
-			"folder_message" : 
-			{
-				"index" : 36,
-				"order" : 136,
-				"text" : "<h4>Message</h4>",
-				"type" : "text"
-			},
-			"folder_day" : 
-			{
-				"index" : 43,
-				"order" : 143,
-				"text" : "<h4>Day</h4>",
-				"type" : "text"
-			},
-			"folder_date" : 
-			{
-				"index" : 49,
-				"order" : 149,
-				"text" : "<h4>Date</h4>",
-				"type" : "text"
-			},
-			"folder_other" : 
-			{
-				"index" : 56,
-				"order" : 156,
-				"text" : "<h4>Other</h4>",
-				"type" : "text"
+				"order" : 0,
+				"text" : "Scheme color",
+				"type" : "color",
+				"value" : "0 0 0"
 			},
 			"folder_rain" : 
 			{
@@ -82,53 +19,135 @@
 				"text" : "<h4>Rain</h4>",
 				"type" : "text"
 			},
-			"schemecolor" : 
+			"ui_rain_matrixspeed" : 
 			{
-				"order" : 0,
-				"text" : "Scheme color",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"ui_audio_audioresponsive" : 
-			{
-				"index" : 18,
-				"order" : 118,
-				"text" : "Audio Responsive",
-				"type" : "bool",
-				"value" : false
-			},
-			"ui_audio_audiosensetivity" : 
-			{
-				"condition" : "ui_audio_audioresponsive.value == true",
 				"fraction" : false,
-				"index" : 19,
-				"max" : 100,
-				"min" : 0,
-				"order" : 119,
-				"text" : "Audio Sensetivity",
+				"index" : 1,
+				"max" : 60,
+				"min" : 10,
+				"order" : 101,
+				"text" : "Matrix Speed",
 				"type" : "slider",
-				"value" : 50
+				"value" : 25
 			},
-			"ui_audio_silenceanimation" : 
+			"ui_rain_traillength" : 
 			{
-				"condition" : "ui_audio_audioresponsive.value == true",
-				"index" : 20,
-				"order" : 120,
-				"text" : "Silence Animation",
+				"fraction" : true,
+				"index" : 2,
+				"max" : 1,
+				"min" : 0,
+				"order" : 102,
+				"precision" : 3,
+				"step" : 0.01,
+				"text" : "Trail Length",
+				"type" : "slider",
+				"value" : 0.86
+			},
+			"ui_rain_dropcount" : 
+			{
+				"fraction" : false,
+				"index" : 3,
+				"max" : 5,
+				"min" : 1,
+				"order" : 103,
+				"text" : "Drop Count/Column",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_rain_initialanimation" : 
+			{
+				"index" : 4,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Fall",
+						"value" : "1"
+					},
+					{
+						"label" : "Scatter",
+						"value" : "2"
+					}
+				],
+				"order" : 104,
+				"text" : "Initial Animation",
+				"type" : "combo",
+				"value" : "1"
+			},
+			"folder_color" : 
+			{
+				"index" : 5,
+				"order" : 105,
+				"text" : "<h4>Color</h4>",
+				"type" : "text"
+			},
+			"ui_color_colormode" : 
+			{
+				"index" : 6,
+				"options" : 
+				[
+					{
+						"label" : "Single",
+						"value" : "0"
+					},
+					{
+						"label" : "RGB Cycle",
+						"value" : "1"
+					},
+					{
+						"label" : "Vertical Rainbow",
+						"value" : "2"
+					},
+					{
+						"label" : "Horizontal Rainbow",
+						"value" : "3"
+					}
+				],
+				"order" : 106,
+				"text" : "Color Mode",
+				"type" : "combo",
+				"value" : "2"
+			},
+			"ui_color_matrixcolor" : 
+			{
+				"condition" : "ui_color_colormode.value == 0",
+				"index" : 7,
+				"order" : 107,
+				"text" : "Matrix Color",
+				"type" : "color",
+				"value" : "0 1 0"
+			},
+			"ui_color_coloranimationspeed" : 
+			{
+				"condition" : "ui_color_colormode.value != 0",
+				"fraction" : true,
+				"index" : 8,
+				"max" : 1,
+				"min" : -1,
+				"order" : 108,
+				"precision" : 3,
+				"step" : 0.01,
+				"text" : "Color Animation Speed",
+				"type" : "slider",
+				"value" : 0.5
+			},
+			"ui_color_highlightfirstcharacter" : 
+			{
+				"index" : 9,
+				"order" : 109,
+				"text" : "Highlight First Character",
 				"type" : "bool",
 				"value" : true
 			},
-			"ui_audio_silencetimeoutseconds" : 
+			"folder_characters" : 
 			{
-				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
-				"fraction" : false,
-				"index" : 21,
-				"max" : 15,
-				"min" : 1,
-				"order" : 121,
-				"text" : "Silence Timeout (Seconds)",
-				"type" : "slider",
-				"value" : 3
+				"index" : 10,
+				"order" : 110,
+				"text" : "<h4>Characters</h4>",
+				"type" : "text"
 			},
 			"ui_characters_charset" : 
 			{
@@ -182,152 +201,23 @@
 				"type" : "textinput",
 				"value" : "0123456789ABCDEF"
 			},
-			"ui_clock_24hourformat" : 
+			"folder_font" : 
 			{
-				"condition" : "ui_clock_clock.value != 0",
-				"index" : 31,
-				"order" : 131,
-				"text" : "24 Hour format",
-				"type" : "bool",
-				"value" : true
+				"index" : 13,
+				"order" : 113,
+				"text" : "<h4>Font</h4>",
+				"type" : "text"
 			},
-			"ui_clock_clock" : 
+			"ui_font_size" : 
 			{
-				"index" : 30,
-				"options" : 
-				[
-					{
-						"label" : "None",
-						"value" : "0"
-					},
-					{
-						"label" : "Horizontal",
-						"value" : "1"
-					},
-					{
-						"label" : "Vertical",
-						"value" : "2"
-					}
-				],
-				"order" : 130,
-				"text" : "Clock",
-				"type" : "combo",
-				"value" : "0"
-			},
-			"ui_clock_daylightsaving" : 
-			{
-				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 32,
-				"max" : 1,
-				"min" : -1,
-				"order" : 132,
-				"text" : "Day-light Saving",
+				"index" : 14,
+				"max" : 30,
+				"min" : 5,
+				"order" : 114,
+				"text" : "Font size",
 				"type" : "slider",
-				"value" : 0
-			},
-			"ui_clock_positionx" : 
-			{
-				"condition" : "ui_clock_clock.value != 0",
-				"fraction" : false,
-				"index" : 34,
-				"max" : 100,
-				"min" : -100,
-				"order" : 134,
-				"text" : "Clock Position X",
-				"type" : "slider",
-				"value" : 0
-			},
-			"ui_clock_positiony" : 
-			{
-				"condition" : "ui_clock_clock.value != 0",
-				"fraction" : false,
-				"index" : 35,
-				"max" : 100,
-				"min" : -100,
-				"order" : 135,
-				"text" : "Clock Position Y",
-				"type" : "slider",
-				"value" : 0
-			},
-			"ui_clock_scale" : 
-			{
-				"condition" : "ui_clock_clock.value != 0",
-				"fraction" : false,
-				"index" : 33,
-				"max" : 10,
-				"min" : 0,
-				"order" : 133,
-				"text" : "Clock Scale",
-				"type" : "slider",
-				"value" : 1
-			},
-			"ui_color_coloranimationspeed" : 
-			{
-				"condition" : "ui_color_colormode.value != 0",
-				"fraction" : true,
-				"index" : 8,
-				"max" : 1,
-				"min" : -1,
-				"order" : 108,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "Color Animation Speed",
-				"type" : "slider",
-				"value" : 0.5
-			},
-			"ui_color_colormode" : 
-			{
-				"index" : 6,
-				"options" : 
-				[
-					{
-						"label" : "Single",
-						"value" : "0"
-					},
-					{
-						"label" : "RGB Cycle",
-						"value" : "1"
-					},
-					{
-						"label" : "Vertical Rainbow",
-						"value" : "2"
-					},
-					{
-						"label" : "Horizontal Rainbow",
-						"value" : "3"
-					}
-				],
-				"order" : 106,
-				"text" : "Color Mode",
-				"type" : "combo",
-				"value" : "2"
-			},
-			"ui_color_highlightfirstcharacter" : 
-			{
-				"index" : 9,
-				"order" : 109,
-				"text" : "Highlight First Character",
-				"type" : "bool",
-				"value" : true
-			},
-			"ui_color_matrixcolor" : 
-			{
-				"condition" : "ui_color_colormode.value == 0",
-				"index" : 7,
-				"order" : 107,
-				"text" : "Matrix Color",
-				"type" : "color",
-				"value" : "0 1 0"
-			},
-			"ui_font_customfont" : 
-			{
-				"condition" : "ui_font_font.value == 0",
-				"index" : 16,
-				"order" : 116,
-				"text" : "Custom Font",
-				"type" : "textinput",
-				"value" : "monospace"
+				"value" : 15
 			},
 			"ui_font_font" : 
 			{
@@ -356,25 +246,69 @@
 				"type" : "combo",
 				"value" : "3"
 			},
-			"ui_font_size" : 
+			"ui_font_customfont" : 
 			{
-				"fraction" : false,
-				"index" : 14,
-				"max" : 30,
-				"min" : 5,
-				"order" : 114,
-				"text" : "Font size",
-				"type" : "slider",
-				"value" : 15
-			},
-			"ui_logo_customlogo" : 
-			{
-				"condition" : "ui_logo_logo.value == 1",
-				"index" : 24,
-				"order" : 124,
-				"text" : "Custom Logo URL (SVG/PNG)",
+				"condition" : "ui_font_font.value == 0",
+				"index" : 16,
+				"order" : 116,
+				"text" : "Custom Font",
 				"type" : "textinput",
-				"value" : ""
+				"value" : "monospace"
+			},
+			"folder_audio" : 
+			{
+				"index" : 17,
+				"order" : 117,
+				"text" : "<h4>Audio</h4>",
+				"type" : "text"
+			},
+			"ui_audio_audioresponsive" : 
+			{
+				"index" : 18,
+				"order" : 118,
+				"text" : "Audio Responsive",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_audio_audiosensetivity" : 
+			{
+				"condition" : "ui_audio_audioresponsive.value == true",
+				"fraction" : false,
+				"index" : 19,
+				"max" : 100,
+				"min" : 0,
+				"order" : 119,
+				"text" : "Audio Sensetivity",
+				"type" : "slider",
+				"value" : 50
+			},
+			"ui_audio_silenceanimation" : 
+			{
+				"condition" : "ui_audio_audioresponsive.value == true",
+				"index" : 20,
+				"order" : 120,
+				"text" : "Silence Animation",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_audio_silencetimeoutseconds" : 
+			{
+				"condition" : "ui_audio_audioresponsive.value == true && ui_audio_silenceanimation.value == true",
+				"fraction" : false,
+				"index" : 21,
+				"max" : 15,
+				"min" : 1,
+				"order" : 121,
+				"text" : "Silence Timeout (Seconds)",
+				"type" : "slider",
+				"value" : 3
+			},
+			"folder_logo" : 
+			{
+				"index" : 22,
+				"order" : 122,
+				"text" : "<h4>Logo</h4>",
+				"type" : "text"
 			},
 			"ui_logo_logo" : 
 			{
@@ -487,29 +421,14 @@
 				"type" : "combo",
 				"value" : "0"
 			},
-			"ui_logo_positionx" : 
+			"ui_logo_customlogo" : 
 			{
-				"condition" : "ui_logo_logo.value != 0",
-				"fraction" : false,
-				"index" : 27,
-				"max" : 2500,
-				"min" : -2500,
-				"order" : 127,
-				"text" : "Logo Position X",
-				"type" : "slider",
-				"value" : 0
-			},
-			"ui_logo_positiony" : 
-			{
-				"condition" : "ui_logo_logo.value != 0",
-				"fraction" : false,
-				"index" : 28,
-				"max" : 2500,
-				"min" : -2500,
-				"order" : 128,
-				"text" : "Logo Position Y",
-				"type" : "slider",
-				"value" : 0
+				"condition" : "ui_logo_logo.value == 1",
+				"index" : 24,
+				"order" : 124,
+				"text" : "Custom Logo URL (SVG/PNG)",
+				"type" : "textinput",
+				"value" : ""
 			},
 			"ui_logo_preservecolor" : 
 			{
@@ -534,81 +453,40 @@
 				"type" : "slider",
 				"value" : 1
 			},
-			"ui_message_message" : 
+			"ui_logo_positionx" : 
 			{
-				"index" : 37,
-				"order" : 137,
-				"text" : "Message",
-				"type" : "bool",
-				"value" : false
-			},
-			"ui_message_positionx" : 
-			{
-				"condition" : "ui_message_message.value",
+				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 40,
-				"max" : 100,
-				"min" : -100,
-				"order" : 140,
-				"text" : "Message Position X",
+				"index" : 27,
+				"max" : 2500,
+				"min" : -2500,
+				"order" : 127,
+				"text" : "Logo Position X",
 				"type" : "slider",
 				"value" : 0
 			},
-			"ui_message_positiony" : 
+			"ui_logo_positiony" : 
 			{
-				"condition" : "ui_message_message.value",
+				"condition" : "ui_logo_logo.value != 0",
 				"fraction" : false,
-				"index" : 41,
-				"max" : 100,
-				"min" : -100,
-				"order" : 141,
-				"text" : "Message Position Y",
+				"index" : 28,
+				"max" : 2500,
+				"min" : -2500,
+				"order" : 128,
+				"text" : "Logo Position Y",
 				"type" : "slider",
 				"value" : 0
 			},
-			"ui_message_scale" : 
+			"folder_clock" : 
 			{
-				"condition" : "ui_message_message.value",
-				"fraction" : false,
-				"index" : 39,
-				"max" : 10,
-				"min" : 0,
-				"order" : 139,
-				"text" : "Message Scale",
-				"type" : "slider",
-				"value" : 1
+				"index" : 29,
+				"order" : 129,
+				"text" : "<h4>Clock</h4>",
+				"type" : "text"
 			},
-			"ui_message_text" : 
+			"ui_clock_clock" : 
 			{
-				"condition" : "ui_message_message.value",
-				"index" : 38,
-				"order" : 138,
-				"text" : "Message Text",
-				"type" : "textinput",
-				"value" : "THE MATRIX"
-			},
-			"ui_other_codescommaseparated" : 
-			{
-				"index" : 57,
-				"order" : 157,
-				"text" : "Codes (comma separated)",
-				"type" : "textinput",
-				"value" : "IP.AF,THE MATRIX"
-			},
-			"ui_rain_dropcount" : 
-			{
-				"fraction" : false,
-				"index" : 3,
-				"max" : 5,
-				"min" : 1,
-				"order" : 103,
-				"text" : "Drop Count/Column",
-				"type" : "slider",
-				"value" : 1
-			},
-			"ui_rain_initialanimation" : 
-			{
-				"index" : 4,
+				"index" : 30,
 				"options" : 
 				[
 					{
@@ -616,46 +494,86 @@
 						"value" : "0"
 					},
 					{
-						"label" : "Fall",
+						"label" : "Horizontal",
 						"value" : "1"
 					},
 					{
-						"label" : "Scatter",
+						"label" : "Vertical",
 						"value" : "2"
 					}
 				],
-				"order" : 104,
-				"text" : "Initial Animation",
+				"order" : 130,
+				"text" : "Clock",
 				"type" : "combo",
-				"value" : "1"
+				"value" : "0"
 			},
-			"ui_rain_matrixspeed" : 
+			"ui_clock_24hourformat" : 
 			{
+				"condition" : "ui_clock_clock.value != 0",
+				"index" : 31,
+				"order" : 131,
+				"text" : "24 Hour format",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_clock_daylightsaving" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
 				"fraction" : false,
-				"index" : 1,
-				"max" : 60,
-				"min" : 10,
-				"order" : 101,
-				"text" : "Matrix Speed",
-				"type" : "slider",
-				"value" : 25
-			},
-			"ui_rain_traillength" : 
-			{
-				"fraction" : true,
-				"index" : 2,
+				"index" : 32,
 				"max" : 1,
-				"min" : 0,
-				"order" : 102,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "Trail Length",
+				"min" : -1,
+				"order" : 132,
+				"text" : "Day-light Saving",
 				"type" : "slider",
-				"value" : 0.86
+				"value" : 0
+			},
+			"ui_clock_scale" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 33,
+				"max" : 10,
+				"min" : 0,
+				"order" : 133,
+				"text" : "Clock Scale",
+				"type" : "slider",
+				"value" : 1
+			},
+			"ui_clock_positionx" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 34,
+				"max" : 100,
+				"min" : -100,
+				"order" : 134,
+				"text" : "Clock Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_clock_positiony" : 
+			{
+				"condition" : "ui_clock_clock.value != 0",
+				"fraction" : false,
+				"index" : 35,
+				"max" : 100,
+				"min" : -100,
+				"order" : 135,
+				"text" : "Clock Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"folder_day" : 
+			{
+				"index" : 36,
+				"order" : 136,
+				"text" : "<h4>Day</h4>",
+				"type" : "text"
 			},
 			"ui_day_day" : 
 			{
-				"index" : 44,
+				"index" : 37,
 				"options" : 
 				[
 					{
@@ -667,35 +585,53 @@
 						"value" : "1"
 					},
 					{
-						"label" : "FRIDAY",
-						"value" : "2"
-					},
-					{
-						"label" : "FRI",
-						"value" : "3"
-					},
-					{
 						"label" : "Fri",
-						"value" : "4"
-					},
-					{
-						"label" : "7",
-						"value" : "5"
+						"value" : "2"
 					}
 				],
-				"order" : 144,
+				"order" : 137,
 				"text" : "Day",
 				"type" : "combo",
 				"value" : "0"
+			},
+			"ui_day_allcaps" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"index" : 38,
+				"order" : 138,
+				"text" : "All CAPS",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_day_orientation" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"index" : 39,
+				"order" : 139,
+				"text" : "Vertical Orientation",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_day_scale" : 
+			{
+				"condition" : "ui_day_day.value != 0",
+				"fraction" : false,
+				"index" : 40,
+				"max" : 10,
+				"min" : 0,
+				"order" : 140,
+				"text" : "Day Scale",
+				"type" : "slider",
+				"value" : 1
 			},
 			"ui_day_positionx" : 
 			{
 				"condition" : "ui_day_day.value != 0",
 				"fraction" : false,
-				"index" : 47,
+				"index" : 41,
 				"max" : 100,
 				"min" : -100,
-				"order" : 147,
+				"order" : 141,
 				"text" : "Day Position X",
 				"type" : "slider",
 				"value" : 0
@@ -704,49 +640,24 @@
 			{
 				"condition" : "ui_day_day.value != 0",
 				"fraction" : false,
-				"index" : 48,
+				"index" : 42,
 				"max" : 100,
 				"min" : -100,
-				"order" : 148,
+				"order" : 142,
 				"text" : "Day Position Y",
 				"type" : "slider",
 				"value" : 0
 			},
-			"ui_day_scale" : 
+			"folder_date" : 
 			{
-				"condition" : "ui_day_day.value != 0",
-				"fraction" : false,
-				"index" : 46,
-				"max" : 10,
-				"min" : 0,
-				"order" : 146,
-				"text" : "Day Scale",
-				"type" : "slider",
-				"value" : 1
-			},
-			"ui_day_orientation" : 
-			{
-				"condition" : "ui_day_day.value != 0",
-				"index" : 45,
-				"options" : 
-				[
-					{
-						"label" : "Horizontal",
-						"value" : "0"
-					},
-					{
-						"label" : "Vertical",
-						"value" : "1"
-					}
-				],
-				"order" : 145,
-				"text" : "Day Orientation",
-				"type" : "combo",
-				"value" : "0"
+				"index" : 43,
+				"order" : 143,
+				"text" : "<h4>Date</h4>",
+				"type" : "text"
 			},
 			"ui_date_date" : 
 			{
-				"index" : 50,
+				"index" : 44,
 				"options" : 
 				[
 					{
@@ -778,15 +689,24 @@
 						"value" : "2"
 					}
 				],
-				"order" : 150,
+				"order" : 144,
 				"text" : "Date",
 				"type" : "combo",
 				"value" : "0"
 			},
+			"ui_date_orientation" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"index" : 45,
+				"order" : 145,
+				"text" : "Vertical Orientation",
+				"type" : "bool",
+				"value" : false
+			},
 			"ui_date_delimiter" : 
 			{
-				"index" : 52,
-				"condition" : "ui_date_date.value != 0 && ui_date_orientation.value == 0",
+				"index" : 46,
+				"condition" : "ui_date_date.value != 0 && !ui_date_orientation.value",
 				"options" : 
 				[
 					{
@@ -806,19 +726,31 @@
 						"value" : "3"
 					}
 				],
-				"order" : 152,
+				"order" : 146,
 				"text" : "Date Delimiter",
 				"type" : "combo",
 				"value" : "0"
+			},
+			"ui_date_scale" : 
+			{
+				"condition" : "ui_date_date.value != 0",
+				"fraction" : false,
+				"index" : 47,
+				"max" : 10,
+				"min" : 0,
+				"order" : 147,
+				"text" : "Date Scale",
+				"type" : "slider",
+				"value" : 1
 			},
 			"ui_date_positionx" : 
 			{
 				"condition" : "ui_date_date.value != 0",
 				"fraction" : false,
-				"index" : 54,
+				"index" : 48,
 				"max" : 100,
 				"min" : -100,
-				"order" : 154,
+				"order" : 148,
 				"text" : "Date Position X",
 				"type" : "slider",
 				"value" : 0
@@ -827,45 +759,88 @@
 			{
 				"condition" : "ui_date_date.value != 0",
 				"fraction" : false,
-				"index" : 55,
+				"index" : 49,
 				"max" : 100,
 				"min" : -100,
-				"order" : 155,
+				"order" : 149,
 				"text" : "Date Position Y",
 				"type" : "slider",
 				"value" : 0
 			},
-			"ui_date_scale" : 
+			"folder_message" : 
 			{
-				"condition" : "ui_date_date.value != 0",
+				"index" : 50,
+				"order" : 150,
+				"text" : "<h4>Message</h4>",
+				"type" : "text"
+			},
+			"ui_message_message" : 
+			{
+				"index" : 51,
+				"order" : 151,
+				"text" : "Message",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_message_text" : 
+			{
+				"condition" : "ui_message_message.value",
+				"index" : 52,
+				"order" : 152,
+				"text" : "Message Text",
+				"type" : "textinput",
+				"value" : "THE MATRIX"
+			},
+			"ui_message_scale" : 
+			{
+				"condition" : "ui_message_message.value",
 				"fraction" : false,
 				"index" : 53,
 				"max" : 10,
 				"min" : 0,
 				"order" : 153,
-				"text" : "Date Scale",
+				"text" : "Message Scale",
 				"type" : "slider",
 				"value" : 1
 			},
-			"ui_date_orientation" : 
+			"ui_message_positionx" : 
 			{
-				"condition" : "ui_date_date.value != 0",
-				"index" : 51,
-				"options" : 
-				[
-					{
-						"label" : "Horizontal",
-						"value" : "0"
-					},
-					{
-						"label" : "Vertical",
-						"value" : "1"
-					}
-				],
-				"order" : 151,
-				"text" : "Date Orientation",
-				"type" : "combo",
-				"value" : "0"
+				"condition" : "ui_message_message.value",
+				"fraction" : false,
+				"index" : 54,
+				"max" : 100,
+				"min" : -100,
+				"order" : 154,
+				"text" : "Message Position X",
+				"type" : "slider",
+				"value" : 0
+			},
+			"ui_message_positiony" : 
+			{
+				"condition" : "ui_message_message.value",
+				"fraction" : false,
+				"index" : 55,
+				"max" : 100,
+				"min" : -100,
+				"order" : 155,
+				"text" : "Message Position Y",
+				"type" : "slider",
+				"value" : 0
+			},
+			"folder_other" : 
+			{
+				"index" : 56,
+				"order" : 156,
+				"text" : "<h4>Other</h4>",
+				"type" : "text"
+			},
+			"ui_other_codescommaseparated" : 
+			{
+				"index" : 57,
+				"order" : 157,
+				"text" : "Codes (comma separated)",
+				"type" : "textinput",
+				"value" : "IP.AF,THE MATRIX"
 			}
 		},
 		"supportsaudioprocessing" : true
