@@ -786,7 +786,7 @@
 			"ui_date_delimiter" : 
 			{
 				"index" : 52,
-				"condition" : "ui_date_orientation.value == 0",
+				"condition" : "ui_date_date.value != 0 && ui_date_orientation.value == 0",
 				"options" : 
 				[
 					{

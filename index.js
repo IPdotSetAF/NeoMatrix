@@ -121,6 +121,7 @@ window.onload = function () {
             });
             rainFolder.add(options, "ui_rain_dropCount").min(1).max(5).step(1).name("Drop Count/Column").onChange(initialAnimation);
             rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(initialAnimation);
+            rainFolder.close();
 
             const colorFolder = gui.addFolder("Color");
             colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
@@ -131,17 +132,20 @@ window.onload = function () {
                 options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
             });
             colorFolder.add(options, 'ui_color_highlightFirstCharacter').name('Highlight First Character');
+            colorFolder.close();
 
             const characterFolder = gui.addFolder("Characters");
             characterFolder.add(options, 'ui_characters_charset', optionsToDict(config.general.properties.ui_characters_charset.options)).name('Char set').onChange(updateCharSet);
             characterFolder.add(options, 'ui_characters_customCharset').name('Custom Char Set').onChange(updateCharSet);
+            characterFolder.close();
 
             const fontFolder = gui.addFolder("Font");
             fontFolder.add(options, 'ui_font_size').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
             fontFolder.add(options, 'ui_font_font', optionsToDict(config.general.properties.ui_font_font.options)).name('Font').onChange(updateFont);
             fontFolder.add(options, 'ui_font_customFont').name('Custom Font').onChange(updateFont);
+            fontFolder.close();
 
-            gui.addFolder("Audio (not available in web version)");
+            gui.addFolder("Audio (not available in web version)").close();;
 
             const logoFolder = gui.addFolder("Logo");
             logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateLogo);
@@ -151,6 +155,7 @@ window.onload = function () {
             const logoPositionFolder = logoFolder.addFolder("Position");
             logoPositionFolder.add(options, "ui_logo_positionX").min(-2500).max(2500).step(1).name("X").onChange(updateLogo);
             logoPositionFolder.add(options, "ui_logo_positionY").min(-2500).max(2500).step(1).name("Y").onChange(updateLogo);
+            logoFolder.close();
 
             const clockFolder = gui.addFolder("Clock");
             clockFolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
@@ -166,6 +171,7 @@ window.onload = function () {
             const clockPositionFolder = clockFolder.addFolder("Position");
             clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            clockFolder.close();
 
             const messageFolder = gui.addFolder("Message");
             messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
@@ -174,6 +180,7 @@ window.onload = function () {
             const messagePositionFolder = messageFolder.addFolder("Position");
             messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            messageFolder.close();
 
             const dayFolder = gui.addFolder("Day");
             dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(updateMask);
@@ -182,6 +189,7 @@ window.onload = function () {
             const dayPositionFolder = dayFolder.addFolder("Position");
             dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             dayPositionFolder.add(options, "ui_day_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            dayFolder.close();
 
             const dateFolder = gui.addFolder("Date");
             dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Day").onChange(updateMask);
@@ -191,12 +199,14 @@ window.onload = function () {
             const datePositionFolder = dateFolder.addFolder("Position");
             datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            dateFolder.close();
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
                 options.codes = makeCodes(options.ui_other_codesCommaSeparated);
                 initialAnimation();
             });
+            otherFolder.close();
 
             gui.add(options, "Share");
             gui.add(options, "Save");
@@ -366,7 +376,7 @@ window.onload = function () {
     ];
     var logo = null, logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
     var debug = document.getElementById("debug"), logs = [];
-    var hour = "", minute = "";
+    var year = "", month = "", date = "", day = "", hour = "", minute = "";
     var startTime, now, then, elapsed, letters, columns, rows, drops, staticChars;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
@@ -423,6 +433,10 @@ window.onload = function () {
 
     function updateTime() {
         let today = new Date();
+        year = today.getFullYear();
+        month = today.getMonth();
+        date = today.getDate();
+        day = today.getDay();
         hour = today.getHours();
         minute = today.getMinutes();
 
@@ -488,12 +502,12 @@ window.onload = function () {
         }
 
         if (options.ui_message_message) {
-            let cc = getCharsCount(options.ui_message_text);
             if (options.ui_message_scale > 0) {
                 let bb = getTextBoundingBox(options.ui_message_text, options.ui_message_scale);
                 let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
                 drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
             } else {
+                let cc = getCharsCount(options.ui_message_text);
                 let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
                 drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
             }
