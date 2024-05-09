@@ -190,12 +190,12 @@ window.onload = function () {
 
             const dateFolder = gui.addFolder("Date");
             dateFolder.add(options, "ui_date_date").name("Day").onChange(updateMask);
-            dateFolder.add(options, "ui_date_orientation").name("Vertical Orientation").onChange(updateMask);
             dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
             dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
             dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
             dateFolder.add(options, "ui_date_allCaps").name("All CAPS").onChange(updateMask);
             dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
+            dateFolder.add(options, "ui_date_orientation").name("Vertical Orientation").onChange(updateMask);
             dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const datePositionFolder = dateFolder.addFolder("Position");
             datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);

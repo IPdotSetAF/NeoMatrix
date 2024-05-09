@@ -581,11 +581,11 @@
 						"value" : "0"
 					},
 					{
-						"label" : "Friday",
+						"label" : "Full",
 						"value" : "1"
 					},
 					{
-						"label" : "Fri",
+						"label" : "Short",
 						"value" : "2"
 					}
 				],
@@ -663,19 +663,10 @@
 				"type" : "bool",
 				"value" : false
 			},
-			"ui_date_orientation" : 
-			{
-				"condition" : "ui_date_date.value",
-				"index" : 45,
-				"order" : 145,
-				"text" : "Vertical Orientation",
-				"type" : "bool",
-				"value" : false
-			},
 			"ui_date_year" : 
 			{
 				"condition" : "ui_date_date.value",
-				"index" : 46,
+				"index" : 45,
 				"options" : 
 				[
 					{
@@ -683,15 +674,15 @@
 						"value" : "0"
 					},
 					{
-						"label" : "YY/",
+						"label" : "Short",
 						"value" : "1"
 					},
 					{
-						"label" : "YYYY/",
+						"label" : "Full",
 						"value" : "2"
 					}
 				],
-				"order" : 146,
+				"order" : 145,
 				"text" : "Year",
 				"type" : "combo",
 				"value" : "2"
@@ -699,7 +690,7 @@
 			"ui_date_order" : 
 			{
 				"condition" : "ui_date_date.value",
-				"index" : 47,
+				"index" : 46,
 				"options" : 
 				[
 					{
@@ -711,30 +702,30 @@
 						"value" : "1"
 					}
 				],
-				"order" : 147,
+				"order" : 146,
 				"text" : "Order",
 				"type" : "combo",
 				"value" : "0"
 			},
 			"ui_date_monthname" : {
 				"condition" : "ui_date_date.value",
-				"index" : 48,
-				"order" : 148,
+				"index" : 47,
+				"order" : 147,
 				"text" : "Month Name",
 				"type" : "bool",	
 				"value": false
 			},
 			"ui_date_allcaps" : {
 				"condition" : "ui_date_date.value",
-				"index" : 49,
-				"order" : 149,
+				"index" : 48,
+				"order" : 148,
 				"text" : "All CAPS",
 				"type" : "bool",	
 				"value": false
 			},
 			"ui_date_delimiter" : 
 			{
-				"index" : 50,
+				"index" : 49,
 				"condition" : "ui_date_date.value && !ui_date_orientation.value",
 				"options" : 
 				[
@@ -759,10 +750,19 @@
 						"value" : "4"
 					}
 				],
-				"order" : 150,
+				"order" : 149,
 				"text" : "Date Delimiter",
 				"type" : "combo",
 				"value" : "0"
+			},
+			"ui_date_orientation" : 
+			{
+				"condition" : "ui_date_date.value",
+				"index" : 50,
+				"order" : 150,
+				"text" : "Vertical Orientation",
+				"type" : "bool",
+				"value" : false
 			},
 			"ui_date_scale" : 
 			{

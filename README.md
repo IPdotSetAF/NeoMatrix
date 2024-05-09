@@ -112,6 +112,38 @@ Click on each preview to watch live
    - Day-light Saving
    - Scale
    - Position
+- Day
+   - Day
+      - None
+      - Full
+      - Short
+   - All CAPS
+   - Orientation
+      - Horizontal
+      - Vertical
+   - Scale
+   - Position
+- Date
+   - Year
+      - None
+      - Full
+      - Short
+   - Order
+      - MM/DD
+      - DD/MM
+   - Month Name
+   - All CAPS
+   - Delimiter
+      - None
+      - Space
+      - \-
+      - .
+      - /
+   - Orientation
+      - Horizontal
+      - Vertical
+   - Scale
+   - Position
 - Message
    - Text
    - Scale
@@ -136,8 +168,6 @@ Click on each preview to watch live
    - Download this Repo as ZIP and extract it.
 
 ## TODO:
-- Date and Day 
-- Random Character Mutations
 - Random Character Flip
 - Random drop length (not to the bottom of the screen)
 - [Lively](https://github.com/rocksdanister/lively) Compatible version
