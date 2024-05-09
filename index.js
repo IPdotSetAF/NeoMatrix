@@ -56,6 +56,22 @@ window.onload = function () {
         ui_message_scale: 1,
         ui_message_positionX: 0,
         ui_message_positionY: 0,
+        ui_day_day: "0",
+        ui_day_allCaps: false,
+        ui_day_orientation: false,
+        ui_day_scale: 1,
+        ui_day_positionX: 0,
+        ui_day_positionY: 0,
+        ui_date_date: false,
+        ui_date_orientation: false,
+        ui_date_year: "2",
+        ui_date_order: "0",
+        ui_date_monthName: false,
+        ui_date_allCaps: false,
+        ui_date_delimiter: "0",
+        ui_date_scale: 1,
+        ui_date_positionX: 0,
+        ui_date_positionY: 0,
         Share() {
             copyToClipboard(paramsToUrl({ preset: btoa(JSON.stringify(gui.save())) }, {}, []));
             Log("Copied Preset URL to clipboard.");
@@ -110,6 +126,7 @@ window.onload = function () {
             });
             rainFolder.add(options, "ui_rain_dropCount").min(1).max(5).step(1).name("Drop Count/Column").onChange(initialAnimation);
             rainFolder.add(options, "ui_rain_initialAnimation", optionsToDict(config.general.properties.ui_rain_initialanimation.options)).name("Initial Animation").onChange(initialAnimation);
+            rainFolder.close();
 
             const colorFolder = gui.addFolder("Color");
             colorFolder.add(options, 'ui_color_colorMode', optionsToDict(config.general.properties.ui_color_colormode.options)).name('Color Mode');
@@ -120,17 +137,20 @@ window.onload = function () {
                 options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
             });
             colorFolder.add(options, 'ui_color_highlightFirstCharacter').name('Highlight First Character');
+            colorFolder.close();
 
             const characterFolder = gui.addFolder("Characters");
             characterFolder.add(options, 'ui_characters_charset', optionsToDict(config.general.properties.ui_characters_charset.options)).name('Char set').onChange(updateCharSet);
             characterFolder.add(options, 'ui_characters_customCharset').name('Custom Char Set').onChange(updateCharSet);
+            characterFolder.close();
 
             const fontFolder = gui.addFolder("Font");
             fontFolder.add(options, 'ui_font_size').min(5).max(30).step(1).name('Font Size').onChange(updateFont);
             fontFolder.add(options, 'ui_font_font', optionsToDict(config.general.properties.ui_font_font.options)).name('Font').onChange(updateFont);
             fontFolder.add(options, 'ui_font_customFont').name('Custom Font').onChange(updateFont);
+            fontFolder.close();
 
-            gui.addFolder("Audio (not available in web version)");
+            gui.addFolder("Audio (not available in web version)").close();;
 
             const logoFolder = gui.addFolder("Logo");
             logoFolder.add(options, "ui_logo_logo", optionsToDict(config.general.properties.ui_logo_logo.options)).name("Logo").onChange(updateLogo);
@@ -140,35 +160,63 @@ window.onload = function () {
             const logoPositionFolder = logoFolder.addFolder("Position");
             logoPositionFolder.add(options, "ui_logo_positionX").min(-2500).max(2500).step(1).name("X").onChange(updateLogo);
             logoPositionFolder.add(options, "ui_logo_positionY").min(-2500).max(2500).step(1).name("Y").onChange(updateLogo);
+            logoFolder.close();
 
-            const clockfolder = gui.addFolder("Clock");
-            clockfolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
-            clockfolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
+            const clockFolder = gui.addFolder("Clock");
+            clockFolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
+            clockFolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
+            clockFolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
                 updateTime();
                 updateMask();
             });
-            clockfolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
-            const clockPositionFolder = clockfolder.addFolder("Position");
+            clockFolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const clockPositionFolder = clockFolder.addFolder("Position");
             clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            clockFolder.close();
 
-            const messagefolder = gui.addFolder("Message");
-            messagefolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
-            messagefolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messagefolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
-            const messagePositionFolder = messagefolder.addFolder("Position");
+            const dayFolder = gui.addFolder("Day");
+            dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(updateMask);
+            dayFolder.add(options, "ui_day_allCaps").name("All CAPS").onChange(updateMask);
+            dayFolder.add(options, "ui_day_orientation").name("Vertical Orientation").onChange(updateMask);
+            dayFolder.add(options, "ui_day_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const dayPositionFolder = dayFolder.addFolder("Position");
+            dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            dayPositionFolder.add(options, "ui_day_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            dayFolder.close();
+
+            const dateFolder = gui.addFolder("Date");
+            dateFolder.add(options, "ui_date_date").name("Day").onChange(updateMask);
+            dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
+            dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
+            dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
+            dateFolder.add(options, "ui_date_allCaps").name("All CAPS").onChange(updateMask);
+            dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
+            dateFolder.add(options, "ui_date_orientation").name("Vertical Orientation").onChange(updateMask);
+            dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const datePositionFolder = dateFolder.addFolder("Position");
+            datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
+            datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            dateFolder.close();
+
+            const messageFolder = gui.addFolder("Message");
+            messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
+            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
+            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            const messagePositionFolder = messageFolder.addFolder("Position");
             messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
             messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            messageFolder.close();
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
                 options.codes = makeCodes(options.ui_other_codesCommaSeparated);
                 initialAnimation();
             });
+            otherFolder.close();
 
             gui.add(options, "Share");
             gui.add(options, "Save");
@@ -247,7 +295,8 @@ window.onload = function () {
                 options.ui_logo_positionY = properties.ui_logo_positiony.value;
             if (properties.ui_logo_preservecolor)
                 options.ui_logo_preserveColor = properties.ui_logo_preservecolor.value;
-            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
+            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale ||
+                properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
                 updateLogo();
 
             if (properties.ui_clock_clock)
@@ -266,7 +315,50 @@ window.onload = function () {
                 options.ui_clock_positionX = properties.ui_clock_positionx.value;
             if (properties.ui_clock_positiony)
                 options.ui_clock_positionY = properties.ui_clock_positiony.value;
-            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
+            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving ||
+                properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
+                updateMask();
+
+            if (properties.ui_day_day)
+                options.ui_day_day = properties.ui_day_day.value;
+            if (properties.ui_day_allcaps)
+                options.ui_day_allCaps = properties.ui_day_allcaps.value;
+            if (properties.ui_day_orientation)
+                options.ui_day_orientation = properties.ui_day_orientation.value;
+            if (properties.ui_day_scale)
+                options.ui_day_scale = properties.ui_day_scale.value;
+            if (properties.ui_day_positionx)
+                options.ui_day_positionX = properties.ui_day_positionx.value;
+            if (properties.ui_day_positiony)
+                options.ui_day_positionY = properties.ui_day_positiony.value;
+            if (properties.ui_day_day || properties.ui_day_allcaps || properties.ui_day_orientation ||
+                properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
+                updateMask();
+
+            if (properties.ui_date_date)
+                options.ui_date_date = properties.ui_date_date.value;
+            if (properties.ui_date_orientation)
+                options.ui_date_orientation = properties.ui_date_orientation.value;
+            if (properties.ui_date_year)
+                options.ui_date_year = properties.ui_date_year.value;
+            if (properties.ui_date_order)
+                options.ui_date_order = properties.ui_date_order.value;
+            if (properties.ui_date_monthname)
+                options.ui_date_monthName = properties.ui_date_monthname.value;
+            if (properties.ui_date_allcaps)
+                options.ui_date_allCaps = properties.ui_date_allcaps.value;
+            if (properties.ui_date_delimiter)
+                options.ui_date_delimiter = properties.ui_date_delimiter.value;
+            if (properties.ui_date_scale)
+                options.ui_date_scale = properties.ui_date_scale.value;
+            if (properties.ui_date_positionx)
+                options.ui_date_positionX = properties.ui_date_positionx.value;
+            if (properties.ui_date_positiony)
+                options.ui_date_positionY = properties.ui_date_positiony.value;
+            if (properties.ui_date_date || properties.ui_date_orientation || properties.ui_date_year ||
+                properties.ui_date_order || properties.ui_date_monthname || properties.ui_date_allcaps ||
+                properties.ui_date_delimiter || properties.ui_date_scale || properties.ui_date_positionx
+                || properties.ui_date_positiony)
                 updateMask();
 
             if (properties.ui_message_message)
@@ -279,7 +371,8 @@ window.onload = function () {
                 options.ui_message_positionX = properties.ui_message_positionx.value;
             if (properties.ui_message_positiony)
                 options.ui_message_positionY = properties.ui_message_positiony.value;
-            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
+            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale ||
+                properties.ui_message_positionx || properties.ui_message_positiony)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -298,8 +391,11 @@ window.onload = function () {
     }, false);
 
     //MARK: Variables
-    var fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
-    var charsets = [
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        dateDelimiters = ["", " ", "-", ".", "/"];
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
+    let charsets = [
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ()._,-=+*/\\:;\'\"<>?!@#$%&^[]{}",
@@ -310,7 +406,7 @@ window.onload = function () {
     ];
     var logo = null, logos = ["ipaf", "kali-1", "kali-2", "ubuntu-1", "ubuntu-2", "windows-11", "windows-10-8", "windows-7", "visual-studio", "vs-code", "unity-1", "unity-2", "unreal", "python", "blazor", "docker", "flutter", "git", "blender", "angular", "c-sharp", "c-plus-plus", "qt"];
     var debug = document.getElementById("debug"), logs = [];
-    var hour = "", minute = "";
+    var year = "", month = "", date = "", day = "", hour = "", minute = "";
     var startTime, now, then, elapsed, letters, columns, rows, drops, staticChars;
     var AudioTimeout = false, LastSoundTime = new Date(), isSilent = false, frequencyArray, frequencyArrayLength = 128, column_frequency;
     var column_hue, row_hue;
@@ -367,6 +463,10 @@ window.onload = function () {
 
     function updateTime() {
         let today = new Date();
+        year = today.getFullYear();
+        month = today.getMonth();
+        date = today.getDate();
+        day = today.getDay();
         hour = today.getHours();
         minute = today.getMinutes();
 
@@ -422,7 +522,7 @@ window.onload = function () {
             case "2": {
                 if (options.ui_clock_scale > 0) {
                     let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
-                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY , options.ui_clock_scale);
+                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
                     drawTextOnMatrix(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
@@ -431,13 +531,70 @@ window.onload = function () {
             }
         }
 
+        if (options.ui_day_day != "0") {
+            var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
+            if (options.ui_day_day == "2")
+                dayText = dayText.substring(0, 3);
+            if (options.ui_day_orientation)
+                dayText = dayText.split("").join("\\n");
+            if (options.ui_day_scale > 0) {
+                let bb = getTextBoundingBox(dayText, options.ui_day_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY, options.ui_day_scale);
+            } else {
+                let cc = getCharsCount(dayText);
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+                drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY);
+            }
+        }
+
+        if (options.ui_date_date) {
+            var dateText = date.toString(), monthText, yearText = "", completeDate;
+            if (dateText.length < 2)
+                dateText = "0" + dateText;
+            if (options.ui_date_monthName) {
+                monthText = months[month];
+                if (options.ui_date_allCaps)
+                    monthText = monthText.toUpperCase();
+            } else {
+                monthText = month.toString();
+                if (monthText.length < 2)
+                    monthText = "0" + monthText;
+            }
+            switch (options.ui_date_year) {
+                case "1": {
+                    yearText = year.toString().substring(2, 4);
+                    break;
+                }
+                case "2": {
+                    yearText = year.toString();
+                    break;
+                }
+            }
+
+            let delimiter = options.ui_date_orientation ? "" : dateDelimiters[parseInt(options.ui_date_delimiter)];
+            completeDate = yearText + (yearText.length > 0 ? delimiter : "") + (options.ui_date_order == "0" ? monthText + delimiter + dateText : dateText + delimiter + monthText);
+            if (options.ui_date_orientation)
+                completeDate = completeDate.split("").join("\\n");
+
+            if (options.ui_date_scale > 0) {
+                let bb = getTextBoundingBox(completeDate, options.ui_date_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMask(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY, options.ui_date_scale);
+            } else {
+                let cc = getCharsCount(completeDate);
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+                drawTextOnMatrix(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY);
+            }
+        }
+
         if (options.ui_message_message) {
-            let cc = getCharsCount(options.ui_message_text);
             if (options.ui_message_scale > 0) {
                 let bb = getTextBoundingBox(options.ui_message_text, options.ui_message_scale);
                 let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
                 drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
             } else {
+                let cc = getCharsCount(options.ui_message_text);
                 let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
                 drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
             }
