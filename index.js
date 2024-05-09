@@ -62,8 +62,12 @@ window.onload = function () {
         ui_day_scale: 1,
         ui_day_positionX: 0,
         ui_day_positionY: 0,
-        ui_date_date: "0",
+        ui_date_date: false,
         ui_date_orientation: false,
+        ui_date_year: "2",
+        ui_date_order: "0",
+        ui_date_monthName: false,
+        ui_date_allCaps: false,
         ui_date_delimiter: "0",
         ui_date_scale: 1,
         ui_date_positionX: 0,
@@ -185,8 +189,12 @@ window.onload = function () {
             dayFolder.close();
 
             const dateFolder = gui.addFolder("Date");
-            dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Day").onChange(updateMask);
+            dateFolder.add(options, "ui_date_date").name("Day").onChange(updateMask);
             dateFolder.add(options, "ui_date_orientation").name("Vertical Orientation").onChange(updateMask);
+            dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
+            dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
+            dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
+            dateFolder.add(options, "ui_date_allCaps").name("All CAPS").onChange(updateMask);
             dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
             dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
             const datePositionFolder = dateFolder.addFolder("Position");
@@ -287,7 +295,8 @@ window.onload = function () {
                 options.ui_logo_positionY = properties.ui_logo_positiony.value;
             if (properties.ui_logo_preservecolor)
                 options.ui_logo_preserveColor = properties.ui_logo_preservecolor.value;
-            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale || properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
+            if (properties.ui_logo_logo || properties.ui_logo_customlogo || properties.ui_logo_scale ||
+                properties.ui_logo_positionx || properties.ui_logo_positiony || properties.ui_logo_preservecolor)
                 updateLogo();
 
             if (properties.ui_clock_clock)
@@ -306,7 +315,8 @@ window.onload = function () {
                 options.ui_clock_positionX = properties.ui_clock_positionx.value;
             if (properties.ui_clock_positiony)
                 options.ui_clock_positionY = properties.ui_clock_positiony.value;
-            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving || properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
+            if (properties.ui_clock_clock || properties.ui_clock_24hourformat || properties.ui_clock_daylightsaving ||
+                properties.ui_clock_scale || properties.ui_clock_positionx || properties.ui_clock_positiony)
                 updateMask();
 
             if (properties.ui_day_day)
@@ -321,13 +331,22 @@ window.onload = function () {
                 options.ui_day_positionX = properties.ui_day_positionx.value;
             if (properties.ui_day_positiony)
                 options.ui_day_positionY = properties.ui_day_positiony.value;
-            if (properties.ui_day_day || properties.ui_day_allcaps || properties.ui_day_orientation || properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
+            if (properties.ui_day_day || properties.ui_day_allcaps || properties.ui_day_orientation ||
+                properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
                 updateMask();
 
             if (properties.ui_date_date)
                 options.ui_date_date = properties.ui_date_date.value;
             if (properties.ui_date_orientation)
                 options.ui_date_orientation = properties.ui_date_orientation.value;
+            if (properties.ui_date_year)
+                options.ui_date_year = properties.ui_date_year.value;
+            if (properties.ui_date_order)
+                options.ui_date_order = properties.ui_date_order.value;
+            if (properties.ui_date_monthname)
+                options.ui_date_monthName = properties.ui_date_monthname.value;
+            if (properties.ui_date_allcaps)
+                options.ui_date_allCaps = properties.ui_date_allcaps.value;
             if (properties.ui_date_delimiter)
                 options.ui_date_delimiter = properties.ui_date_delimiter.value;
             if (properties.ui_date_scale)
@@ -336,7 +355,10 @@ window.onload = function () {
                 options.ui_date_positionX = properties.ui_date_positionx.value;
             if (properties.ui_date_positiony)
                 options.ui_date_positionY = properties.ui_date_positiony.value;
-            if (properties.ui_date_date || properties.ui_date_orientation || properties.ui_date_delimiter || properties.ui_date_scale || properties.ui_date_positionx || properties.ui_date_positiony)
+            if (properties.ui_date_date || properties.ui_date_orientation || properties.ui_date_year ||
+                properties.ui_date_order || properties.ui_date_monthname || properties.ui_date_allcaps ||
+                properties.ui_date_delimiter || properties.ui_date_scale || properties.ui_date_positionx
+                || properties.ui_date_positiony)
                 updateMask();
 
             if (properties.ui_message_message)
@@ -349,7 +371,8 @@ window.onload = function () {
                 options.ui_message_positionX = properties.ui_message_positionx.value;
             if (properties.ui_message_positiony)
                 options.ui_message_positionY = properties.ui_message_positiony.value;
-            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale || properties.ui_message_positionx || properties.ui_message_positiony)
+            if (properties.ui_message_message || properties.ui_message_text || properties.ui_message_scale ||
+                properties.ui_message_positionx || properties.ui_message_positiony)
                 updateMask();
 
             if (properties.ui_other_codescommaseparated) {
@@ -368,6 +391,8 @@ window.onload = function () {
     }, false);
 
     //MARK: Variables
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        dateDelimiters = ["", " ", "-", ".", "/"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
     let charsets = [
@@ -523,22 +548,45 @@ window.onload = function () {
             }
         }
 
-        // if (options.ui_date_date != "0") {
-        //     var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
-        //     if (options.ui_day_day == "2")
-        //         dayText = dayText.substring(0, 3);
-        //     if (options.ui_day_orientation)
-        //         dayText = dayText.split("").join("\\n");
-        //     if (options.ui_day_scale > 0) {
-        //         let bb = getTextBoundingBox(dayText, options.ui_day_scale);
-        //         let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
-        //         drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_date_positionY, options.ui_day_scale);
-        //     } else {
-        //         let cc = getCharsCount(dayText);
-        //         let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
-        //         drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_date_positionY);
-        //     }
-        // }
+        if (options.ui_date_date) {
+            var dateText = date.toString(), monthText, yearText = "", completeDate;
+            if (dateText.length < 2)
+                dateText = "0" + dateText;
+            if (options.ui_date_monthName) {
+                monthText = months[month];
+                if (options.ui_date_allCaps)
+                    monthText = monthText.toUpperCase();
+            } else {
+                monthText = month.toString();
+                if (monthText.length < 2)
+                    monthText = "0" + monthText;
+            }
+            switch (options.ui_date_year) {
+                case "1": {
+                    yearText = year.toString().substring(2, 4);
+                    break;
+                }
+                case "2": {
+                    yearText = year.toString();
+                    break;
+                }
+            }
+
+            let delimiter = options.ui_date_orientation ? "" : dateDelimiters[parseInt(options.ui_date_delimiter)];
+            completeDate = yearText + (yearText.length > 0 ? delimiter : "") + (options.ui_date_order == "0" ? monthText + delimiter + dateText : dateText + delimiter + monthText);
+            if (options.ui_date_orientation)
+                completeDate = completeDate.split("").join("\\n");
+
+            if (options.ui_date_scale > 0) {
+                let bb = getTextBoundingBox(completeDate, options.ui_date_scale);
+                let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+                drawTextOnMask(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY, options.ui_date_scale);
+            } else {
+                let cc = getCharsCount(completeDate);
+                let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+                drawTextOnMatrix(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY);
+            }
+        }
 
         if (options.ui_message_message) {
             if (options.ui_message_scale > 0) {

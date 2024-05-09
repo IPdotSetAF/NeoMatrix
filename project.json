@@ -655,9 +655,27 @@
 				"text" : "<h4>Date</h4>",
 				"type" : "text"
 			},
-			"ui_date_date" : 
+			"ui_date_date" :
 			{
 				"index" : 44,
+				"order" : 144,
+				"text" : "Date",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_date_orientation" : 
+			{
+				"condition" : "ui_date_date.value",
+				"index" : 45,
+				"order" : 145,
+				"text" : "Vertical Orientation",
+				"type" : "bool",
+				"value" : false
+			},
+			"ui_date_year" : 
+			{
+				"condition" : "ui_date_date.value",
+				"index" : 46,
 				"options" : 
 				[
 					{
@@ -665,48 +683,59 @@
 						"value" : "0"
 					},
 					{
-						"label" : "YYYY/MM/DD",
+						"label" : "YY/",
 						"value" : "1"
 					},
 					{
-						"label" : "YYYY/DD/MM",
-						"value" : "1"
-					},
-					{
-						"label" : "YY/DD/MM",
-						"value" : "1"
-					},
-					{
-						"label" : "YY/MM/DD",
-						"value" : "1"
-					},
-					{
-						"label" : "MM/DD",
-						"value" : "2"
-					},
-					{
-						"label" : "DD/MM",
+						"label" : "YYYY/",
 						"value" : "2"
 					}
 				],
-				"order" : 144,
-				"text" : "Date",
+				"order" : 146,
+				"text" : "Year",
+				"type" : "combo",
+				"value" : "2"
+			},
+			"ui_date_order" : 
+			{
+				"condition" : "ui_date_date.value",
+				"index" : 47,
+				"options" : 
+				[
+					{
+						"label" : "MM/DD",
+						"value" : "0"
+					},
+					{
+						"label" : "DD/MM",
+						"value" : "1"
+					}
+				],
+				"order" : 147,
+				"text" : "Order",
 				"type" : "combo",
 				"value" : "0"
 			},
-			"ui_date_orientation" : 
-			{
-				"condition" : "ui_date_date.value != 0",
-				"index" : 45,
-				"order" : 145,
-				"text" : "Vertical Orientation",
-				"type" : "bool",
-				"value" : false
+			"ui_date_monthname" : {
+				"condition" : "ui_date_date.value",
+				"index" : 48,
+				"order" : 148,
+				"text" : "Month Name",
+				"type" : "bool",	
+				"value": false
+			},
+			"ui_date_allcaps" : {
+				"condition" : "ui_date_date.value",
+				"index" : 49,
+				"order" : 149,
+				"text" : "All CAPS",
+				"type" : "bool",	
+				"value": false
 			},
 			"ui_date_delimiter" : 
 			{
-				"index" : 46,
-				"condition" : "ui_date_date.value != 0 && !ui_date_orientation.value",
+				"index" : 50,
+				"condition" : "ui_date_date.value && !ui_date_orientation.value",
 				"options" : 
 				[
 					{
@@ -722,62 +751,66 @@
 						"value" : "2"
 					},
 					{
-						"label" : "/",
+						"label" : ".",
 						"value" : "3"
+					},
+					{
+						"label" : "/",
+						"value" : "4"
 					}
 				],
-				"order" : 146,
+				"order" : 150,
 				"text" : "Date Delimiter",
 				"type" : "combo",
 				"value" : "0"
 			},
 			"ui_date_scale" : 
 			{
-				"condition" : "ui_date_date.value != 0",
+				"condition" : "ui_date_date.value",
 				"fraction" : false,
-				"index" : 47,
+				"index" : 51,
 				"max" : 10,
 				"min" : 0,
-				"order" : 147,
+				"order" : 151,
 				"text" : "Date Scale",
 				"type" : "slider",
 				"value" : 1
 			},
 			"ui_date_positionx" : 
 			{
-				"condition" : "ui_date_date.value != 0",
+				"condition" : "ui_date_date.value",
 				"fraction" : false,
-				"index" : 48,
+				"index" : 52,
 				"max" : 100,
 				"min" : -100,
-				"order" : 148,
+				"order" : 152,
 				"text" : "Date Position X",
 				"type" : "slider",
 				"value" : 0
 			},
 			"ui_date_positiony" : 
 			{
-				"condition" : "ui_date_date.value != 0",
+				"condition" : "ui_date_date.value",
 				"fraction" : false,
-				"index" : 49,
+				"index" : 53,
 				"max" : 100,
 				"min" : -100,
-				"order" : 149,
+				"order" : 153,
 				"text" : "Date Position Y",
 				"type" : "slider",
 				"value" : 0
 			},
 			"folder_message" : 
 			{
-				"index" : 50,
-				"order" : 150,
+				"index" : 54,
+				"order" : 154,
 				"text" : "<h4>Message</h4>",
 				"type" : "text"
 			},
 			"ui_message_message" : 
 			{
-				"index" : 51,
-				"order" : 151,
+				"index" : 55,
+				"order" : 155,
 				"text" : "Message",
 				"type" : "bool",
 				"value" : false
@@ -785,8 +818,8 @@
 			"ui_message_text" : 
 			{
 				"condition" : "ui_message_message.value",
-				"index" : 52,
-				"order" : 152,
+				"index" : 56,
+				"order" : 156,
 				"text" : "Message Text",
 				"type" : "textinput",
 				"value" : "THE MATRIX"
@@ -795,10 +828,10 @@
 			{
 				"condition" : "ui_message_message.value",
 				"fraction" : false,
-				"index" : 53,
+				"index" : 57,
 				"max" : 10,
 				"min" : 0,
-				"order" : 153,
+				"order" : 157,
 				"text" : "Message Scale",
 				"type" : "slider",
 				"value" : 1
@@ -807,10 +840,10 @@
 			{
 				"condition" : "ui_message_message.value",
 				"fraction" : false,
-				"index" : 54,
+				"index" : 58,
 				"max" : 100,
 				"min" : -100,
-				"order" : 154,
+				"order" : 158,
 				"text" : "Message Position X",
 				"type" : "slider",
 				"value" : 0
@@ -819,25 +852,25 @@
 			{
 				"condition" : "ui_message_message.value",
 				"fraction" : false,
-				"index" : 55,
+				"index" : 59,
 				"max" : 100,
 				"min" : -100,
-				"order" : 155,
+				"order" : 159,
 				"text" : "Message Position Y",
 				"type" : "slider",
 				"value" : 0
 			},
 			"folder_other" : 
 			{
-				"index" : 56,
-				"order" : 156,
+				"index" : 60,
+				"order" : 160,
 				"text" : "<h4>Other</h4>",
 				"type" : "text"
 			},
 			"ui_other_codescommaseparated" : 
 			{
-				"index" : 57,
-				"order" : 157,
+				"index" : 61,
+				"order" : 161,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "IP.AF,THE MATRIX"
