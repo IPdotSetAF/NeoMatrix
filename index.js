@@ -189,7 +189,7 @@ window.onload = function () {
             dayFolder.close();
 
             const dateFolder = gui.addFolder("Date");
-            dateFolder.add(options, "ui_date_date").name("Day").onChange(updateMask);
+            dateFolder.add(options, "ui_date_date").name("Date").onChange(updateMask);
             dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
             dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
             dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
