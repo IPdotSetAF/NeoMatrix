@@ -462,19 +462,14 @@ window.onload = function () {
     }, 60000);
 
     function updateTime() {
-        let today = new Date();
+        var today = new Date();
+        today.setHours(today.getHours() + options.ui_clock_dayLightSaving);
         year = today.getFullYear();
         month = today.getMonth();
         date = today.getDate();
         day = today.getDay();
         hour = today.getHours();
         minute = today.getMinutes();
-
-        hour += options.ui_clock_dayLightSaving;
-        if (hour < 0)
-            hour = 23;
-        if (hour > 23)
-            hour = 0;
 
         if (!options.ui_clock_24HourFormat && hour > 12) {
             hour = hour % 12;
