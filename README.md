@@ -43,7 +43,6 @@ Click on each preview to watch live
    - Trail Length
    - Drop Count/Column (1-5)
    - Initial Fall Animation
-      - None
       - Fall
       - Scatter
 - Color Customization
@@ -71,7 +70,6 @@ Click on each preview to watch live
    - Silence Timeout
 - Logo Customization
    - Logo
-      - None
       - 23 presets :
 
          <p align="left">
@@ -114,7 +112,6 @@ Click on each preview to watch live
    - Position
 - Day
    - Day
-      - None
       - Full
       - Short
    - All CAPS
@@ -125,7 +122,6 @@ Click on each preview to watch live
    - Position
 - Date
    - Year
-      - None
       - Full
       - Short
    - Order
@@ -134,7 +130,6 @@ Click on each preview to watch live
    - Month Name
    - All CAPS
    - Delimiter
-      - None
       - Space
       - \-
       - .

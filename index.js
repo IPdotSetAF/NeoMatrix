@@ -1,6 +1,6 @@
 window.onload = function () {
     //MARK: Update
-    const version = "v7.0.0";
+    const version = "v7.0.1";
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
