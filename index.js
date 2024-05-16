@@ -62,7 +62,7 @@ window.onload = function () {
         ui_day_scale: 1,
         ui_day_positionX: 0,
         ui_day_positionY: 0,
-        ui_date_date: false,
+        ui_date_date: "0",
         ui_date_orientation: false,
         ui_date_year: "2",
         ui_date_order: "0",
@@ -189,7 +189,10 @@ window.onload = function () {
             dayFolder.close();
 
             const dateFolder = gui.addFolder("Date");
-            dateFolder.add(options, "ui_date_date").name("Date").onChange(updateMask);
+            dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Date").onChange(() => {
+                updateTime();
+                updateMask();
+            });
             dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
             dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
             dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
@@ -335,8 +338,10 @@ window.onload = function () {
                 properties.ui_day_scale || properties.ui_day_positionx || properties.ui_day_positiony)
                 updateMask();
 
-            if (properties.ui_date_date)
+            if (properties.ui_date_date) {
                 options.ui_date_date = properties.ui_date_date.value;
+                updateTime();
+            }
             if (properties.ui_date_orientation)
                 options.ui_date_orientation = properties.ui_date_orientation.value;
             if (properties.ui_date_year)
@@ -391,8 +396,11 @@ window.onload = function () {
     }, false);
 
     //MARK: Variables
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        dateDelimiters = ["", " ", "-", ".", "/"];
+    let months = [
+        ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        ["Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad", "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand"],
+        ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah"]
+    ], dateDelimiters = ["", " ", "-", ".", "/"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
     let charsets = [
@@ -464,9 +472,27 @@ window.onload = function () {
     function updateTime() {
         var today = new Date();
         today.setHours(today.getHours() + options.ui_clock_dayLightSaving);
-        year = today.getFullYear();
-        month = today.getMonth();
-        date = today.getDate();
+
+        switch (options.ui_date_date) {
+            case "1":
+                year = today.getFullYear();
+                month = today.getMonth() + 1;
+                date = today.getDate();
+                break;
+            case "2":
+                var parts = today.toLocaleDateString('fa-IR-u-nu-latn').split("/");
+                year = parseInt(parts[0]);
+                month = parseInt(parts[1]);
+                date = parseInt(parts[2]);
+                break;
+            case "3":
+                var parts = today.toLocaleDateString('ar-SA-u-nu-latn').split("/");
+                year = parseInt(parts[2]);
+                month = parseInt(parts[1]);
+                date = parseInt(parts[0]);
+                break;
+        }
+
         day = today.getDay();
         hour = today.getHours();
         minute = today.getMinutes();
@@ -543,12 +569,12 @@ window.onload = function () {
             }
         }
 
-        if (options.ui_date_date) {
+        if (options.ui_date_date != "0") {
             var dateText = date.toString(), monthText, yearText = "", completeDate;
             if (dateText.length < 2)
                 dateText = "0" + dateText;
             if (options.ui_date_monthName) {
-                monthText = months[month];
+                monthText = months[parseInt(options.ui_date_date) - 1][month - 1];
                 if (options.ui_date_allCaps)
                     monthText = monthText.toUpperCase();
             } else {

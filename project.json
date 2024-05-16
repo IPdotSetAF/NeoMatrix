@@ -658,10 +658,29 @@
 			"ui_date_date" :
 			{
 				"index" : 44,
+				"options" : 
+				[
+					{
+						"label" : "None",
+						"value" : "0"
+					},
+					{
+						"label" : "Gregorian",
+						"value" : "1"
+					},
+					{
+						"label" : "Persian",
+						"value" : "2"
+					},
+					{
+						"label" : "Hijri",
+						"value" : "3"
+					}
+				],
 				"order" : 144,
 				"text" : "Date",
-				"type" : "bool",
-				"value" : false
+				"type" : "combo",
+				"value" : "0"
 			},
 			"ui_date_year" : 
 			{
