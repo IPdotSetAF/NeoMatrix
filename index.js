@@ -400,8 +400,7 @@ window.onload = function () {
         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         ["Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad", "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand"],
         ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah"]
-    ];
-    dateDelimiters = ["", " ", "-", ".", "/"];
+    ], dateDelimiters = ["", " ", "-", ".", "/"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let fonts = ["monospace", "consolas", "courier-bold", "neo-matrix"];
     let charsets = [
@@ -477,7 +476,7 @@ window.onload = function () {
         switch (options.ui_date_date) {
             case "1":
                 year = today.getFullYear();
-                month = today.getMonth() +1;
+                month = today.getMonth() + 1;
                 date = today.getDate();
                 break;
             case "2":
