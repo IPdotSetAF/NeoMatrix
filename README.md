@@ -121,6 +121,10 @@ Click on each preview to watch live
    - Scale
    - Position
 - Date
+   - Date
+      - Gregorian
+      - Persian
+      - Hijri
    - Year
       - Full
       - Short
