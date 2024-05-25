@@ -1,11 +1,6 @@
 {
   "PropertyListener": "SucrosePropertyListener('{0}', {1});",
   "PropertyList": {
-    "schemecolor": {
-      "text": "Scheme Color",
-      "type": "colorpicker",
-      "value": "#FF000000"
-    },
     "folder_rain": {
       "type": "label",
       "value": "Rain"
@@ -84,7 +79,7 @@
     "ui_characters_charset": {
       "type": "dropdown",
       "text": "Char Set",
-      "value": 4,
+      "value": 3,
       "items": [
         "Custom",
         "English Lttrs",
@@ -209,12 +204,12 @@
       "value": false
     },
     "ui_logo_scale": {
-      "max": 10,
+      "max": 100,
       "min": 0,
       "step": 1,
       "text": "Logo Matrix Scale",
       "type": "slider",
-      "value": 1
+      "value": 10
     },
     "ui_logo_positionx": {
       "max": 2500,

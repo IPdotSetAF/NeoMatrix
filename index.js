@@ -109,7 +109,7 @@ window.onload = function () {
     else
         drawGui();
 
-    window.SucroseAudioData = function(audioArray) {
+    window.SucroseAudioData = function (audioArray) {
         frequencyArray = audioArray.Data;
     };
 
@@ -392,7 +392,7 @@ window.onload = function () {
     };
 
     //MARK: Sucrose Wallpaper Engine
-    window.SucrosePropertyListener = function(name, val) {
+    window.SucrosePropertyListener = function (name, val) {
         switch (name) {
             case "ui_rain_matrixspeed":
                 options.fpsInterval = calculateFpsInterval(val.value);
@@ -472,7 +472,7 @@ window.onload = function () {
                 updateLogo();
                 break;
             case "ui_logo_scale":
-                options.ui_logo_scale = val.value;
+                options.ui_logo_scale = val.value / 10;
                 updateLogo();
                 break;
             case "ui_logo_positionx":
@@ -577,7 +577,7 @@ window.onload = function () {
                 options.ui_date_positionY = val.value;
                 updateMask();
                 break;
-                
+
             case "ui_message_message":
                 options.ui_message_message = val.value;
                 updateMask();
@@ -598,7 +598,7 @@ window.onload = function () {
                 options.ui_message_positionY = val.value;
                 updateMask();
                 break;
-                
+
             case "ui_other_codescommaseparated":
                 options.codes = makeCodes(val.value);
                 initialAnimation();
