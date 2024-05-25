@@ -464,17 +464,6 @@
       "help": "Enter codes (comma separated)",
       "type": "textbox",
       "value": "IP.AF,THE MATRIX"
-    },
-    "ui_other_preset": {
-      "text": "Preset",
-      "help": "Enter preset",
-      "type": "textbox",
-      "value": ""
-    },
-    "ui_other_debug": {
-      "text": "Debug Mode",
-      "type": "checkbox",
-      "value": false
     }
   }
 }

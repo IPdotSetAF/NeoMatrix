@@ -401,12 +401,15 @@ window.onload = function () {
                 options.trailLength = calculateTrailLength(val.value / 100);
                 updateMask();
                 break;
-            case "ui_rain_dropcount":
-                options.ui_rain_dropCount = val.value;
-                break;
             case "ui_rain_initialanimation":
                 options.ui_rain_initialAnimation = val.value.toString();
+                initialAnimation();
                 break;
+            case "ui_rain_dropcount":
+                options.ui_rain_dropCount = val.value;
+                initialAnimation();
+                break;
+
             case "ui_color_colormode":
                 options.ui_color_colorMode = val.value.toString();
                 break;
@@ -420,21 +423,29 @@ window.onload = function () {
             case "ui_color_highlightfirstcharacter":
                 options.ui_color_highlightFirstCharacter = val.value;
                 break;
+
             case "ui_characters_charset":
                 options.ui_characters_charset = val.value.toString();
+                updateCharSet();
                 break;
             case "ui_characters_customcharset":
                 options.ui_characters_customCharset = val.value;
+                updateCharSet();
                 break;
-            case "ui_font_size":
-                options.ui_font_size = val.value;
-                break;
+
             case "ui_font_font":
                 options.ui_font_font = val.value.toString();
+                updateFont();
                 break;
             case "ui_font_customfont":
                 options.ui_font_customFont = val.value;
+                updateFont();
                 break;
+            case "ui_font_size":
+                options.ui_font_size = val.value;
+                updateFont();
+                break;
+
             case "ui_audio_audioresponsive":
                 options.ui_audio_audioResponsive = val.value;
                 break;
@@ -447,155 +458,152 @@ window.onload = function () {
             case "ui_audio_silencetimeoutseconds":
                 options.ui_audio_silenceTimeoutSeconds = val.value;
                 break;
+
             case "ui_logo_logo":
                 options.ui_logo_logo = val.value.toString();
+                updateLogo();
                 break;
             case "ui_logo_customlogo":
                 options.ui_logo_customLogo = val.value;
+                updateLogo();
                 break;
             case "ui_logo_preservecolor":
                 options.ui_logo_preserveColor = val.value;
+                updateLogo();
                 break;
             case "ui_logo_scale":
                 options.ui_logo_scale = val.value;
+                updateLogo();
                 break;
             case "ui_logo_positionx":
                 options.ui_logo_positionX = val.value;
+                updateLogo();
                 break;
             case "ui_logo_positiony":
                 options.ui_logo_positionY = val.value;
+                updateLogo();
                 break;
+
             case "ui_clock_clock":
                 options.ui_clock_clock = val.value.toString();
+                updateMask();
                 break;
             case "ui_clock_24hourformat":
                 options.ui_clock_24HourFormat = val.value;
                 updateTime();
+                updateMask();
                 break;
             case "ui_clock_daylightsaving":
                 options.ui_clock_dayLightSaving = val.value;
                 updateTime();
+                updateMask();
                 break;
             case "ui_clock_scale":
                 options.ui_clock_scale = val.value;
+                updateMask();
                 break;
             case "ui_clock_positionx":
                 options.ui_clock_positionX = val.value;
+                updateMask();
                 break;
             case "ui_clock_positiony":
                 options.ui_clock_positionY = val.value;
+                updateMask();
                 break;
+
             case "ui_day_day":
                 options.ui_day_day = val.value.toString();
+                updateMask();
                 break;
             case "ui_day_allcaps":
                 options.ui_day_allCaps = val.value;
+                updateMask();
                 break;
             case "ui_day_orientation":
                 options.ui_day_orientation = val.value;
+                updateMask();
                 break;
             case "ui_day_scale":
                 options.ui_day_scale = val.value;
+                updateMask();
                 break;
             case "ui_day_positionx":
                 options.ui_day_positionX = val.value;
+                updateMask();
                 break;
             case "ui_day_positiony":
                 options.ui_day_positionY = val.value;
+                updateMask();
                 break;
+
             case "ui_date_date":
                 options.ui_date_date = val.value.toString();
                 updateTime();
-                break;
-            case "ui_date_year":
-                options.ui_date_year = val.value.toString();
-                break;
-            case "ui_date_order":
-                options.ui_date_order = val.value.toString();
-                break;
-            case "ui_date_monthname":
-                options.ui_date_monthName = val.value;
-                break;
-            case "ui_date_allcaps":
-                options.ui_date_allCaps = val.value;
-                break;
-            case "ui_date_delimiter":
-                options.ui_date_delimiter = val.value.toString();
+                updateMask();
                 break;
             case "ui_date_orientation":
                 options.ui_date_orientation = val.value;
+                updateMask();
+                break;
+            case "ui_date_year":
+                options.ui_date_year = val.value.toString();
+                updateMask();
+                break;
+            case "ui_date_order":
+                options.ui_date_order = val.value.toString();
+                updateMask();
+                break;
+            case "ui_date_monthname":
+                options.ui_date_monthName = val.value;
+                updateMask();
+                break;
+            case "ui_date_allcaps":
+                options.ui_date_allCaps = val.value;
+                updateMask();
+                break;
+            case "ui_date_delimiter":
+                options.ui_date_delimiter = val.value.toString();
+                updateMask();
                 break;
             case "ui_date_scale":
                 options.ui_date_scale = val.value;
+                updateMask();
                 break;
             case "ui_date_positionx":
                 options.ui_date_positionX = val.value;
+                updateMask();
                 break;
             case "ui_date_positiony":
                 options.ui_date_positionY = val.value;
+                updateMask();
                 break;
+                
             case "ui_message_message":
                 options.ui_message_message = val.value;
+                updateMask();
                 break;
             case "ui_message_text":
                 options.ui_message_text = val.value;
+                updateMask();
                 break;
             case "ui_message_scale":
                 options.ui_message_scale = val.value;
+                updateMask();
                 break;
             case "ui_message_positionx":
                 options.ui_message_positionX = val.value;
+                updateMask();
                 break;
             case "ui_message_positiony":
                 options.ui_message_positionY = val.value;
+                updateMask();
                 break;
+                
             case "ui_other_codescommaseparated":
                 options.codes = makeCodes(val.value);
                 initialAnimation();
                 break;
-            case "ui_other_preset":
-                if (val.value) {
-                    window.localStorage.setItem("preset", atob(val.value));
-                    options.Load();
-                } else {
-                    window.localStorage.removeItem("preset");
-                    options.Reset();
-                }
-                break;
-            case "ui_other_debug":
-                document.getElementById('gui').innerHTML = '';
-                drawGui();
-                if (val.value) {
-                    document.getElementById('gui').style.display = 'block';
-                } else {
-                    document.getElementById('gui').style.display = 'none';
-                }
-                break;
         }
-
-        if (options.ui_rain_initialAnimation || options.ui_rain_dropcount)
-            initialAnimation();
-
-        if (options.ui_characters_charset || options.ui_characters_customcharset)
-            updateCharSet();
-
-        if (options.ui_font_font || options.ui_font_customFont || options.ui_font_size)
-            updateFont();
-
-        if (options.ui_logo_logo || options.ui_logo_customlogo || options.ui_logo_scale || options.ui_logo_positionx || options.ui_logo_positiony || options.ui_logo_preservecolor)
-            updateLogo();
-
-        if (options.ui_clock_clock || options.ui_clock_24hourformat || options.ui_clock_daylightsaving || options.ui_clock_scale || options.ui_clock_positionx || options.ui_clock_positiony)
-            updateMask();
-
-        if (options.ui_day_day || options.ui_day_allcaps || options.ui_day_orientation || options.ui_day_scale || options.ui_day_positionx || options.ui_day_positiony)
-            updateMask();
-
-        if (options.ui_date_date || options.ui_date_orientation || options.ui_date_year || options.ui_date_order || options.ui_date_monthname || options.ui_date_allcaps || options.ui_date_delimiter || options.ui_date_scale || options.ui_date_positionx || options.ui_date_positiony)
-            updateMask();
-
-        if (options.ui_message_message || options.ui_message_text || options.ui_message_scale || options.ui_message_positionx || options.ui_message_positiony)
-            updateMask();
     };
 
     window.addEventListener('resize', function () {
