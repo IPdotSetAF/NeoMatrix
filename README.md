@@ -1,3 +1,7 @@
+<p align=center>
+   <img height="250" src="logos/4.png"/>
+</p>
+
 <p align=left>
    <img src="https://img.shields.io/github/v/release/IPdotSetAF/NeoMatrix"/>
    <img src="https://img.shields.io/github/release-date/IPdotSetAF/NeoMatrix"/>
