@@ -1,0 +1,20 @@
+{
+  "AppVersion": "24.5.17.0",
+  "Version": "7.1.0",
+  "Title": "Neo Matrix",
+  "Thumbnail": "images/thumbnail.jpg",
+  "Preview": "images/preview.gif",
+  "Description": "This is a highly customizable animated Matrix wallpaper",
+  "Author": "Mohammad Mahdi Nazari",
+  "License": "LICENSE",
+  "Contact": "https://github.com/IPdotSetAF",
+  "Type": 2,
+  "Source": "index.html",
+  "Tags": [
+    "Sci-Fi",
+    "Hacker",
+    "Music",
+    "Matrix"
+  ],
+  "Arguments": null
+}

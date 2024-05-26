@@ -106,6 +106,10 @@ window.onload = function () {
         window.wallpaperRegisterAudioListener((audioArray) => {
             return frequencyArray = audioArray;
         });
+    else if (navigator.userAgent.startsWith("Sucrose"))
+        window.SucroseAudioData = function (audioArray) {
+            frequencyArray = audioArray.Data;
+        };
     else
         drawGui();
 
@@ -384,6 +388,221 @@ window.onload = function () {
                 options.codes = makeCodes(properties.ui_other_codescommaseparated.value);
                 initialAnimation();
             }
+        }
+    };
+
+    //MARK: Sucrose Wallpaper Engine
+    window.SucrosePropertyListener = function (name, val) {
+        switch (name) {
+            case "ui_rain_matrixspeed":
+                options.fpsInterval = calculateFpsInterval(val.value);
+                break;
+            case "ui_rain_traillength":
+                options.trailLength = calculateTrailLength(val.value / 100);
+                updateMask();
+                break;
+            case "ui_rain_initialanimation":
+                options.ui_rain_initialAnimation = val.value.toString();
+                initialAnimation();
+                break;
+            case "ui_rain_dropcount":
+                options.ui_rain_dropCount = val.value;
+                initialAnimation();
+                break;
+
+            case "ui_color_colormode":
+                options.ui_color_colorMode = val.value.toString();
+                break;
+            case "ui_color_matrixcolor":
+                const tmp = hexToRgb(val.value);
+                options.matrixColor = rgbToHue([tmp.r, tmp.g, tmp.b])
+                break;
+            case "ui_color_coloranimationspeed":
+                options.colorAnimationSpeed = calculateColorAnimationSpeed(val.value / 10);
+                break;
+            case "ui_color_highlightfirstcharacter":
+                options.ui_color_highlightFirstCharacter = val.value;
+                break;
+
+            case "ui_characters_charset":
+                options.ui_characters_charset = val.value.toString();
+                updateCharSet();
+                break;
+            case "ui_characters_customcharset":
+                options.ui_characters_customCharset = val.value;
+                updateCharSet();
+                break;
+
+            case "ui_font_font":
+                options.ui_font_font = val.value.toString();
+                updateFont();
+                break;
+            case "ui_font_customfont":
+                options.ui_font_customFont = val.value;
+                updateFont();
+                break;
+            case "ui_font_size":
+                options.ui_font_size = val.value;
+                updateFont();
+                break;
+
+            case "ui_audio_audioresponsive":
+                options.ui_audio_audioResponsive = val.value;
+                break;
+            case "ui_audio_audiosensetivity":
+                options.ui_audio_audioSensetivity = val.value;
+                break;
+            case "ui_audio_silenceanimation":
+                options.ui_audio_silenceAnimation = val.value;
+                break;
+            case "ui_audio_silencetimeoutseconds":
+                options.ui_audio_silenceTimeoutSeconds = val.value;
+                break;
+
+            case "ui_logo_logo":
+                options.ui_logo_logo = val.value.toString();
+                updateLogo();
+                break;
+            case "ui_logo_customlogo":
+                options.ui_logo_customLogo = val.value;
+                updateLogo();
+                break;
+            case "ui_logo_preservecolor":
+                options.ui_logo_preserveColor = val.value;
+                updateLogo();
+                break;
+            case "ui_logo_scale":
+                options.ui_logo_scale = val.value / 10;
+                updateLogo();
+                break;
+            case "ui_logo_positionx":
+                options.ui_logo_positionX = val.value;
+                updateLogo();
+                break;
+            case "ui_logo_positiony":
+                options.ui_logo_positionY = val.value;
+                updateLogo();
+                break;
+
+            case "ui_clock_clock":
+                options.ui_clock_clock = val.value.toString();
+                updateMask();
+                break;
+            case "ui_clock_24hourformat":
+                options.ui_clock_24HourFormat = val.value;
+                updateTime();
+                updateMask();
+                break;
+            case "ui_clock_daylightsaving":
+                options.ui_clock_dayLightSaving = val.value;
+                updateTime();
+                updateMask();
+                break;
+            case "ui_clock_scale":
+                options.ui_clock_scale = val.value;
+                updateMask();
+                break;
+            case "ui_clock_positionx":
+                options.ui_clock_positionX = val.value;
+                updateMask();
+                break;
+            case "ui_clock_positiony":
+                options.ui_clock_positionY = val.value;
+                updateMask();
+                break;
+
+            case "ui_day_day":
+                options.ui_day_day = val.value.toString();
+                updateMask();
+                break;
+            case "ui_day_allcaps":
+                options.ui_day_allCaps = val.value;
+                updateMask();
+                break;
+            case "ui_day_orientation":
+                options.ui_day_orientation = val.value;
+                updateMask();
+                break;
+            case "ui_day_scale":
+                options.ui_day_scale = val.value;
+                updateMask();
+                break;
+            case "ui_day_positionx":
+                options.ui_day_positionX = val.value;
+                updateMask();
+                break;
+            case "ui_day_positiony":
+                options.ui_day_positionY = val.value;
+                updateMask();
+                break;
+
+            case "ui_date_date":
+                options.ui_date_date = val.value.toString();
+                updateTime();
+                updateMask();
+                break;
+            case "ui_date_orientation":
+                options.ui_date_orientation = val.value;
+                updateMask();
+                break;
+            case "ui_date_year":
+                options.ui_date_year = val.value.toString();
+                updateMask();
+                break;
+            case "ui_date_order":
+                options.ui_date_order = val.value.toString();
+                updateMask();
+                break;
+            case "ui_date_monthname":
+                options.ui_date_monthName = val.value;
+                updateMask();
+                break;
+            case "ui_date_allcaps":
+                options.ui_date_allCaps = val.value;
+                updateMask();
+                break;
+            case "ui_date_delimiter":
+                options.ui_date_delimiter = val.value.toString();
+                updateMask();
+                break;
+            case "ui_date_scale":
+                options.ui_date_scale = val.value;
+                updateMask();
+                break;
+            case "ui_date_positionx":
+                options.ui_date_positionX = val.value;
+                updateMask();
+                break;
+            case "ui_date_positiony":
+                options.ui_date_positionY = val.value;
+                updateMask();
+                break;
+
+            case "ui_message_message":
+                options.ui_message_message = val.value;
+                updateMask();
+                break;
+            case "ui_message_text":
+                options.ui_message_text = val.value;
+                updateMask();
+                break;
+            case "ui_message_scale":
+                options.ui_message_scale = val.value;
+                updateMask();
+                break;
+            case "ui_message_positionx":
+                options.ui_message_positionX = val.value;
+                updateMask();
+                break;
+            case "ui_message_positiony":
+                options.ui_message_positionY = val.value;
+                updateMask();
+                break;
+
+            case "ui_other_codescommaseparated":
+                options.codes = makeCodes(val.value);
+                initialAnimation();
+                break;
         }
     };
 
@@ -927,6 +1146,15 @@ window.onload = function () {
             return Math.ceil(c * 255)
         });
         return rgbToHsl(...tmp)[0] * 360;
+    }
+
+    function hexToRgb(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[2], 16),
+            g: parseInt(result[3], 16),
+            b: parseInt(result[4], 16)
+        } : null;
     }
 
     function rgbToHsl(r, g, b) {
