@@ -1,3 +1,7 @@
+<p align=center>
+   <img height="250" src="logo.png"/>
+</p>
+
 <p align=left>
    <img src="https://img.shields.io/github/v/release/IPdotSetAF/NeoMatrix"/>
    <img src="https://img.shields.io/github/release-date/IPdotSetAF/NeoMatrix"/>
@@ -74,12 +78,13 @@ Click on each preview to watch live
    - Silence Timeout
 - Logo Customization
    - Logo
-      - 23 presets :
+      - 24 presets :
 
          <p align="left">
             <img src="images/ipaf.svg" alt="IP.AF" width=40px/>
             <img src="images/kali-1.svg" alt="Kali Linux" width=40px/>
             <img src="images/kali-2.svg" alt="Kali Linux" width=40px/>
+            <img src="images/pardus.svg" alt="Pardus" width=40px/>
             <img src="images/ubuntu-1.svg" alt="Ubuntu Linux" width=40px/>
             <img src="images/ubuntu-2.svg" alt="Ubuntu Linux" width=40px/>
             <img src="images/windows-11.svg" alt="Windows 11" width=40px/>
