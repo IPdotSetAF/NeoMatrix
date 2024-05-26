@@ -1,7 +1,3 @@
-<p align=center>
-   <img height="250" src="logo.png"/>
-</p>
-
 <p align=left>
    <img src="https://img.shields.io/github/v/release/IPdotSetAF/NeoMatrix"/>
    <img src="https://img.shields.io/github/release-date/IPdotSetAF/NeoMatrix"/>
@@ -11,8 +7,10 @@
 </p>
 
 # NeoMatrix (The Red 💊)
-
-This is a highly customizable animated Matrix wallpaper for Wallpaper Engine (Web Browser Compatible)
+<p align=left> 
+   <img height="150" src="logo.png"/>
+   This is a highly customizable animated Matrix wallpaper
+</p>
 
 ## Preview [(Web Demo)](https://ipdotsetaf.github.io/NeoMatrix/)
 
