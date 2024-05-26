@@ -162,7 +162,7 @@
     },
     "ui_logo_logo": {
       "type": "dropdown",
-      "text": "Logo Matrix",
+      "text": "Logo",
       "value": 0,
       "items": [
         "None",
@@ -193,13 +193,13 @@
       ]
     },
     "ui_logo_customlogo": {
-      "text": "Custom Logo Matrix URL (SVG/PNG)",
-      "help": "Enter custom logo matrix url (svg/png)",
+      "text": "Custom Logo URL (SVG/PNG)",
+      "help": "Enter custom logo url (svg/png)",
       "type": "textbox",
       "value": ""
     },
     "ui_logo_preservecolor": {
-      "text": "Preserve Logo Matrix Color",
+      "text": "Preserve Logo Color",
       "type": "checkbox",
       "value": false
     },
@@ -207,7 +207,7 @@
       "max": 100,
       "min": 0,
       "step": 1,
-      "text": "Logo Matrix Scale",
+      "text": "Logo Scale",
       "type": "slider",
       "value": 10
     },
@@ -215,7 +215,7 @@
       "max": 2500,
       "min": -2500,
       "step": 1,
-      "text": "Logo Matrix Position X",
+      "text": "Logo Position X",
       "type": "slider",
       "value": 0
     },
@@ -223,7 +223,7 @@
       "max": 2500,
       "min": -2500,
       "step": 1,
-      "text": "Logo Matrix Position Y",
+      "text": "Logo Position Y",
       "type": "slider",
       "value": 0
     },

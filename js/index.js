@@ -106,12 +106,12 @@ window.onload = function () {
         window.wallpaperRegisterAudioListener((audioArray) => {
             return frequencyArray = audioArray;
         });
+    else if (navigator.userAgent.startsWith("Sucrose"))
+        window.SucroseAudioData = function (audioArray) {
+            frequencyArray = audioArray.Data;
+        };
     else
         drawGui();
-
-    window.SucroseAudioData = function (audioArray) {
-        frequencyArray = audioArray.Data;
-    };
 
     //MARK: GUI
     function drawGui() {
