@@ -102,6 +102,10 @@ window.onload = function () {
         }
     }
 
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('js/serviceWorker.js');
+    }
+
     if (window.wallpaperRegisterAudioListener)
         window.wallpaperRegisterAudioListener((audioArray) => {
             return frequencyArray = audioArray;
