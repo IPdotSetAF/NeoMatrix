@@ -725,6 +725,9 @@ window.onload = function () {
             hour = "0" + hour;
         if (minute < 10)
             minute = "0" + minute;
+
+        hour = hour.toString();
+        minute = minute.toString();
     }
 
     //MARK: Mask
@@ -750,22 +753,36 @@ window.onload = function () {
 
         switch (options.ui_clock_clock) {
             case "1": {
+                let clock = hour + ":" + minute;
                 if (options.ui_clock_scale > 0) {
                     let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows - 5 * options.ui_clock_scale) / 2)];
-                    drawTextOnMask(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+                    drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 5) / 2), Math.floor((rows - 1) / 2)];
-                    drawTextOnMatrix(hour + ":" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+                    drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
                 }
                 break;
             }
             case "2": {
+                let clock = hour + "\\n" + minute;
                 if (options.ui_clock_scale > 0) {
                     let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
-                    drawTextOnMask(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+                    drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
                 } else {
                     let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
-                    drawTextOnMatrix(hour + "\\n" + minute, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+                    drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+                }
+                break;
+            }
+            case "3": {
+                let h = hour.split("").join("\\n"), m = minute.split("").join("\\n");
+                let clock = h + "\\n" + m;
+                if (options.ui_clock_scale > 0) {
+                    let center = [Math.floor((columns - 3 * options.ui_clock_scale) / 2), Math.floor((rows - 23 * options.ui_clock_scale) / 2)];
+                    drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+                } else {
+                    let center = [Math.floor((columns - 1) / 2), Math.floor((rows - 4) / 2)];
+                    drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
                 }
                 break;
             }

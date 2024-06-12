@@ -239,7 +239,8 @@
       "items": [
         "None",
         "Horizontal",
-        "Vertical"
+        "Vertical (2*2)",
+        "Vertical (1*4)"
       ]
     },
     "ui_clock_24hourformat": {

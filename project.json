@@ -502,8 +502,12 @@
 						"value" : "1"
 					},
 					{
-						"label" : "Vertical",
+						"label" : "Vertical (2*2)",
 						"value" : "2"
+					},
+					{
+						"label" : "Vertical (1*4)",
+						"value" : "3"
 					}
 				],
 				"order" : 130,
