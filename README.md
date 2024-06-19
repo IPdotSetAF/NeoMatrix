@@ -112,6 +112,7 @@ Click on each preview to watch live
 - Clock
    - Clock
       - Horizontal
+      - Stacked
       - Vertical
    - 12/24 Hour Format
    - Day-light Saving
@@ -140,14 +141,15 @@ Click on each preview to watch live
       - DD/MM
    - Month Name
    - All CAPS
+   - Style
+      - Horizontal
+      - Stacked
+      - Vertical
    - Delimiter
       - Space
       - \-
       - .
       - /
-   - Orientation
-      - Horizontal
-      - Vertical
    - Scale
    - Position
 - Message
