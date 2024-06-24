@@ -76,7 +76,7 @@ Click on each preview to watch live
    - Silence Timeout
 - Logo Customization
    - Logo
-      - 24 presets :
+      - 25 presets :
 
          <p align="left">
             <img src="images/ipaf.svg" alt="IP.AF" width=40px/>
@@ -103,6 +103,7 @@ Click on each preview to watch live
             <img src="images/c-sharp.svg" alt="C#" width=40px/>
             <img src="images/c-plus-plus.svg" alt="C++" width=40px/>
             <img src="images/qt.svg" alt="QT" width=40px/>
+            <img src="images/sucrose.svg" alt="Sucrose" width=40px/>
          </p>
 
       - CUSTOM
