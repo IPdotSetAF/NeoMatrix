@@ -180,7 +180,7 @@ Click on each preview to watch live
    - [`Microsoft Store`](https://apps.microsoft.com/detail/XP8JGPBHTJGLCQ?launch=true&mode=full)
    or
    - [`GitHub`](https://github.com/Taiizor/Sucrose?tab=readme-ov-file#download)
-2. Download this wallpaper from the library tab.
+2. `NeoMatrix` comes preinstalled in `Sucrose Wallpaper Engine`! just select `NeoMatrix` wallpaper from the library tab.
 
 ## TODO:
 - Random Character Flip
