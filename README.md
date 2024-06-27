@@ -166,21 +166,21 @@ Click on each preview to watch live
    - Reset
 
 ## Are you ready to be free?
-
+### Wallpaper Engine
 1. Install `Wallpaper Engine`
 2. Goto the Install folder: `Wallpaper Engine\projects\myprojects`
 3. Download this Repository:
    - `git clone https://github.com/IPdotSetAF/NeoMatrix`
    or
-   - Download this Repo as ZIP and extract it.
+   - [Download this Repo as ZIP](https://github.com/IPdotSetAF/NeoMatrix/archive/refs/heads/master.zip) and extract it.
 
-## So, are you ready to be more free?
+### Sucrose Wallpaper Engine
 
 1. Install `Sucrose Wallpaper Engine`:
    - [`Microsoft Store`](https://apps.microsoft.com/detail/XP8JGPBHTJGLCQ?launch=true&mode=full)
    or
    - [`GitHub`](https://github.com/Taiizor/Sucrose?tab=readme-ov-file#download)
-2. And now you're free...
+2. Download this wallpaper from the library tab.
 
 ## TODO:
 - Random Character Flip
