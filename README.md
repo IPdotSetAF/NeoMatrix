@@ -39,9 +39,9 @@ Click on each preview to watch live
 ##
 
 ## Compatibility
+- ✔️ WEB Browser
 - ✔️ Wallpaper Engine
 - ✔️ Sucrose Wallpaper Engine
-- ✔️ WEB Browser
 
 ## Features
 - Rain Customization
@@ -173,6 +173,14 @@ Click on each preview to watch live
    - `git clone https://github.com/IPdotSetAF/NeoMatrix`
    or
    - Download this Repo as ZIP and extract it.
+
+## So, are you ready to be more free?
+
+1. Install `Sucrose Wallpaper Engine`:
+   - [`Microsoft Store`](https://apps.microsoft.com/detail/XP8JGPBHTJGLCQ?launch=true&mode=full)
+   or
+   - [`GitHub`](https://github.com/Taiizor/Sucrose?tab=readme-ov-file#download)
+2. And now you're free...
 
 ## TODO:
 - Random Character Flip
