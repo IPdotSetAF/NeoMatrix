@@ -15,7 +15,7 @@ window.onload = function () {
 
     //MARK: Options
     var gui;
-    var options = {
+   var options = {
         ui_rain_matrixSpeed: 24,
         fpsInterval: calculateFpsInterval(24),
         ui_rain_trailLength: 0.86,
@@ -51,11 +51,15 @@ window.onload = function () {
         ui_clock_scale: 1,
         ui_clock_positionX: 0,
         ui_clock_positionY: 0,
+        ui_clock_textColor: '#FFFFFF',  // New option for clock text color
         ui_message_message: false,
         ui_message_text: "THE MATRIX",
         ui_message_scale: 1,
         ui_message_positionX: 0,
         ui_message_positionY: 0,
+        ui_message_textColor: '#FFFFFF',  // New option for message text color
+        ui_day_textColor: '#FFFF00',  // Default text color
+        ui_day_preserveColor: false,  // New option for preserving text color
         ui_day_day: "0",
         ui_day_allCaps: false,
         ui_day_orientation: false,
@@ -72,35 +76,9 @@ window.onload = function () {
         ui_date_scale: 1,
         ui_date_positionX: 0,
         ui_date_positionY: 0,
-        Share() {
-            copyToClipboard(paramsToUrl({ preset: btoa(JSON.stringify(gui.save())) }, {}, []));
-            Log("Copied Preset URL to clipboard.");
-        },
-        Save() {
-            window.localStorage.setItem("preset", JSON.stringify(gui.save()));
-            Log("Saved preset.");
-        },
-        Load() {
-            let preset = JSON.parse(window.localStorage.getItem("preset"));
-            if (preset) {
-                gui.load(preset);
-                Log("Loaded preset.");
-            } else
-                Log("No preset found.");
-        },
-        Reset() {
-            gui.reset();
-            Log("Settings reset to default.");
-        },
-        LoadFrom(params) {
-            let preset = gui.load(JSON.parse(atob(params.preset)));
-            if (preset) {
-                gui.load(preset);
-                Log("Loaded preset from URL.");
-            } else
-                Log("Preset URl is not correct.");
-        }
-    }
+        ui_date_textColor: '#FFFFFF'  // New option for date text color
+    };
+    
 
     if (window.wallpaperRegisterAudioListener)
         window.wallpaperRegisterAudioListener((audioArray) => {
@@ -166,57 +144,205 @@ window.onload = function () {
             logoPositionFolder.add(options, "ui_logo_positionY").min(-2500).max(2500).step(1).name("Y").onChange(updateLogo);
             logoFolder.close();
 
+
+
+
+
             const clockFolder = gui.addFolder("Clock");
-            clockFolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(updateMask);
+
+            clockFolder.add(options, "ui_clock_clock", optionsToDict(config.general.properties.ui_clock_clock.options)).name("Clock").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
             clockFolder.add(options, "ui_clock_24HourFormat").name("24 Hour format").onChange(() => {
                 updateTime();
-                updateMask();
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
             });
             clockFolder.add(options, "ui_clock_dayLightSaving").min(-1).max(1).step(1).name("Day-light Saving").onChange(() => {
                 updateTime();
-                updateMask();
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
             });
-            clockFolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            clockFolder.add(options, "ui_clock_scale").min(0).max(10).step(1).name("Scale").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            clockFolder.addColor(options, "ui_clock_textColor").name("Text Color").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            clockFolder.add(options, "ui_day_preserveColor").name("Preserve Day Color").onChange(updateMask);  // New option
+            
             const clockPositionFolder = clockFolder.addFolder("Position");
-            clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            clockPositionFolder.add(options, "ui_clock_positionX").min(-100).max(100).step(1).name("X").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            clockPositionFolder.add(options, "ui_clock_positionY").min(-100).max(100).step(1).name("Y").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            
             clockFolder.close();
+            
+         
+            
+
+
+
 
             const dayFolder = gui.addFolder("Day");
-            dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(updateMask);
-            dayFolder.add(options, "ui_day_allCaps").name("All CAPS").onChange(updateMask);
-            dayFolder.add(options, "ui_day_orientation").name("Vertical Orientation").onChange(updateMask);
-            dayFolder.add(options, "ui_day_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+
+            dayFolder.add(options, "ui_day_day", optionsToDict(config.general.properties.ui_day_day.options)).name("Day").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayFolder.add(options, "ui_day_allCaps").name("All CAPS").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayFolder.add(options, "ui_day_orientation").name("Vertical Orientation").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayFolder.add(options, "ui_day_scale").min(0).max(10).step(1).name("Scale").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayFolder.addColor(options, "ui_day_textColor").name("Text Color").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayFolder.add(options, "ui_day_preserveColor").name("Preserve Day Color").onChange(updateMask);  // New option
+            
             const dayPositionFolder = dayFolder.addFolder("Position");
-            dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            dayPositionFolder.add(options, "ui_day_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            dayPositionFolder.add(options, "ui_day_positionX").min(-100).max(100).step(1).name("X").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dayPositionFolder.add(options, "ui_day_positionY").min(-100).max(100).step(1).name("Y").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            
             dayFolder.close();
+            
+
+            
+
 
             const dateFolder = gui.addFolder("Date");
-            dateFolder.add(options, "ui_date_date", optionsToDict(config.general.properties.ui_date_date.options)).name("Date").onChange(() => {
-                updateTime();
-                updateMask();
+
+            dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
             });
-            dateFolder.add(options, "ui_date_year", optionsToDict(config.general.properties.ui_date_year.options)).name("Year").onChange(updateMask);
-            dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(updateMask);
-            dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(updateMask);
-            dateFolder.add(options, "ui_date_allCaps").name("All CAPS").onChange(updateMask);
-            dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(updateMask);
-            dateFolder.add(options, "ui_date_style", optionsToDict(config.general.properties.ui_date_style.options)).name("Style").onChange(updateMask);
-            dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+            dateFolder.add(options, "ui_date_order", optionsToDict(config.general.properties.ui_date_order.options)).name("Order").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_date_monthName").name("Month Name").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_date_allCaps").name("All CAPS").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_date_delimiter", optionsToDict(config.general.properties.ui_date_delimiter.options)).name("Delimiter").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_date_style", optionsToDict(config.general.properties.ui_date_style.options)).name("Style").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_date_scale").min(0).max(10).step(1).name("Scale").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.addColor(options, "ui_date_textColor").name("Text Color").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            dateFolder.add(options, "ui_day_preserveColor").name("Preserve Day Color").onChange(updateMask);  // New option
+            
             const datePositionFolder = dateFolder.addFolder("Position");
-            datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            datePositionFolder.add(options, "ui_date_positionX").min(-100).max(100).step(1).name("X").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            datePositionFolder.add(options, "ui_date_positionY").min(-100).max(100).step(1).name("Y").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            
             dateFolder.close();
+            
 
             const messageFolder = gui.addFolder("Message");
-            messageFolder.add(options, "ui_message_message").name("Message").onChange(updateMask);
-            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(updateMask);
-            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(updateMask);
+
+            messageFolder.add(options, "ui_message_message").name("Message").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            messageFolder.add(options, "ui_message_text").name("Message Text").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            messageFolder.add(options, "ui_message_scale").min(0).max(10).step(1).name("Scale").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            messageFolder.addColor(options, "ui_message_textColor").name("Text Color").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            messageFolder.add(options, "ui_day_preserveColor").name("Preserve Day Color").onChange(updateMask);  // New option
+            
             const messagePositionFolder = messageFolder.addFolder("Position");
-            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(updateMask);
-            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
+            messagePositionFolder.add(options, "ui_message_positionX").min(-100).max(100).step(1).name("X").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(() => {
+                if (!options.ui_day_preserveColor) {
+                    updateMask();
+                }
+            });
+            
             messageFolder.close();
+            
 
             const otherFolder = gui.addFolder("Other");
             otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
@@ -788,12 +914,37 @@ window.onload = function () {
             }
         }
 
+        // if (options.ui_day_day != "0") {
+        //     var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
+        //     if (options.ui_day_day == "2")
+        //         dayText = dayText.substring(0, 3);
+        //     if (options.ui_day_orientation)
+        //         dayText = dayText.split("").join("\\n");
+        //     if (options.ui_day_scale > 0) {
+        //         let bb = getTextBoundingBox(dayText, options.ui_day_scale);
+        //         let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+        //         drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY, options.ui_day_scale);
+        //     } else {
+        //         let cc = getCharsCount(dayText);
+        //         let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+        //         drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY);
+        //     }
+        // }
+
         if (options.ui_day_day != "0") {
             var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
             if (options.ui_day_day == "2")
                 dayText = dayText.substring(0, 3);
             if (options.ui_day_orientation)
                 dayText = dayText.split("").join("\\n");
+    
+            // Check if preservation is enabled
+            if (options.ui_day_preserveColor) {
+                mask.fillStyle = options.ui_day_textColor; // Use preserved color
+            } else {
+                mask.fillStyle = "rgba(255, 255, 255, 1)"; // Default color if not preserved
+            }
+    
             if (options.ui_day_scale > 0) {
                 let bb = getTextBoundingBox(dayText, options.ui_day_scale);
                 let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
@@ -872,6 +1023,157 @@ window.onload = function () {
             }
         }
     }
+
+
+    // MARK: Mask
+// MARK: Mask
+// function updateMask() {
+//     clearStaticChars();
+
+//     mask.globalCompositeOperation = 'source-over';
+//     mask.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
+//     mask.fillStyle = "rgba(0, 0, 0, " + options.trailLength + ")";
+//     mask.fillRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
+
+//     mask.globalCompositeOperation = 'destination-out';
+
+//     if (logo) {
+//         let logo_width = (neoMatrixDom.height / 2) * (logo.width / logo.height) * options.ui_logo_scale;
+//         let logo_height = (neoMatrixDom.height / 2) * options.ui_logo_scale;
+
+//         mask.drawImage(logo, neoMatrixDom.width / 2 - logo_width / 2 + options.ui_logo_positionX, neoMatrixDom.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
+
+//         colorOverlay.clearRect(0, 0, neoMatrixDom.width, neoMatrixDom.height);
+//         colorOverlay.drawImage(logo, neoMatrixDom.width / 2 - logo_width / 2 + options.ui_logo_positionX, neoMatrixDom.height / 2 - logo_height / 2 + options.ui_logo_positionY, logo_width, logo_height);
+//     }
+
+//     switch (options.ui_clock_clock) {
+//         case "1": {
+//             let clock = hour + ":" + minute;
+//             if (options.ui_clock_scale > 0) {
+//                 let center = [Math.floor((columns - 17 * options.ui_clock_scale) / 2), Math.floor((rows - 5 * options.ui_clock_scale) / 2)];
+//                 drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+//             } else {
+//                 let center = [Math.floor((columns - 5) / 2), Math.floor((rows - 1) / 2)];
+//                 drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+//             }
+//             break;
+//         }
+//         case "2": {
+//             let clock = hour + "\\n" + minute;
+//             if (options.ui_clock_scale > 0) {
+//                 let center = [Math.floor((columns - 7 * options.ui_clock_scale) / 2), Math.floor((rows - 11 * options.ui_clock_scale) / 2)];
+//                 drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+//             } else {
+//                 let center = [Math.floor((columns - 2) / 2), Math.floor((rows - 2) / 2)];
+//                 drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+//             }
+//             break;
+//         }
+//         case "3": {
+//             let h = hour.split("").join("\\n"), m = minute.split("").join("\\n");
+//             let clock = h + "\\n" + m;
+//             if (options.ui_clock_scale > 0) {
+//                 let center = [Math.floor((columns - 3 * options.ui_clock_scale) / 2), Math.floor((rows - 23 * options.ui_clock_scale) / 2)];
+//                 drawTextOnMask(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY, options.ui_clock_scale);
+//             } else {
+//                 let center = [Math.floor((columns - 1) / 2), Math.floor((rows - 4) / 2)];
+//                 drawTextOnMatrix(clock, center[0] + options.ui_clock_positionX, center[1] + options.ui_clock_positionY);
+//             }
+//             break;
+//         }
+//     }
+
+//     // Only update day text if Preserve Day Color is NOT checked
+//     if (options.ui_day_day != "0" && !options.ui_day_preserveColor) {
+//         var dayText = options.ui_day_allCaps ? days[day].toUpperCase() : days[day];
+//         if (options.ui_day_day == "2")
+//             dayText = dayText.substring(0, 3);
+//         if (options.ui_day_orientation)
+//             dayText = dayText.split("").join("\\n");
+
+//         mask.fillStyle = "rgba(255, 255, 255, 1)"; // Default color if preservation is not enabled
+
+//         if (options.ui_day_scale > 0) {
+//             let bb = getTextBoundingBox(dayText, options.ui_day_scale);
+//             let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+//             drawTextOnMask(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY, options.ui_day_scale);
+//         } else {
+//             let cc = getCharsCount(dayText);
+//             let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+//             drawTextOnMatrix(dayText, center[0] + options.ui_day_positionX, center[1] + options.ui_day_positionY);
+//         }
+//     }
+
+//     if (options.ui_date_date != "0") {
+//         var text3 = date.toString(), text2, text1 = "", completeDate;
+//         if (text3.length < 2)
+//             text3 = "0" + text3;
+//         if (options.ui_date_monthName) {
+//             text2 = months[parseInt(options.ui_date_date) - 1][month - 1];
+//             if (options.ui_date_allCaps)
+//                 text2 = text2.toUpperCase();
+//         } else {
+//             text2 = month.toString();
+//             if (text2.length < 2)
+//                 text2 = "0" + text2;
+//         }
+//         switch (options.ui_date_year) {
+//             case "1": {
+//                 text1 = year.toString().substring(2, 4);
+//                 break;
+//             }
+//             case "2": {
+//                 text1 = year.toString();
+//                 break;
+//             }
+//         }
+
+//         if(options.ui_date_order == 1){
+//             let tmp = text2;
+//             text2 = text3;
+//             text3 = tmp;
+//         }
+
+//         let delimiter = dateDelimiters[parseInt(options.ui_date_delimiter)];
+
+//         switch (options.ui_date_style) {
+//             case "0":
+//                 completeDate = (text1.length > 0 ? [text1, text2, text3] : [text2, text3]).join(delimiter);
+//                 break;
+//             case "1":
+//                 completeDate = (text1.length > 0 ? [text1, text2, text3] : [text2, text3]).join("\\n");
+//                 break;
+//             case "2":
+//                 completeDate = (text1 + text2 + text3).split("").join("\\n");
+//                 break;
+//         }
+
+//         if (options.ui_date_scale > 0) {
+//             let bb = getTextBoundingBox(completeDate, options.ui_date_scale);
+//             let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+//             drawTextOnMask(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY, options.ui_date_scale);
+//         } else {
+//             let cc = getCharsCount(completeDate);
+//             let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+//             drawTextOnMatrix(completeDate, center[0] + options.ui_date_positionX, center[1] + options.ui_date_positionY);
+//         }
+//     }
+
+//     if (options.ui_message_message) {
+//         if (options.ui_message_scale > 0) {
+//             let bb = getTextBoundingBox(options.ui_message_text, options.ui_message_scale);
+//             let center = [Math.floor((columns - bb[0]) / 2), Math.floor((rows - bb[1]) / 2)];
+//             drawTextOnMask(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY, options.ui_message_scale);
+//         } else {
+//             let cc = getCharsCount(options.ui_message_text);
+//             let center = [Math.floor((columns - cc[0]) / 2), Math.floor((rows - cc[1]) / 2)];
+//             drawTextOnMatrix(options.ui_message_text, center[0] + options.ui_message_positionX, center[1] + options.ui_message_positionY);
+//         }
+//     }
+// }
+
+
 
     function drawTextOnMatrix(text, x, y) {
         mask.fillStyle = "#FFF";
