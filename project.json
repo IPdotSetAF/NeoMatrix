@@ -906,20 +906,40 @@
 				"type" : "slider",
 				"value" : 0
 			},
-			"folder_other" : 
+			"folder_codes" : 
 			{
 				"index" : 60,
 				"order" : 160,
-				"text" : "<h4>Other</h4>",
+				"text" : "<h4>Codes</h4>",
 				"type" : "text"
 			},
-			"ui_other_codescommaseparated" : 
+			"ui_codes_codescommaseparated" : 
 			{
 				"index" : 61,
 				"order" : 161,
 				"text" : "Codes (comma separated)",
 				"type" : "textinput",
 				"value" : "IP.AF,THE MATRIX"
+			},
+			"ui_codes_color" : 
+			{
+				"index" : 62,
+				"order" : 162,
+				"text" : "Codes Highlight Color",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"ui_codes_probability" : 
+			{
+				"index" : 63,
+				"fraction" : true,
+				"min" : 0.01,
+				"max" : 1,
+				"step" : 0.01,
+				"order" : 163,
+				"text" : "Codes Probability",
+				"type" : "slider",
+				"value" : 0.5
 			}
 		},
 		"supportsaudioprocessing" : true

@@ -27,7 +27,10 @@ window.onload = function () {
         ui_font_font: "3",
         ui_font_customFont: "monospace",
         ui_font_size: 15,
-        ui_other_codesCommaSeparated: "IP.AF,THE MATRIX",
+        ui_codes_codesCommaSeparated: "IP.AF,THE MATRIX",
+        ui_codes_color: [1, 1, 1],
+        codesColor: rgbToHue([1, 1, 1]),
+        ui_codes_probability: 0.5,
         codes: makeCodes("IP.AF,THE MATRIX"),
         ui_color_colorMode: "2",
         ui_color_matrixColor: [0, 1, 0],
@@ -218,12 +221,16 @@ window.onload = function () {
             messagePositionFolder.add(options, "ui_message_positionY").min(-100).max(100).step(1).name("Y").onChange(updateMask);
             messageFolder.close();
 
-            const otherFolder = gui.addFolder("Other");
-            otherFolder.add(options, 'ui_other_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
-                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
+            const codesFolder = gui.addFolder("Codes");
+            codesFolder.add(options, 'ui_codes_codesCommaSeparated').name('Codes (Comma separated)').onChange(() => {
+                options.codes = makeCodes(options.ui_codes_codesCommaSeparated);
                 initialAnimation();
             });
-            otherFolder.close();
+            codesFolder.addColor(options, "ui_codes_color").name("Highlight Color").onChange(() =>{
+                options.codesColor = rgbToHue(options.ui_codes_color);
+            });
+            codesFolder.add(options, "ui_codes_probability").name("Probability").step(0.01).min(0.01).max(1);
+            codesFolder.close();
 
             gui.add(options, "Share");
             gui.add(options, "Save");
@@ -384,10 +391,14 @@ window.onload = function () {
                 properties.ui_message_positionx || properties.ui_message_positiony)
                 updateMask();
 
-            if (properties.ui_other_codescommaseparated) {
-                options.codes = makeCodes(properties.ui_other_codescommaseparated.value);
+            if (properties.ui_codes_codescommaseparated) {
+                options.codes = makeCodes(properties.ui_codes_codescommaseparated.value);
                 initialAnimation();
             }
+            if (properties.ui_codes_color)
+                options.codesColor = rgbToHue(properties.ui_codes_color.value.split(' '))
+            if (properties.ui_codes_probability)
+                options.ui_codes_probability = properties.ui_codes_probability.value;
         }
     };
 
@@ -1097,7 +1108,7 @@ window.onload = function () {
         if (staticChars[column][dropItem[0]])
             return staticChars[column][dropItem[0]];
 
-        if (Math.random() > 0.995 && dropItem[1] == 0) {
+        if (Math.random() > 0.9999 - (options.ui_codes_probability * 0.02) && dropItem[1] == 0) {
             dropItem[1] = Math.floor(Math.random() * options.codes.length) + 1;
             dropItem[2] = dropItem[0];
         }
