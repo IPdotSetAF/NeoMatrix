@@ -936,6 +936,7 @@
 				"min" : 0.01,
 				"max" : 1,
 				"step" : 0.01,
+				"precision" : 2,
 				"order" : 163,
 				"text" : "Codes Probability",
 				"type" : "slider",
