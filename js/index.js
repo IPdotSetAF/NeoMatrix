@@ -1,12 +1,15 @@
 window.onload = function () {
     //MARK: Update
     const version = "v7.3.0";
+    var logging = true;
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
+        try {
         const tags = await fetch(url).then(_ => _.json());
         if (tags[0]['name'] > version)
             Log("New release available: " + tags[0]['name']);
+        } catch { }
     }
 
     readProjectConfig = async () => {
@@ -829,7 +832,7 @@ window.onload = function () {
                 }
             }
 
-            if(options.ui_date_order == 1){
+            if (options.ui_date_order == 1) {
                 let tmp = text2;
                 text2 = text3;
                 text3 = tmp;
@@ -1162,6 +1165,8 @@ window.onload = function () {
 
     //MARK: Helpers
     function Log(text) {
+        if (!logging)
+            return;
         debug.classList.remove("hide");
         void debug.offsetWidth;
         logs.push(text);
