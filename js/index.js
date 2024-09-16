@@ -6,9 +6,9 @@ window.onload = function () {
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
         try {
-        const tags = await fetch(url).then(_ => _.json());
-        if (tags[0]['name'] > version)
-            Log("New release available: " + tags[0]['name']);
+            const tags = await fetch(url).then(_ => _.json());
+            if (tags[0]['name'] > version)
+                Log("New release available: " + tags[0]['name']);
         } catch { }
     }
 
@@ -113,6 +113,27 @@ window.onload = function () {
         window.SucroseAudioData = function (audioArray) {
             frequencyArray = audioArray.Data;
         };
+    else if (window.self !== window.top) {
+        window.addEventListener('message', (event) => {
+            const receivedData = event.data;
+            if (receivedData.preset){
+                options = receivedData.preset;
+                
+                options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
+                options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
+                options.matrixColor = rgbToHue(options.ui_color_matrixColor);
+                options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
+                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
+                updateCanvasSize();
+                updateCharSet();
+                updateTime();
+                updateFont();
+                updateLogo();
+                updateMask();
+                initialAnimation();
+            }
+        });
+    }
     else
         drawGui();
 
