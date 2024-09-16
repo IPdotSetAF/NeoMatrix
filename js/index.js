@@ -1,12 +1,15 @@
 window.onload = function () {
     //MARK: Update
     const version = "v7.3.0";
+    var logging = true;
 
     checkForUpdates = async () => {
         const url = 'https://api.github.com/repos/IPdotSetAF/NeoMatrix/tags';
-        const tags = await fetch(url).then(_ => _.json());
-        if (tags[0]['name'] > version)
-            Log("New release available: " + tags[0]['name']);
+        try {
+            const tags = await fetch(url).then(_ => _.json());
+            if (tags[0]['name'] > version)
+                Log("New release available: " + tags[0]['name']);
+        } catch { }
     }
 
     readProjectConfig = async () => {
@@ -110,6 +113,27 @@ window.onload = function () {
         window.SucroseAudioData = function (audioArray) {
             frequencyArray = audioArray.Data;
         };
+    else if (window.self !== window.top) {
+        window.addEventListener('message', (event) => {
+            const receivedData = event.data;
+            if (receivedData.preset){
+                options = receivedData.preset;
+                
+                options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
+                options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
+                options.matrixColor = rgbToHue(options.ui_color_matrixColor);
+                options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
+                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
+                updateCanvasSize();
+                updateCharSet();
+                updateTime();
+                updateFont();
+                updateLogo();
+                updateMask();
+                initialAnimation();
+            }
+        });
+    }
     else
         drawGui();
 
@@ -829,7 +853,7 @@ window.onload = function () {
                 }
             }
 
-            if(options.ui_date_order == 1){
+            if (options.ui_date_order == 1) {
                 let tmp = text2;
                 text2 = text3;
                 text3 = tmp;
@@ -1162,6 +1186,8 @@ window.onload = function () {
 
     //MARK: Helpers
     function Log(text) {
+        if (!logging)
+            return;
         debug.classList.remove("hide");
         void debug.offsetWidth;
         logs.push(text);
