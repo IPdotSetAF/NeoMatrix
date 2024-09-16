@@ -116,9 +116,9 @@ window.onload = function () {
     else if (window.self !== window.top) {
         window.addEventListener('message', (event) => {
             const receivedData = event.data;
-            if (receivedData.preset){
+            if (receivedData.preset) {
                 options = receivedData.preset;
-                
+
                 options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
                 options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
                 options.matrixColor = rgbToHue(options.ui_color_matrixColor);
@@ -1035,7 +1035,8 @@ window.onload = function () {
     }
 
     function startAnimating() {
-        checkForUpdates();
+        if (logging)
+            checkForUpdates();
         then = Date.now();
         startTime = then;
         loop();
