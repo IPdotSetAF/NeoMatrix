@@ -113,28 +113,7 @@ window.onload = function () {
         window.SucroseAudioData = function (audioArray) {
             frequencyArray = audioArray.Data;
         };
-    else if (window.self !== window.top) {
-        window.addEventListener('message', (event) => {
-            const receivedData = event.data;
-            if (receivedData.preset){
-                options = receivedData.preset;
-                
-                options.fpsInterval = calculateFpsInterval(options.ui_rain_matrixSpeed);
-                options.trailLength = calculateTrailLength(options.ui_rain_trailLength);
-                options.matrixColor = rgbToHue(options.ui_color_matrixColor);
-                options.colorAnimationSpeed = calculateColorAnimationSpeed(options.ui_color_colorAnimationSpeed);
-                options.codes = makeCodes(options.ui_other_codesCommaSeparated);
-                updateCanvasSize();
-                updateCharSet();
-                updateTime();
-                updateFont();
-                updateLogo();
-                updateMask();
-                initialAnimation();
-            }
-        });
-    }
-    else
+    else if (window.self === window.top)
         drawGui();
 
     //MARK: GUI
@@ -414,6 +393,13 @@ window.onload = function () {
             }
         }
     };
+
+    //MARK: IFrame
+    window.addEventListener('message', (event) => {
+        const receivedData = event.data;
+        if (receivedData.preset)
+            window.wallpaperPropertyListener.applyUserProperties(presetToProperties(receivedData.preset));
+    });
 
     //MARK: Sucrose Wallpaper Engine
     window.SucrosePropertyListener = function (name, val) {
@@ -1295,6 +1281,13 @@ window.onload = function () {
             params[key] = value;
 
         return params;
+    }
+
+    function presetToProperties(partialPreset) {
+        const transformedProperties = {};
+        for (const [key, value] of Object.entries(partialPreset))
+            transformedProperties[key.toLowerCase()] = { value };
+        return transformedProperties;
     }
 };
 
