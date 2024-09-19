@@ -18,7 +18,6 @@ function mapAndApply(fromObject, toObject, mapper) {
             : toObject[destinationKey] === convertedValue;
 
         if (!valuesAreEqual) {
-            debugger;
             toObject[destinationKey] = convertedValue;
             onChange();
         }
