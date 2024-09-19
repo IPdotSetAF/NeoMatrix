@@ -1,8 +1,10 @@
 function mapAndApply(fromObject, toObject, mapper) {
     for (const [inputKey, inputValue] of Object.entries(fromObject)) {
-        const mapEntry = mapper.properties[inputKey];
+        let mapEntry = mapper.properties[inputKey];
         if (!mapEntry)
-            if (!mapper.mapUndefined)
+            if (mapper.mapUndefined)
+                mapEntry = {};
+            else
                 continue;
 
         const destinationKey = mapEntry.key || inputKey;
@@ -12,8 +14,8 @@ function mapAndApply(fromObject, toObject, mapper) {
         const convertedValue = conversionFunc(inputValue);
 
         const valuesAreEqual = Array.isArray(toObject[destinationKey]) && Array.isArray(convertedValue)
-        ? arraysAreEqual(toObject[destinationKey], convertedValue)
-        : toObject[destinationKey] === convertedValue;
+            ? arraysAreEqual(toObject[destinationKey], convertedValue)
+            : toObject[destinationKey] === convertedValue;
 
         if (!valuesAreEqual) {
             debugger;
