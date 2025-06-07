@@ -907,8 +907,7 @@ window.onload = function () {
                 break;
             }
         }
-
-        return "hsl(" + hue + ", 100%, " + lightness + "%)";;
+        return "hsl(" + hue%360 + ", 100%, " + lightness + "%)";
     }
 
     function calculateFpsInterval(fps) {
